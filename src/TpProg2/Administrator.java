@@ -1,3 +1,5 @@
+package TpProg2;
+
 public class Administrator extends User {
 
     public Administrator(int cuil, int phoneNumber) {

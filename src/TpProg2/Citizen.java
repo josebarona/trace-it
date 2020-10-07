@@ -1,3 +1,5 @@
+package TpProg2;
+
 import java.util.ArrayList;
 
 public class Citizen extends User {
@@ -9,8 +11,8 @@ public class Citizen extends User {
 
     public Citizen(int cuil, int phoneNumber) {
         super(cuil, phoneNumber);
-        this.receivedInvitations = new ArrayList<Invitation>();
-        this.acceptedRequest = new ArrayList<FaceToFaceMeeting>();
+        this.receivedInvitations = new ArrayList<>(); // ArrayList<Invitation>
+        this.acceptedRequest = new ArrayList<>(); //ArrayList<FaceToFaceMeeting>
         this.isBan = false;
         this.rejections = 0;
     }

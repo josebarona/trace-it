@@ -1,3 +1,5 @@
+package TpProg2;
+
 public class Invitation {
     FaceToFaceMeeting meeting;
     Citizen transmitter;

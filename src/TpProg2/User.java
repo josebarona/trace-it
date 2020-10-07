@@ -1,3 +1,5 @@
+package TpProg2;
+
 public abstract class User {
     int cuil;
     int phoneNumber;
@@ -7,5 +9,5 @@ public abstract class User {
         this.phoneNumber = phoneNumber;
     }
 
-    void SelfRecordingOfSymptoms(){};
+    void SelfRecordingOfSymptoms(){}
 }
