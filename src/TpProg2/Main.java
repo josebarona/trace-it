@@ -23,7 +23,7 @@ public class Main {
         Administrator admin = new Administrator("3", "4");
     }
 
-    void menu (){
+    void menuStart(){
         int opcion;
         do{
             System.out.println("\n  Menu: ");
@@ -48,8 +48,9 @@ public class Main {
                     */
                     break;
                 case 2:     //Iniciar sesion
-                    //aca tendriamos que preguntar si va a ingresar como ciudadano o admin
-                    //y tendriamos que ver si existe el usuario y validar la contraseña.
+                    // aca tendriamos que preguntar si va a ingresar como ciudadano o admin
+                    // primero tenemos que fijarnos que exista el usuario y que no este bloqueado, despues que la contraseña coincida
+                    // y por ultimo deberiamos movernos a otro menu de usuario o admin con todas las opciones del programa.
                     break;
                 case 3:
                     //AMB
@@ -68,5 +69,19 @@ public class Main {
             }
         }while(opcion != 6);
     }
+
+    void MenuCitizen(Citizen citizen){
+        //algo parecido al de arriba pero tiene que tener todas las funcionalidades que nos piden para los ciudadanos.
+        //Bandeja de entrada para poder aceptar o rechazar invitaciones.(Deberia aparecer quien lo envio y el lugar/horario del meeting)
+        //Tambien deberian poder crear una invitacion y enviarla a otros ciudadanos.
+        //Tienen que poder dignosticar sus sintomas y darlos de baja cuando quieran. (sintomas/eventos que crearon los admins)
+    }
+    void MenuAdministrator(Administrator admin){
+        // Tiene que poder bloquear y desbloquear ciudadanos
+        // Tiene que poder ingresar nuevos eventos/sintomas para los ciudadanos
+        // ...
+        //
+    }
+
 
 }
