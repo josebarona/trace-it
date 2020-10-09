@@ -5,4 +5,5 @@ public interface DataStore<T extends Saveable> {
     void remove(String id);
     T findById(String id);
     void edit(T t);
+    boolean isEmpty();
 }

@@ -1,18 +1,31 @@
 package TpProg2;
 
+import TpProg2.DataStore.CollectionStore;
+import TpProg2.DataStore.DataStore;
+import TpProg2.Exceptions.ABMAdminException;
 import TpProg2.Exceptions.ABMCitizenException;
 import TpProg2.ImplementOfUsers.FaceToFaceMeeting;
 import TpProg2.ImplementOfUsers.Invitation;
+import TpProg2.Users.ABMAdmin;
 import TpProg2.Users.ABMCitizen;
 import TpProg2.Users.Administrator;
 import TpProg2.Users.Citizen;
 import TpProg2.util.Scanner;
 
 import java.util.Date;
+import java.util.HashMap;
 
 public class Main {
+    // DATA DE adminis:
+    static DataStore<Administrator> administratorDataStore = new CollectionStore<>(new HashMap<>());
+    static ABMAdmin adminABM = new ABMAdmin(administratorDataStore);
 
-    public static void main(String[] args) {
+    // DATA DE Citizens:
+    static DataStore<Citizen> citizenDataStore = new CollectionStore<>(new HashMap<>());
+    static ABMCitizen citizenABM = new ABMCitizen(citizenDataStore);
+
+    public static void main(String[] args) throws ABMCitizenException, ABMAdminException {
+
         Citizen c1 = new Citizen("1", "2");
         FaceToFaceMeeting f2fm = new FaceToFaceMeeting(
                 new Date(),
@@ -21,6 +34,21 @@ public class Main {
         );
         Invitation invitation = new Invitation(f2fm, c1);
         Administrator admin = new Administrator("3", "4");
+
+        adminRegister();
+
+    }
+
+    public static void adminRegister() throws ABMAdminException {
+        Administrator administrator = new Administrator(Scanner.getString("Ingrese su cuil: "),Scanner.getString("Ingrese su numero de telefono"));
+        adminABM.add(administrator.getId(),administrator.getCuil());
+        System.out.println("la base de datos esta vacia? " + administratorDataStore.isEmpty());
+    }
+
+    public static void citizenRegister() throws ABMCitizenException {
+        Citizen citizen = new Citizen(Scanner.getString("Ingrese su cuil: "),Scanner.getString("Ingrese su numero de telefono"));
+        citizenABM.add(citizen.getId(),citizen.getCuil());
+        System.out.println("la base de datos esta vacia? " + citizenDataStore.isEmpty());
     }
 
     void menuStart(){

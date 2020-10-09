@@ -14,4 +14,18 @@ public class Administrator extends User {
         citizen.isBan = false;
     }
 
+    @Override
+    public void SelfRecordingOfSymptoms() {
+        super.SelfRecordingOfSymptoms();
+    }
+
+    @Override
+    public String getFileRepresentation() {
+        return super.getFileRepresentation();
+    }
+
+    @Override
+    public String getCuil() {
+        return super.getCuil();
+    }
 }

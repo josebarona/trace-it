@@ -22,4 +22,9 @@ public class FileStore<T extends FileSaveable> implements DataStore<T>{
     public void edit(T t) {
 
     }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
 }

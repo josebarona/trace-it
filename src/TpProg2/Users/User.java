@@ -22,4 +22,8 @@ public abstract class User implements FileSaveable {
     public String getId() {
         return this.phoneNumber;
     }
+
+    public String getCuil() {
+        return cuil;
+    }
 }

@@ -21,10 +21,16 @@ public class CollectionStore<T extends Saveable> implements DataStore<T>{
 
     @Override
     public T findById(String id) {
+        //if (collectionStore.containsKey(id))
         return null;
     }
 
     @Override
     public void edit(T t) {
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return collectionStore.isEmpty();
     }
 }
