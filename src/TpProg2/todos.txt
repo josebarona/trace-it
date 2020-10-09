@@ -1,2 +1,5 @@
 agregar funciones toString() a cada objeto []
 hacer que la clase Face2FaceMeeting reciba un strings fechas tipo: "2020-10-06" y que lo parsee a date dentro del construcor para facilitar testeo []
+
+
+prueba
