@@ -1,2 +1,9 @@
 agregar funciones toString() a cada objeto []
 hacer que la clase Face2FaceMeeting reciba un strings fechas tipo: "2020-10-06" y que lo parsee a date dentro del construcor para facilitar testeo []
+
+
+Gestion de eventos:
+- Que los administradores puedan crear eventos/sintomas (pueden ser literal un texto por lo que digieron en clase), y hay que agruparlos segun efermedades.
+- Hay que hacer el autodiagnostico para los ciudadanos, tienen que poder seleccionar todos los eventos que crearon los admins.
+
+- estaria bueno ya ir armado algo en consola como para ver como creamos un usuario más el tema de las invitaciones.
