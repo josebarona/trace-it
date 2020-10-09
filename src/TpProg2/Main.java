@@ -1,9 +1,12 @@
 package TpProg2;
 
+import TpProg2.Exceptions.ABMCitizenException;
 import TpProg2.ImplementOfUsers.FaceToFaceMeeting;
 import TpProg2.ImplementOfUsers.Invitation;
+import TpProg2.Users.ABMCitizen;
 import TpProg2.Users.Administrator;
 import TpProg2.Users.Citizen;
+import TpProg2.util.Scanner;
 
 import java.util.Date;
 
@@ -19,9 +22,6 @@ public class Main {
         Invitation invitation = new Invitation(f2fm, c1);
         Administrator admin = new Administrator("3", "4");
     }
-}
-/*
-        //ejemplo de menu basico
 
     void menu (){
         int opcion;
@@ -31,10 +31,23 @@ public class Main {
             opcion = Scanner.getInt(" Que operación desea realizar: ");
 
             switch (opcion) {
-                case 1:
-                    //codigo para registrar un usuario, pidiendo sus datos y validandolos.
+                case 1:     //registrar usuario
+                    System.out.println("Para crear un nuevo usuario debe ingresar los siguientes datos");
+                    String cuil = Scanner.getString(" Su numero de cuil: ");
+                    String phoneNumber = Scanner.getString(" Su numero de celular: ");
+
+                    // Deberiamos validar de alguna manera los datos y fijarnos que el usuario no este ya registrado.
+                    // y tendriamos que ver si va a necesitar una contraseña para iniciar sesion.
+
+                    /*
+                    try{
+                        ABMCitizen.add(cuil, phoneNumber);
+                    }catch(ABMCitizenException e){
+                        //...
+                    }
+                    */
                     break;
-                case 2:
+                case 2:     //Iniciar sesion
                     //aca tendriamos que preguntar si va a ingresar como ciudadano o admin
                     //y tendriamos que ver si existe el usuario y validar la contraseña.
                     break;
@@ -55,4 +68,5 @@ public class Main {
             }
         }while(opcion != 6);
     }
-*/
+
+}
