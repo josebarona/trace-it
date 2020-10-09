@@ -1,8 +1,8 @@
-package TpProg2;
+package TpProg2.Users;
 
 public class Administrator extends User {
 
-    public Administrator(int cuil, int phoneNumber) {
+    public Administrator(String cuil, String phoneNumber) {
         super(cuil, phoneNumber);
     }
 

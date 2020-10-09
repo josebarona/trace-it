@@ -1,8 +1,10 @@
-package TpProg2;
+package TpProg2.ImplementOfUsers;
+
+import TpProg2.Users.Citizen;
 
 public class Invitation {
-    FaceToFaceMeeting meeting;
-    Citizen transmitter;
+    public FaceToFaceMeeting meeting;
+    public Citizen transmitter;
 
     public Invitation(FaceToFaceMeeting meeting, Citizen transmitter) {
         this.meeting = meeting;

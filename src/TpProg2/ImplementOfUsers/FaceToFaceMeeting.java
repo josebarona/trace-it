@@ -1,15 +1,17 @@
-package TpProg2;
+package TpProg2.ImplementOfUsers;
+
+import TpProg2.Users.Citizen;
 
 import java.util.Date;
 
 public class FaceToFaceMeeting {
     Date start;
     Date finish;
-    Citizen[] meeting;
+    Citizen[] attendeesCitizens;
 
     public FaceToFaceMeeting(Date start, Date finish, Citizen[] meeting){
         this.start = start;
         this.finish = finish;
-        this.meeting = meeting;
+        this.attendeesCitizens = meeting;
     }
 }
