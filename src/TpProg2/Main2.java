@@ -92,11 +92,13 @@ public class Main2 {
             menuAdministrator(admin);
         }else if (citizenDataStore.exists(phoneNumber)) {
             Citizen citizen = citizenDataStore.findById(phoneNumber);
-            if (citizen.isBan() == false){
+            if (!citizen.isBan()){
                 menuCitizen(citizen);
             }else{
                 System.out.println("El cuidadano se encuentra bloqueado momentaneamente");
             }
+        }else{
+            System.out.println("\n Este usuario no existe!");
         }
         /*
         busca en los datos si existe un usuario con el nombre y id que le pasa
@@ -108,12 +110,12 @@ public class Main2 {
         int opcion;
         do {
             System.out.println("\n  Menu Ciudadano: ");
-            System.out.println(" _________________________________________\n Operaciones: \n 1... \n 2. ... \n 3. ...  \n 4. ... \n 5. ... \n 6. Log Out \n 7. Exit ");
+            System.out.println(" _________________________________________\n Operaciones: \n 1 Bandeja de entrada de invitaciones \n 2. Mandar solicitudes de encuentro \n 3. Registro de sintomas  \n 4. ... \n 5. ... \n 6. Log Out \n 7. Exit ");
             opcion = Scanner.getInt(" Que operación desea realizar: ");
 
             switch (opcion){
                 case 1:
-                    // bandejas de entrada de invitaciones
+                    citizen.inbox();
                     break;
                 case 2:
                     //mandar solicitudes de encuentro
@@ -128,7 +130,7 @@ public class Main2 {
                     // añadir sintomas
                     break;
                 case 6: //volver atras
-                    menuPrincipal();
+                    // menuPrincipal(); //no es necesario, termina volviendo solo.
                     break;
                 case 7: // finalizar programa
                     System.out.println();
@@ -141,12 +143,8 @@ public class Main2 {
                  */
                 default:
                     System.out.println("opcion invalida!");
-
-
             }
-
-        }while (opcion != 6 || opcion != 7);// seguramente vaya a haber mas opciones
-
+        }while (opcion != 6);// seguramente vaya a haber mas opciones
     }
 
     public static void menuAdministrator(Administrator admin) throws ABMUserException {
@@ -200,6 +198,6 @@ public class Main2 {
 
             }
 
-        }while (opcion != 6 || opcion != 7); // seguramente va a haber mas opciones
+        }while (opcion != 6); // seguramente va a haber mas opciones
     }
 }
