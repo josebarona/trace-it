@@ -7,3 +7,9 @@ Gestion de eventos:
 - Hay que hacer el autodiagnostico para los ciudadanos, tienen que poder seleccionar todos los eventos que crearon los admins.
 
 - estaria bueno ya ir armado algo en consola como para ver como creamos un usuario más el tema de las invitaciones.
+
+
+
+- Faltaria ver como crear invitaciones, porque aparte de meterle la ubicacion y el horario del meeting, tambien habria que ver
+como hacemos la lista con todos los que estuvieron presentes, y despues podriamos hacer que se envie automaticamente a todos esos ciudadanos.
+

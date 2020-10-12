@@ -186,7 +186,7 @@ public class Main2 {
                     break;
                 case 6:
                     //volver atras
-                    menuPrincipal();
+                    //menuPrincipal(); //no es necesario
                     break;
                 case 7: // finalizar programa
                     System.out.println();

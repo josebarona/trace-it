@@ -31,6 +31,7 @@ public class Citizen extends User {
     public void receiveMeetingRequest(Invitation invitation){ // aceptar o rechazar invitacion para faceToFaceMeeting; - Nacho B
         this.receivedInvitations.add(invitation);
     }
+    public Invitation createRequest(){ return null;} //crear una invitacion, el tema es que no solo hay que poner fecha y localizacion, sino tambien crear una lista de usuarios que estuvieron en el evento.
 
     public void sendRequest(Citizen sendTo, Invitation invitation){
         sendTo.receiveMeetingRequest(invitation);
@@ -91,18 +92,6 @@ public class Citizen extends User {
         this.rejections = rejections;
     }
 
-    public String viewInvitationsNames(){
-        String lista = "";
-        for(int i = 0; i < receivedInvitations.size(); i++){
-            lista += i + ". " + receivedInvitations.get(i).transmitter.getUserName();
-        }
-        return lista;
-    }
-    public String viewInvitationInfo(Invitation invitation){
-        String info = " Invitacion de " + invitation.transmitter.getUserName() + ": \n";
-        info += " Ecuentro realizado en ......, desde las ...... hasta las ....."; //falta modelar las calses de ubicaciones y fechas.
-        return info;
-    }
     public void inbox (){
         int opcion;
         do {
@@ -134,5 +123,19 @@ public class Citizen extends User {
                 System.out.println(" Opcion invalida!");
             }
         }while (opcion != 99);
+    }
+
+    public String viewInvitationsNames(){
+        String lista = "";
+        for(int i = 0; i < receivedInvitations.size(); i++){
+            lista += i + ". " + receivedInvitations.get(i).transmitter.getUserName();
+        }
+        return lista;
+    }
+
+    public String viewInvitationInfo(Invitation invitation){
+        String info = " Invitacion de " + invitation.transmitter.getUserName() + ": \n";
+        info += " Ecuentro realizado en ......, desde las ...... hasta las ....."; //falta modelar las calses de ubicaciones y fechas.
+        return info;
     }
 }
