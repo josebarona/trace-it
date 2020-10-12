@@ -2,8 +2,10 @@ package TpProg2;
 
 import TpProg2.DataStore.CollectionStore;
 import TpProg2.DataStore.DataStore;
+import TpProg2.DataStore.FileStore;
 import TpProg2.Exceptions.ABMAdminException;
 import TpProg2.Exceptions.ABMCitizenException;
+import TpProg2.Exceptions.ABMUserException;
 import TpProg2.ImplementOfUsers.FaceToFaceMeeting;
 import TpProg2.ImplementOfUsers.Invitation;
 import TpProg2.Users.ABMAdmin;
@@ -11,44 +13,57 @@ import TpProg2.Users.ABMCitizen;
 import TpProg2.Users.Administrator;
 import TpProg2.Users.Citizen;
 import TpProg2.util.Scanner;
-
 import java.util.Date;
 import java.util.HashMap;
+
+// Main ideas probar, etc
 
 public class Main {
     // DATA DE adminis:
     static DataStore<Administrator> administratorDataStore = new CollectionStore<>(new HashMap<>());
+    static DataStore<Administrator> administratorDataFile = new FileStore<>("FileAdminData");
     static ABMAdmin adminABM = new ABMAdmin(administratorDataStore);
 
     // DATA DE Citizens:
     static DataStore<Citizen> citizenDataStore = new CollectionStore<>(new HashMap<>());
+    static DataStore<Citizen> citizenDataFile = new FileStore<>("FileCitizenData");
     static ABMCitizen citizenABM = new ABMCitizen(citizenDataStore);
 
-    public static void main(String[] args) throws ABMCitizenException, ABMAdminException {
+    public static void main(String[] args)  {
 
-        Citizen c1 = new Citizen("1", "2");
+        Citizen c1 = new Citizen("citizen1","1", "2");
         FaceToFaceMeeting f2fm = new FaceToFaceMeeting(
                 new Date(),
                 new Date(),
                 new Citizen[] {c1}
         );
         Invitation invitation = new Invitation(f2fm, c1);
-        Administrator admin = new Administrator("3", "4");
+        Administrator admin = new Administrator("admin1","3", "4");
 
-        adminRegister();
+        try {
+            adminRegister();
+            citizenRegister();
+        } catch (ABMUserException | ABMAdminException | ABMCitizenException e) {
+            e.printStackTrace();
+        }
 
     }
 
-    public static void adminRegister() throws ABMAdminException {
-        Administrator administrator = new Administrator(Scanner.getString("Ingrese su cuil: "),Scanner.getString("Ingrese su numero de telefono"));
-        adminABM.add(administrator.getId(),administrator.getCuil());
+    public static void adminRegister() throws ABMAdminException, ABMUserException {
+        Administrator administrator = new Administrator(Scanner.getString("Ingrese su nombre de usuario: "),Scanner.getString("Ingrese su cuil: "),Scanner.getString("Ingrese su numero de telefono"));
+        adminABM.add(administrator.getUserName(),administrator.getId(),administrator.getCuil());
         System.out.println("la base de datos esta vacia? " + administratorDataStore.isEmpty());
+        //chquear tema archivos
+        administratorDataFile.save(administrator);
+
     }
 
-    public static void citizenRegister() throws ABMCitizenException {
-        Citizen citizen = new Citizen(Scanner.getString("Ingrese su cuil: "),Scanner.getString("Ingrese su numero de telefono"));
-        citizenABM.add(citizen.getId(),citizen.getCuil());
+    public static void citizenRegister() throws ABMCitizenException, ABMUserException {
+        Citizen citizen = new Citizen(Scanner.getString("Ingrese su nombre de usuario: "),Scanner.getString("Ingrese su cuil: "),Scanner.getString("Ingrese su numero de telefono"));
+        citizenABM.add(citizen.getUserName(),citizen.getId(),citizen.getCuil());
         System.out.println("la base de datos esta vacia? " + citizenDataStore.isEmpty());
+        // chquear tema archivos
+        citizenDataFile.save(citizen);
     }
 
     void menuStart(){
@@ -93,7 +108,7 @@ public class Main {
                     System.out.println("\n ¡Gracias por usar este programa!\n");
                     break;
                 default:
-                    System.out.println("\n Opcion invalida! (intente con otro numero).\n");
+                    System.out.println("\n Opcion invalida! (intente con otra opcion).\n");
             }
         }while(opcion != 6);
     }
@@ -104,7 +119,9 @@ public class Main {
         //Tambien deberian poder crear una invitacion y enviarla a otros ciudadanos.
         //Tienen que poder dignosticar sus sintomas y darlos de baja cuando quieran. (sintomas/eventos que crearon los admins)
     }
+
     void MenuAdministrator(Administrator admin){
+
         // Tiene que poder bloquear y desbloquear ciudadanos
         // Tiene que poder ingresar nuevos eventos/sintomas para los ciudadanos
         // ...

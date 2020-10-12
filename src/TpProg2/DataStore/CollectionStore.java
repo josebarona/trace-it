@@ -1,5 +1,7 @@
 package TpProg2.DataStore;
 
+import TpProg2.Exceptions.ABMUserException;
+
 import java.util.Map;
 
 public class CollectionStore<T extends Saveable> implements DataStore<T>{
@@ -7,6 +9,10 @@ public class CollectionStore<T extends Saveable> implements DataStore<T>{
 
     public CollectionStore(Map<String, T> collectionStore) {
         this.collectionStore = collectionStore;
+    }
+
+    public int size() {
+        return collectionStore.size();
     }
 
     @Override
@@ -21,16 +27,23 @@ public class CollectionStore<T extends Saveable> implements DataStore<T>{
 
     @Override
     public T findById(String id) {
-        //if (collectionStore.containsKey(id))
+        if (collectionStore.containsKey(id)) {
+            return (T) collectionStore.values();
+        }
         return null;
     }
 
     @Override
-    public void edit(T t) {
+    public void edit(T t) { // buscar manera que en vez de remover y meter de nuevo en la lista. directamente editar lo que quieras editar sobre ese t que buscas. SETTER(?)
+        if (collectionStore.containsKey(t.getId())){
+            remove(t.getId()); // remueve t de la lista, ya que tiene datos desactualizados.
+            save(t); // ingresa el nuevo t con datos actualizados.
+        }
     }
 
     @Override
     public boolean isEmpty() {
         return collectionStore.isEmpty();
     }
+
 }

@@ -3,19 +3,21 @@ package TpProg2.Users;
 import TpProg2.DataStore.FileSaveable;
 
 public abstract class User implements FileSaveable {
+    String userName;
     String cuil;
     String phoneNumber;
+    String type;
 
-    public User(String cuil, String phoneNumber) {
+    public User(String userName, String cuil, String phoneNumber) {
+        this.userName = userName;
         this.cuil = cuil;
         this.phoneNumber = phoneNumber;
     }
 
-    public void SelfRecordingOfSymptoms(){}
-
     @Override
     public String getFileRepresentation() {
-        return null;
+        String fileData = getUserName() + ", " + getId() + ", " + getCuil(); //por ahora... despues hay que agregar + cosas.
+        return fileData;
     }
 
     @Override
@@ -25,5 +27,14 @@ public abstract class User implements FileSaveable {
 
     public String getCuil() {
         return cuil;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    @Override
+    public String getType() {
+        return type;
     }
 }

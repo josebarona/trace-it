@@ -1,7 +1,13 @@
 package TpProg2.DataStore;
 
 public interface FileSaveable extends Saveable {
+
+    String getFileRepresentation();
+
     @Override
     String getId();
-    String getFileRepresentation();
+    @Override
+    String getUserName();
+    @Override
+    String getType();
 }

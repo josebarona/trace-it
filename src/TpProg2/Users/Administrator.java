@@ -1,9 +1,11 @@
 package TpProg2.Users;
 
 public class Administrator extends User {
+    String type;
 
-    public Administrator(String cuil, String phoneNumber) {
-        super(cuil, phoneNumber);
+    public Administrator(String userName, String cuil, String phoneNumber) {
+        super(userName ,cuil, phoneNumber);
+        this.type = "Administrador";
     }
 
     public void banCitizen(Citizen citizen) {
@@ -14,9 +16,13 @@ public class Administrator extends User {
         citizen.isBan = false;
     }
 
+    public void symptomRegister(){
+        // dar de alta sintomas
+    }
+
     @Override
-    public void SelfRecordingOfSymptoms() {
-        super.SelfRecordingOfSymptoms();
+    public String getType() {
+        return this.type + "es";
     }
 
     @Override
@@ -27,5 +33,15 @@ public class Administrator extends User {
     @Override
     public String getCuil() {
         return super.getCuil();
+    }
+
+    @Override
+    public String getId() {
+        return super.getId();
+    }
+
+    @Override
+    public String getUserName() {
+        return super.getUserName();
     }
 }
