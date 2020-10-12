@@ -45,7 +45,7 @@ public class CollectionStore<T extends Saveable> implements DataStore<T>{
     }
 
     @Override
-    public boolean userExist(String phoneNumber) {
+    public boolean exists(String phoneNumber) {
         if (collectionStore.containsKey(phoneNumber)){
             return true;
         }

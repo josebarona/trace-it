@@ -51,7 +51,7 @@ public class Citizen extends User {
 
     @Override
     public String getFileRepresentation() {
-        return super.getFileRepresentation() + ", " + isBan + ", " + rejections;
+        return super.getFileRepresentation() + "," + isBan + "," + rejections;
     }
 
     @Override
@@ -76,5 +76,17 @@ public class Citizen extends User {
 
     public boolean isBan() {
         return isBan;
+    }
+
+    public void setBan(boolean ban) {
+        isBan = ban;
+    }
+
+    public int getRejections() {
+        return rejections;
+    }
+
+    public void setRejections(int rejections) {
+        this.rejections = rejections;
     }
 }

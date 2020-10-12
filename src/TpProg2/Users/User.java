@@ -14,14 +14,13 @@ public abstract class User implements FileSaveable {
         this.phoneNumber = phoneNumber;
     }
 
-    @Override
     public String getFileRepresentation() {
-        String fileData = getUserName() + ", " + getId() + ", " + getCuil(); //por ahora... despues hay que agregar + cosas.
+        String fileData = getId() + "," + getUserName() + "," + getCuil(); //por ahora... despues hay que agregar + cosas.
         return fileData;
     }
 
     @Override
-    public String getId() {
+     public String getId() {
         return this.phoneNumber;
     }
 
@@ -33,7 +32,6 @@ public abstract class User implements FileSaveable {
         return userName;
     }
 
-    @Override
     public String getType() {
         return type;
     }

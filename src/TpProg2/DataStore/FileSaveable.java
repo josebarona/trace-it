@@ -6,8 +6,5 @@ public interface FileSaveable extends Saveable {
 
     @Override
     String getId();
-    @Override
-    String getUserName();
-    @Override
-    String getType();
+
 }

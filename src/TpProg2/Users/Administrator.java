@@ -1,5 +1,7 @@
 package TpProg2.Users;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class Administrator extends User {
     String type;
 

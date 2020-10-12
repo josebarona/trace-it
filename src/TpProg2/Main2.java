@@ -1,8 +1,6 @@
 package TpProg2;
 
-import TpProg2.DataStore.CollectionStore;
-import TpProg2.DataStore.DataStore;
-import TpProg2.DataStore.FileStore;
+import TpProg2.DataStore.*;
 import TpProg2.Exceptions.ABMAdminException;
 import TpProg2.Exceptions.ABMCitizenException;
 import TpProg2.Exceptions.ABMUserException;
@@ -15,36 +13,29 @@ import java.util.HashMap;
 
 public class Main2 {
     // DATA DE adminis:
-    static DataStore<Administrator> administratorDataStore = new CollectionStore<>(new HashMap<>());
-    static DataStore<Administrator> administratorDataFile = new FileStore<>("FileAdminData"/*,(CollectionStore<Administrator>) administratorDataStore*/);
+    //static DataStore<Administrator> administratorDataStore = new CollectionStore<>(new HashMap<>()); // GUARDADO EN COLLECTIONS
+    static DataStore<Administrator> administratorDataStore = new AdminFileStore("FileAdminData"); // GUARDADO EN FILES
     static ABMAdmin adminABM = new ABMAdmin(administratorDataStore);
 
     // DATA DE Citizens:
-    static DataStore<Citizen> citizenDataStore = new CollectionStore<>(new HashMap<>());
-    static DataStore<Citizen> citizenDataFile = new FileStore<>("FileCitizenData"/*,(CollectionStore<Citizen>) citizenDataStore*/);
+    //static DataStore<Citizen> citizenDataStore = new CollectionStore<>(new HashMap<>()); // GUARDADO EN COLLECTIONS
+    static DataStore<Citizen> citizenDataStore = new CitizenFileStore("FileCitizenData"); // GUARDADO EN FILES
     static ABMCitizen citizenABM = new ABMCitizen(citizenDataStore);
 
     public static void main(String[] args) {
-
         menuPrincipal();
-
     }
 
     public static void adminRegister() throws ABMAdminException, ABMUserException {
         Administrator administrator = new Administrator(Scanner.getString("Ingrese su nombre de usuario: "),Scanner.getString("Ingrese su cuil: "),Scanner.getString("Ingrese su numero de telefono: "));
         adminABM.add(administrator.getUserName(),administrator.getId(),administrator.getCuil());
-        System.out.println("la base de datos esta vacia? " + administratorDataStore.isEmpty());
-        //chquear tema archivos, falta por hacer, incompleto
-        administratorDataFile.save(administrator);
-
+        //System.out.println("la base de datos esta vacia? " + administratorDataStore.isEmpty());
     }
 
     public static void citizenRegister() throws ABMCitizenException, ABMUserException {
         Citizen citizen = new Citizen(Scanner.getString("Ingrese su nombre de usuario: "),Scanner.getString("Ingrese su cuil: "),Scanner.getString("Ingrese su numero de telefono: "));
         citizenABM.add(citizen.getUserName(),citizen.getId(),citizen.getCuil());
-        System.out.println("la base de datos esta vacia? " + citizenDataStore.isEmpty());
-        // chequear tema archivos, falta por hacer, incompleto
-        citizenDataFile.save(citizen);
+        //System.out.println("la base de datos esta vacia? " + citizenDataStore.isEmpty());
     }
 
     public static void menuPrincipal(){
@@ -71,9 +62,6 @@ public class Main2 {
                     } catch (ABMUserException e) {
                         e.printStackTrace();
                     }
-                    // hacer un metodo iniciar sesion y que cuando inicias sesion te mande a el menu de el admin o citizen segun lo que elijiste.
-                    // si existe ese usuario al chequear en la base de datos pasa a los menus segun el tipo de usuario
-                    //menuCitizen(); O menuAdmin();
                     break;
                 case 999: //Registro secreto para ser administrador
                     String word = Scanner.getString("Contraseña de usuarios administradores: ");
@@ -99,10 +87,10 @@ public class Main2 {
     }
 
     public static void iniciarSesion(String userName, String phoneNumber) throws ABMUserException {
-        if (administratorDataStore.userExist(phoneNumber)){
+        if (administratorDataStore.exists(phoneNumber)){
             Administrator admin = administratorDataStore.findById(phoneNumber);
             menuAdministrator(admin);
-        }else if (citizenDataStore.userExist(phoneNumber)) {
+        }else if (citizenDataStore.exists(phoneNumber)) {
             Citizen citizen = citizenDataStore.findById(phoneNumber);
             if (citizen.isBan() == false){
                 menuCitizen(citizen);
@@ -182,7 +170,7 @@ public class Main2 {
                 case 4:
                     // el administrador deberia bloquear a un ciudadano?? preguntar ---> si no bloquea, se saca la opcion.
                     String idCitizen = Scanner.getString("Ingrese id del ciudadano al que quiere Bloquear: ");
-                    if (citizenDataStore.userExist(idCitizen)) {
+                    if (citizenDataStore.exists(idCitizen)) {
                         admin.banCitizen(citizenDataStore.findById(idCitizen));
                         System.out.println("El ciudadano a sido bloqueado. ");
                     }else{
@@ -191,7 +179,7 @@ public class Main2 {
                     break;
                 case 5:
                     String idCitizen2 = Scanner.getString("Pase id de ciudadano que quiere Desbloquear: ");
-                    if (citizenDataStore.userExist(idCitizen2)) {
+                    if (citizenDataStore.exists(idCitizen2)) {
                         admin.unbanCitizen(citizenDataStore.findById(idCitizen2));
                         System.out.println("El ciudadano a sido desbloqueado. ");
                     }else{

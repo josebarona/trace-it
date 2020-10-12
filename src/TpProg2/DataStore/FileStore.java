@@ -1,44 +1,27 @@
 package TpProg2.DataStore;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 public class FileStore<T extends FileSaveable> implements DataStore<T>{
     String fileName;
-    //CollectionStore<T> collectionData; // PROBANDO ALGO
 
-    public FileStore(String fileName/*,CollectionStore<T> collectionData*/) {
-        this.fileName = fileName;
-        ///this.collectionData = collectionData;
+    public FileStore(String fileName) {
+        this.fileName = "C:\\Users\\nacho\\IdeaProjects\\trace-it\\src\\TpProg2\\DataStore\\data\\" + fileName;
     }
 
     @Override
     public void save(T t) {
-
-        try {
-            FileWriter fileWriter = new FileWriter("C:\\Users\\nacho\\IdeaProjects\\trace-it\\src\\TpProg2\\Archvios\\" + fileName); // comprobar que funciona.
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            bufferedWriter.write("Datos de " + t.getType() + " : " +  "\n");
-            bufferedWriter.write(t.getFileRepresentation());
-            bufferedWriter.close();
-        } catch(Exception e ){
-            System.out.println(e.getMessage());
-        }
-
-        // Funcionar va a funciona, ver tema del concepto ---> es correcto? tiene sentido?
-        // VER MANERA DE QUE IMPRIMA CADA T NO SOLO EL ULTIMO (ITERADOR(?))
-        /*try {
-            FileWriter fileWriter = new FileWriter("C:\\Users\\nacho\\IdeaProjects\\trace-it\\src\\TpProg2\\Archvios\\" + fileName);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            bufferedWriter.write("Datos de " + t.getType() + " : " +  "\n");
-            for (int i = 0; i < collectionData.size(); i++) {
-                bufferedWriter.write(t.getFileRepresentation() + "\n");
+        if (!exists(t.getId())) {
+            try {
+                FileWriter fileWriter = new FileWriter(fileName, true);
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                bufferedWriter.newLine();
+                bufferedWriter.write(t.getFileRepresentation());
+                bufferedWriter.close();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
-            bufferedWriter.close();
-        }catch (IOException e){
-            System.out.println(e.getMessage());
-        }*/
+        }
 
     }
 
@@ -49,6 +32,25 @@ public class FileStore<T extends FileSaveable> implements DataStore<T>{
 
     @Override
     public T findById(String id) {
+        try {
+            FileInputStream fstream = new FileInputStream(fileName);
+            BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+            String strLine;
+            while ((strLine = br.readLine()) != null) {
+                String[] data = strLine.split(",");
+                if (data[0].equals(id)) {
+                    System.out.println(data[0]);
+                    return this.lineToObject(strLine);
+                }
+            }
+            fstream.close();
+        }catch (IOException e){
+            e.getMessage();
+        }
+        return null;
+    }
+
+    public T lineToObject(String line){
         return null;
     }
 
@@ -63,18 +65,23 @@ public class FileStore<T extends FileSaveable> implements DataStore<T>{
     }
 
     @Override
-    public boolean userExist(String phoneNumber) {
-        return true;
+    public boolean exists(String id) {
+        try {
+            FileInputStream fstream = new FileInputStream(fileName);
+            BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+            String strLine;
+            while ((strLine = br.readLine()) != null) {
+                String[] data = strLine.split(",");
+                if (data[0].equals(id)) {
+                    System.out.println(data[0]);
+                    return true;
+                }
+            }
+            fstream.close();
+        }catch (IOException e){
+            e.getMessage();
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 }
-
-/*
- try {
-         FileReader fileReader = new FileReader("C:\\Users\\nacho\\IdeaProjects\\trace-it\\src\\TpProg2\\Archvios\\" + fileName);
-         BufferedReader bufferedReader = new BufferedReader(fileReader);
-         String line = bufferedReader.readLine();
-         System.out.println(line);
-         }catch (Exception e){
-         System.out.println(e.getMessage());
-         }
-*/
