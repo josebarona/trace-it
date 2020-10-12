@@ -1,6 +1,5 @@
 package TpProg2.Users;
 
-        import TpProg2.DataStore.CollectionStore;
         import TpProg2.DataStore.DataStore;
         import TpProg2.Exceptions.ABMAdminException;
         import TpProg2.Exceptions.ABMAdminException2;

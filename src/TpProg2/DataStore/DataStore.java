@@ -8,4 +8,5 @@ public interface DataStore<T extends Saveable> {
     T findById(String id) throws ABMUserException;
     void edit(T t);
     boolean isEmpty();
+    boolean userExist(String phoneNumber);
 }

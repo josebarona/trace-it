@@ -21,12 +21,12 @@ import java.util.HashMap;
 public class Main {
     // DATA DE adminis:
     static DataStore<Administrator> administratorDataStore = new CollectionStore<>(new HashMap<>());
-    static DataStore<Administrator> administratorDataFile = new FileStore<>("FileAdminData");
+    static DataStore<Administrator> administratorDataFile = new FileStore<>("FileAdminData"/*, (CollectionStore<Administrator>) administratorDataStore*/);
     static ABMAdmin adminABM = new ABMAdmin(administratorDataStore);
 
     // DATA DE Citizens:
     static DataStore<Citizen> citizenDataStore = new CollectionStore<>(new HashMap<>());
-    static DataStore<Citizen> citizenDataFile = new FileStore<>("FileCitizenData");
+    static DataStore<Citizen> citizenDataFile = new FileStore<>("FileCitizenData"/*, (CollectionStore<Citizen>) citizenDataStore*/);
     static ABMCitizen citizenABM = new ABMCitizen(citizenDataStore);
 
     public static void main(String[] args)  {

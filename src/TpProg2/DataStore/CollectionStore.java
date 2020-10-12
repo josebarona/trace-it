@@ -1,7 +1,5 @@
 package TpProg2.DataStore;
 
-import TpProg2.Exceptions.ABMUserException;
-
 import java.util.Map;
 
 public class CollectionStore<T extends Saveable> implements DataStore<T>{
@@ -27,8 +25,8 @@ public class CollectionStore<T extends Saveable> implements DataStore<T>{
 
     @Override
     public T findById(String id) {
-        if (collectionStore.containsKey(id)) {
-            return (T) collectionStore.values();
+        if (collectionStore.containsKey(id)){
+            return collectionStore.get(id);
         }
         return null;
     }
@@ -46,4 +44,11 @@ public class CollectionStore<T extends Saveable> implements DataStore<T>{
         return collectionStore.isEmpty();
     }
 
+    @Override
+    public boolean userExist(String phoneNumber) {
+        if (collectionStore.containsKey(phoneNumber)){
+            return true;
+        }
+        return false;
+    }
 }

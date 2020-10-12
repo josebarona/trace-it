@@ -2,13 +2,15 @@ package TpProg2.DataStore;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.io.IOException;
 
 public class FileStore<T extends FileSaveable> implements DataStore<T>{
     String fileName;
     //CollectionStore<T> collectionData; // PROBANDO ALGO
 
-    public FileStore(String fileName) {
+    public FileStore(String fileName/*,CollectionStore<T> collectionData*/) {
         this.fileName = fileName;
+        ///this.collectionData = collectionData;
     }
 
     @Override
@@ -24,6 +26,8 @@ public class FileStore<T extends FileSaveable> implements DataStore<T>{
             System.out.println(e.getMessage());
         }
 
+        // Funcionar va a funciona, ver tema del concepto ---> es correcto? tiene sentido?
+        // VER MANERA DE QUE IMPRIMA CADA T NO SOLO EL ULTIMO (ITERADOR(?))
         /*try {
             FileWriter fileWriter = new FileWriter("C:\\Users\\nacho\\IdeaProjects\\trace-it\\src\\TpProg2\\Archvios\\" + fileName);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
@@ -58,8 +62,10 @@ public class FileStore<T extends FileSaveable> implements DataStore<T>{
         return false;
     }
 
-
-
+    @Override
+    public boolean userExist(String phoneNumber) {
+        return true;
+    }
 }
 
 /*
