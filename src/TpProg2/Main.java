@@ -29,7 +29,7 @@ public class Main {
     static DataStore<Citizen> citizenDataFile = new FileStore<>("FileCitizenData"/*, (CollectionStore<Citizen>) citizenDataStore*/);
     static ABMCitizen citizenABM = new ABMCitizen(citizenDataStore);
 
-    public static void main(String[] args)  {
+   public static void main(String[] args)  {
 
         Citizen c1 = new Citizen("citizen1","1", "2");
         FaceToFaceMeeting f2fm = new FaceToFaceMeeting(

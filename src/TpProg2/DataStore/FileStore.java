@@ -6,7 +6,7 @@ public class FileStore<T extends FileSaveable> implements DataStore<T>{
     String fileName;
 
     public FileStore(String fileName) {
-        this.fileName = "C:\\Users\\nacho\\IdeaProjects\\trace-it\\src\\TpProg2\\DataStore\\data\\" + fileName;
+        this.fileName = "src/TpProg2/DataStore/data/" + fileName;
     }
 
     @Override

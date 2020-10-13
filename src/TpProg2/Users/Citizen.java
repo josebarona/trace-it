@@ -51,6 +51,14 @@ public class Citizen extends User {
         // auto registro de sintomas
     }
 
+    public void addEvent(){
+
+    }
+
+    public void removeEvent(){
+
+    }
+
     @Override
     public String getFileRepresentation() {
         return super.getFileRepresentation() + "," + isBan + "," + rejections;
