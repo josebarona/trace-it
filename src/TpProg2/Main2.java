@@ -38,6 +38,26 @@ public class Main2 {
         //System.out.println("la base de datos esta vacia? " + citizenDataStore.isEmpty());
     }
 
+    public static void iniciarSesion(String userName, String phoneNumber) throws ABMUserException {
+        if (administratorDataStore.exists(phoneNumber)){
+            Administrator admin = administratorDataStore.findById(phoneNumber);
+            menuAdministrator(admin);
+        }else if (citizenDataStore.exists(phoneNumber)) {
+            Citizen citizen = citizenDataStore.findById(phoneNumber);
+            if (!citizen.isBan()){
+                menuCitizen(citizen);
+            }else{
+                System.out.println("El cuidadano se encuentra bloqueado momentaneamente");
+            }
+        }else{
+            System.out.println("\n Este usuario no existe!");
+        }
+        /*
+        busca en los datos si existe un usuario con el nombre y id que le pasa
+        si existe pasa al menu del usuario al cual se asigna
+         */
+    }
+
     public static void menuPrincipal(){
         int opcion;
         String password = "TpGrupo14";
@@ -84,26 +104,6 @@ public class Main2 {
                     System.out.println("\n Opcion invalida! (intente con otra opcion).\n");
             }
         }while(opcion != 3);
-    }
-
-    public static void iniciarSesion(String userName, String phoneNumber) throws ABMUserException {
-        if (administratorDataStore.exists(phoneNumber)){
-            Administrator admin = administratorDataStore.findById(phoneNumber);
-            menuAdministrator(admin);
-        }else if (citizenDataStore.exists(phoneNumber)) {
-            Citizen citizen = citizenDataStore.findById(phoneNumber);
-            if (!citizen.isBan()){
-                menuCitizen(citizen);
-            }else{
-                System.out.println("El cuidadano se encuentra bloqueado momentaneamente");
-            }
-        }else{
-            System.out.println("\n Este usuario no existe!");
-        }
-        /*
-        busca en los datos si existe un usuario con el nombre y id que le pasa
-        si existe pasa al menu del usuario al cual se asigna
-         */
     }
 
     public static void menuCitizen(Citizen citizen){
