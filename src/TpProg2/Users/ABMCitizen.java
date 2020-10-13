@@ -20,19 +20,19 @@ public class ABMCitizen {
             return citizen;
         }
         throw new ABMCitizenException(phoneNumber);
-    }
+    }// Agrega un ciudadano a la base de datos
 
     public void remove(Citizen citizen) throws ABMCitizenException2, ABMUserException {  // chquear excepciones
         if (this.dataStore.findById(citizen.getId()) != null){
             this.dataStore.remove(citizen.getId());
         }
         throw new ABMCitizenException2(citizen.getId());
-    }
+    } // Elimina a un ciudadano de la base de datos
 
     public void edit(Citizen citizen) throws ABMCitizenException2, ABMUserException { // chquear excepciones
         if (this.dataStore.findById(citizen.getId()) != null){
             this.dataStore.edit(citizen);
         }
         throw new ABMCitizenException2(citizen.getId());
-    }
+    } // Modifica un ciudadano dentro de la base de datos
 }

@@ -19,8 +19,7 @@ public class Administrator extends User {
     }
 
     public void symptomRegister(){
-        // dar de alta sintomas
-    }
+    } // Con este metodo cualquier administrador deberia poder dar de alta/baja cualquier sintoma
 
     @Override
     public String getType() {

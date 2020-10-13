@@ -22,44 +22,8 @@ public class Citizen extends User {
         this.rejectedInvitations = new ArrayList<>(); //ArrayList<FaceToFaceMeeting>
         this.isBan = false;
         this.rejections = 0;
-        if (rejections >= 5){
-            isBan = true; // lo tiene que bloquear un admin?? o se bloquea solo automaticamente?
-        }
         this.type = "Ciudadano";
     }
-
-    public void receiveMeetingRequest(Invitation invitation){ // aceptar o rechazar invitacion para faceToFaceMeeting; - Nacho B
-        this.receivedInvitations.add(invitation);
-    }
-
-    public Invitation createRequest(){ return null;} //crear una invitacion, el tema es que no solo hay que poner fecha y localizacion, sino tambien crear una lista de usuarios que estuvieron en el evento.
-
-    public void sendRequest(Citizen sendTo, Invitation invitation){
-        sendTo.receiveMeetingRequest(invitation);
-    }
-
-    public void acceptedRequest(Invitation invitation){
-        receivedInvitations.remove(invitation);
-        acceptedRequest.add(invitation.meeting);
-    } // Metodo que acepta una invitacion dentro de su bandeja de entrada y guarda registro de este encuentro/meeting.
-
-    public void rejectedRequest(Invitation invitation){
-        receivedInvitations.remove(invitation);
-        invitation.transmitter.rejections ++;
-    } // Metodo que rechaza una invitacion dentro de su bandeja de entrada y se suma a la cuenta de rechazos del emisor.
-
-    public void SelfRecordingOfSymptoms() {
-        // auto registro de sintomas
-    }
-
-    public void addEvent(){
-
-    }
-
-    public void removeEvent(){
-
-    }
-
     @Override
     public String getFileRepresentation() {
         return super.getFileRepresentation() + "," + isBan + "," + rejections;
@@ -100,6 +64,38 @@ public class Citizen extends User {
     public void setRejections(int rejections) {
         this.rejections = rejections;
     }
+
+    public void receiveMeetingRequest(Invitation invitation){ // aceptar o rechazar invitacion para faceToFaceMeeting; - Nacho B
+        this.receivedInvitations.add(invitation);
+    } // Recibe una invitacion dentro del inbox/bandeja de entrada
+
+    public Invitation createRequest(){ return null;} // Con este metodo un ciudadano deberia poder crear una invitacion sobre una meeting/encuento, el cual debe tener una localizacion, fecha e integrantes de la misma.
+
+    public void sendRequest(Citizen sendTo, Invitation invitation){
+        sendTo.receiveMeetingRequest(invitation);
+    }
+
+    public void acceptedRequest(Invitation invitation){
+        receivedInvitations.remove(invitation);
+        acceptedRequest.add(invitation.meeting);
+    } // Metodo que acepta una invitacion dentro de su bandeja de entrada y guarda registro de este encuentro/meeting.
+
+    public void rejectedRequest(Invitation invitation){
+        receivedInvitations.remove(invitation);
+        invitation.transmitter.rejections ++;
+    } // Metodo que rechaza una invitacion dentro de su bandeja de entrada y se suma a la cuenta de rechazos del emisor.
+
+    public void SelfRecordingOfSymptoms() {
+        // auto registro de sintomas
+    } // Con este metodo un ciudadano deberia poder seleccionar los sintomas que posee y asi guardar un registro.
+
+    public void addEvent(){
+
+    } // Metodo para agregar un evento/enfermedad a un paciente
+
+    public void removeEvent(){
+
+    } // Metodo para eliminar un evento/enfermedad de un paciente
 
     public void inbox (){
         int opcion;
