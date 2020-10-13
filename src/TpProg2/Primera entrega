@@ -1,4 +1,4 @@
 Durante estas primeras semanas trabajando sobre el TP nos enfocamos principalmente en preparar toda la estructura del programa.
 Definiendo y organizando las distintas clases que van a interactuar entre si
 Empezamos por definir los dos tipos de usuarios que vamos a necesitar y todos los metodos que estos necesitaran en un futuro.
-Luego le dimos un gran enfoque a la persistencia del
+Luego le dimos un gran enfoque a la persistencia dentro de la estructura del programa, asi se pueda adaptar un uso tanto de generics como la posibilidad de guardar toda la informacion en archivos (falta terminar varios detalles)

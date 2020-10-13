@@ -31,6 +31,7 @@ public class Citizen extends User {
     public void receiveMeetingRequest(Invitation invitation){ // aceptar o rechazar invitacion para faceToFaceMeeting; - Nacho B
         this.receivedInvitations.add(invitation);
     }
+
     public Invitation createRequest(){ return null;} //crear una invitacion, el tema es que no solo hay que poner fecha y localizacion, sino tambien crear una lista de usuarios que estuvieron en el evento.
 
     public void sendRequest(Citizen sendTo, Invitation invitation){
@@ -40,12 +41,12 @@ public class Citizen extends User {
     public void acceptedRequest(Invitation invitation){
         receivedInvitations.remove(invitation);
         acceptedRequest.add(invitation.meeting);
-    }
+    } // Metodo que acepta una invitacion dentro de su bandeja de entrada y guarda registro de este encuentro/meeting.
 
     public void rejectedRequest(Invitation invitation){
         receivedInvitations.remove(invitation);
         invitation.transmitter.rejections ++;
-    }
+    } // Metodo que rechaza una invitacion dentro de su bandeja de entrada y se suma a la cuenta de rechazos del emisor.
 
     public void SelfRecordingOfSymptoms() {
         // auto registro de sintomas
@@ -131,7 +132,7 @@ public class Citizen extends User {
                 System.out.println(" Opcion invalida!");
             }
         }while (opcion != 99);
-    }
+    } // Metodo que permite navegar por la bandeja de entrada, pudiendo aceptar/rechazar invitaciones de meetings depues de ver su informacion.
 
     public String viewInvitationsNames(){
         String lista = "";
@@ -139,11 +140,11 @@ public class Citizen extends User {
             lista += i + ". " + receivedInvitations.get(i).transmitter.getUserName();
         }
         return lista;
-    }
+    } // Devuelve un String con los nombres de los emisores de cada invitacion dentro de la bandeja de entrada (en forma de lista).
 
     public String viewInvitationInfo(Invitation invitation){
         String info = " Invitacion de " + invitation.transmitter.getUserName() + ": \n";
         info += " Ecuentro realizado en ......, desde las ...... hasta las ....."; //falta modelar las calses de ubicaciones y fechas.
         return info;
-    }
+    } //Metodo que devuelve un String con toda la informacion que lleva una invitacion (location, date, citizens)
 }
