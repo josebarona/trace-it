@@ -1,8 +1,6 @@
 package TpProg2.Events;
 
 import TpProg2.DataStore.FileSaveable;
-import TpProg2.DataStore.Saveable;
-
 import java.util.ArrayList;
 
 public class Disease implements FileSaveable {
@@ -12,6 +10,10 @@ public class Disease implements FileSaveable {
     public Disease(String name, ArrayList<Symptom> symptomArrayList) {
         this.name = name;
         this.symptomArrayList = symptomArrayList;
+    }
+
+    public void createGroupOfSymptoms(Symptom symptom){
+        symptomArrayList.add(symptom);
     }
 
     public String getName() {

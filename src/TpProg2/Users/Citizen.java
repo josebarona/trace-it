@@ -26,6 +26,7 @@ public class Citizen extends User {
         this.rejectedInvitations = new ArrayList<>(); //ArrayList<FaceToFaceMeeting>
         this.isBan = false;
         this.rejections = 0;
+
         this.type = "Ciudadano";
     }
     @Override

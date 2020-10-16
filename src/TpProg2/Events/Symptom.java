@@ -1,7 +1,6 @@
 package TpProg2.Events;
 
 import TpProg2.DataStore.FileSaveable;
-import TpProg2.DataStore.Saveable;
 
 public class Symptom implements FileSaveable {
     private final String name;

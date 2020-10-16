@@ -3,7 +3,6 @@ package TpProg2.Users;
 import TpProg2.DataStore.DataStore;
 import TpProg2.Exceptions.ABMCitizenException;
 import TpProg2.Exceptions.ABMCitizenException2;
-import TpProg2.Exceptions.ABMException;
 import TpProg2.Exceptions.ABMUserException;
 
 public class ABMCitizen {
