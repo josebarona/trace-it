@@ -112,15 +112,17 @@ public class Citizen extends User {
                 int opcion1;
                 do {
                     System.out.println(viewInvitationInfo(receivedInvitations.get(opcion)));
-                    opcion1 = Scanner.getInt(" Usted confirma haber estado en este encuentro? \n1. Aceptar \n2. Rechazar \n3. (volver)");
+                    opcion1 = Scanner.getInt(" Usted confirma haber estado en este encuentro? \n1. Aceptar \n2. Rechazar \n3. (volver)\n Opcion: ");
                     switch (opcion1){
                         case 1:
                             acceptedRequest(receivedInvitations.get(opcion));
                             System.out.println(" Solicitud aceptada!!");
+                            opcion1 = 3;
                             break;
                         case 2:
                             rejectedRequest(receivedInvitations.get(opcion));
                             System.out.println(" Solicitud rechazada!!");
+                            opcion1 = 3;
                             break;
                         case 3:
                             break;
@@ -144,13 +146,14 @@ public class Citizen extends User {
 
     public String viewInvitationInfo(Invitation invitation){
         String info = " Invitacion de " + invitation.transmitter.getUserName() + ": \n";
-        info += " Ecuentro realizado en ......, desde las ...... hasta las ....."; //falta modelar las calses de ubicaciones y fechas.
+        info += " Ecuentro realizado en " + invitation.meeting.location.locationName + ", el dia " + invitation.meeting.start.mes + "/" + invitation.meeting.start.dia + " a las " + invitation.meeting.start.hora + "hs.";
+        info += "\n hasta el dia " + invitation.meeting.finish.mes + "/" + invitation.meeting.finish.dia + " a las " + invitation.meeting.finish.hora + "hs.";
         return info;
     } //Metodo que devuelve un String con toda la informacion que lleva una invitacion (location, date, citizens)
 
     public void createIvitation() throws ABMUserException {
         System.out.println(" Porfavor ingrese los siguientes datos sobre el encuentro al cual asistio: ");
-         //1 Location
+        //1 Location
         Location location = new Location(Scanner.getString(" El nombre de la ubicacion del encuentro: "));
         //2 Date
         Date start = new Date(Scanner.getInt(" Utilizando dos digitos ingrese el numero de mes en el cual inicio este evento: "),

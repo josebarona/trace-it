@@ -3,10 +3,10 @@ package TpProg2.ImplementOfUsers;
 import TpProg2.Users.Citizen;
 
 public class FaceToFaceMeeting {
-    Location location;
-    Date start;
-    Date finish;
-    Citizen[] attendeesCitizens;
+    public Location location;
+    public Date start;
+    public Date finish;
+    public Citizen[] attendeesCitizens;
 
     public FaceToFaceMeeting(Location location, Date start, Date finish, Citizen[] meeting){
         this.location = location;

@@ -1,9 +1,9 @@
 package TpProg2.ImplementOfUsers;
 
 public class Location {
-    String location;
-    public Location(String location){
-        this.location = location;
+    public String locationName;
+    public Location(String locationName){
+        this.locationName = locationName;
     }
 }
 //Una vez implementada esta clase, esta ayudaria a mantener un rastreo dentro de las meetings (encuentros sociales)
