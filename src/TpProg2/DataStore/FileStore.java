@@ -56,11 +56,20 @@ public class FileStore<T extends FileSaveable> implements DataStore<T>{
 
     @Override
     public void edit(T t) {
-
+        this.remove(t.getId());
+        this.save(t);
     }
 
     @Override
     public boolean isEmpty() {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(fileName));
+            if (br.readLine() == null) {
+                return true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 

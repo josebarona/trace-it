@@ -2,6 +2,7 @@
 package TpProg2;
 
 import TpProg2.DataStore.*;
+import TpProg2.Events.Symptom;
 import TpProg2.Exceptions.ABMAdminException;
 import TpProg2.Exceptions.ABMCitizenException;
 import TpProg2.Exceptions.ABMUserException;
@@ -13,7 +14,7 @@ import java.util.HashMap;
 // main pasado un poco mas en limpio.
 
 public class Main2 {
-    // DATA DE adminis:
+    // DATA DE Adminis:
     public static DataStore<Administrator> administratorDataStore = new CollectionStore<>(new HashMap<>()); // GUARDADO EN COLLECTIONS
     //static DataStore<Administrator> administratorDataStore = new AdminFileStore("FileAdminData"); // GUARDADO EN FILES
     static ABMAdmin adminABM = new ABMAdmin(administratorDataStore);
@@ -45,9 +46,10 @@ public class Main2 {
             menuAdministrator(admin);
         }else if (citizenDataStore.exists(phoneNumber)) {
             Citizen citizen = citizenDataStore.findById(phoneNumber);
-            if (!citizen.isBan()){
+            if (citizen.getRejections() < 5){
                 menuCitizen(citizen);
             }else{
+                citizen.setBan(true);
                 System.out.println("El cuidadano se encuentra bloqueado momentaneamente");
             }
         }else{

@@ -1,6 +1,9 @@
 package TpProg2.Events;
 
-public class Symptom{
+import TpProg2.DataStore.FileSaveable;
+import TpProg2.DataStore.Saveable;
+
+public class Symptom implements FileSaveable {
     private final String name;
 
     public Symptom(String name) {
@@ -8,6 +11,16 @@ public class Symptom{
     }
 
     public String getName() {
+        return name;
+    }
+
+    @Override
+    public String getFileRepresentation() {
+        return null;
+    }
+
+    @Override
+    public String getId() {
         return name;
     }
 }
