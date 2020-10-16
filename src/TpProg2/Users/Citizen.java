@@ -1,7 +1,11 @@
 package TpProg2.Users;
 
+import TpProg2.Exceptions.ABMUserException;
+import TpProg2.ImplementOfUsers.Date;
 import TpProg2.ImplementOfUsers.FaceToFaceMeeting;
 import TpProg2.ImplementOfUsers.Invitation;
+import TpProg2.ImplementOfUsers.Location;
+import TpProg2.Main2;
 import TpProg2.util.Scanner;
 
 import java.util.ArrayList;
@@ -143,4 +147,32 @@ public class Citizen extends User {
         info += " Ecuentro realizado en ......, desde las ...... hasta las ....."; //falta modelar las calses de ubicaciones y fechas.
         return info;
     } //Metodo que devuelve un String con toda la informacion que lleva una invitacion (location, date, citizens)
+
+    public void createIvitation() throws ABMUserException {
+        System.out.println(" Porfavor ingrese los siguientes datos sobre el encuentro al cual asistio: ");
+         //1 Location
+        Location location = new Location(Scanner.getString(" El nombre de la ubicacion del encuentro: "));
+        //2 Date
+        Date start = new Date(Scanner.getInt(" Utilizando dos digitos ingrese el numero de mes en el cual inicio este evento: "),
+                              Scanner.getInt(" Ingrese el dia en el cual inicio el evento: "),
+                              Scanner.getInt(" Ingrese la hora a la cual inicio el evento: "));
+        Date end = new Date(Scanner.getInt(" Utilizando dos digitos ingrese el numero de mes en el cual finalizo este evento: "),
+                Scanner.getInt(" Ingrese el dia en el cual finalizo el evento: "),
+                Scanner.getInt(" Ingrese la hora a la cual finalizo el evento: "));
+        //3 Citizens
+        int cantidad = Scanner.getInt(" Cuantas pesonas asistieron a este evento? ");
+        Citizen[] presentCitizens = new Citizen[cantidad];
+        for (int i = 0; i < cantidad; i++){
+            presentCitizens[i] = Main2.citizenDataStore.findById(Scanner.getString(" Ingrese el id del ciudadano ("+ i+1 + "): "));
+        }
+        //4
+        //crear la invitacion
+        FaceToFaceMeeting meeting = new FaceToFaceMeeting(location, start, end, presentCitizens);
+        Invitation invitation = new Invitation(meeting, this);
+        //enviarla a todos los participantes
+        for (int i = 0; i < cantidad; i++){
+            sendRequest(presentCitizens[i], invitation);
+        }
+        System.out.println(" Perfecto, la solicitud de evento fue creada y enviada a todos los participantes del mismo.");
+    }
 }

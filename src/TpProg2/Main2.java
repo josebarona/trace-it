@@ -20,7 +20,7 @@ public class Main2 {
 
     // DATA DE Citizens:
     //static DataStore<Citizen> citizenDataStore = new CollectionStore<>(new HashMap<>()); // GUARDADO EN COLLECTIONS
-    static DataStore<Citizen> citizenDataStore = new CitizenFileStore("FileCitizenData"); // GUARDADO EN FILES
+    public static DataStore<Citizen> citizenDataStore = new CitizenFileStore("FileCitizenData"); // GUARDADO EN FILES
     static ABMCitizen citizenABM = new ABMCitizen(citizenDataStore);
 
     public static void main(String[] args) {
@@ -107,7 +107,7 @@ public class Main2 {
         }while(opcion != 3);
     }
 
-    public static void menuCitizen(Citizen citizen){
+    public static void menuCitizen(Citizen citizen) throws ABMUserException {
         int opcion;
         do {
             System.out.println("\n  Menu Ciudadano: ");
@@ -119,7 +119,7 @@ public class Main2 {
                     citizen.inbox();
                     break;
                 case 2:
-                    //mandar solicitudes de encuentro
+                    citizen.createIvitation();
                     break;
                 case 3:
                     //registro de sintomas;
