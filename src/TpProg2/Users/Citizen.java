@@ -139,8 +139,12 @@ public class Citizen extends User {
 
     public String viewInvitationsNames(){
         String lista = "";
-        for(int i = 0; i < receivedInvitations.size(); i++){
-            lista += i + ". " + receivedInvitations.get(i).transmitter.getUserName()+"\n";
+        if (receivedInvitations.size() > 0) {
+            for (int i = 0; i < receivedInvitations.size(); i++) {
+                lista += i + ". " + receivedInvitations.get(i).transmitter.getUserName() + "\n";
+            }
+        }else{
+            lista += "\n (No tienes ninguna invitacion a eventos en tu bandeja de entrada)\n";
         }
         return lista;
     } // Devuelve un String con los nombres de los emisores de cada invitacion dentro de la bandeja de entrada (en forma de lista).

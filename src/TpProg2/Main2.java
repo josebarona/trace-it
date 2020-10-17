@@ -2,26 +2,34 @@
 package TpProg2;
 
 import TpProg2.DataStore.*;
+import TpProg2.Events.Disease;
+import TpProg2.Events.Symptom;
 import TpProg2.Exceptions.ABMAdminException;
 import TpProg2.Exceptions.ABMCitizenException;
 import TpProg2.Exceptions.ABMUserException;
 import TpProg2.Users.*;
 import TpProg2.util.Scanner;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 // main pasado un poco mas en limpio.
 
 public class Main2 {
     // DATA DE adminis:
-    //static DataStore<Administrator> administratorDataStore = new CollectionStore<>(new HashMap<>()); // GUARDADO EN COLLECTIONS
+    //public static DataStore<Administrator> administratorDataStore = new CollectionStore<>(new HashMap<>()); // GUARDADO EN COLLECTIONS
     static DataStore<Administrator> administratorDataStore = new AdminFileStore("FileAdminData"); // GUARDADO EN FILES
     static ABMAdmin adminABM = new ABMAdmin(administratorDataStore);
 
     // DATA DE Citizens:
-    //static DataStore<Citizen> citizenDataStore = new CollectionStore<>(new HashMap<>()); // GUARDADO EN COLLECTIONS
+    //public static DataStore<Citizen> citizenDataStore = new CollectionStore<>(new HashMap<>()); // GUARDADO EN COLLECTIONS
     public static DataStore<Citizen> citizenDataStore = new CitizenFileStore("FileCitizenData"); // GUARDADO EN FILES
     static ABMCitizen citizenABM = new ABMCitizen(citizenDataStore);
+
+    //Efermedades y sintomas predeterminados
+    Disease covid = new Disease("COVID", new ArrayList<Symptom>());
+    // Falta agregar estos sintomas
+    //{"Tos", "seca", "Cansancio", "Molestias y dolores", "Dolor de garganta", "Diarrea", "Conjuntivitis", "Dolor de cabeza", "Pérdida del sentido del olfato o del gusto", "Dificultad para respirar o sensación de falta de aire", "Dolor o presión en el pecho"}
 
     public static void main(String[] args) {
         menuPrincipal();
