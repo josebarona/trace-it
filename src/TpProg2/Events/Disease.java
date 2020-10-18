@@ -12,8 +12,8 @@ public class Disease implements FileSaveable {
         this.symptomArrayList = symptomArrayList;
     }
 
-    public void addSymptom(String newSymptom){
-        Symptom symptom = new Symptom(newSymptom);
+    public void addSymptom(String symptomName){
+        Symptom symptom = new Symptom(symptomName);
         symptomArrayList.add(symptom);
     }
 

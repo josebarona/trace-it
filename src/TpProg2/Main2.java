@@ -29,16 +29,14 @@ public class Main2 {
     static ABMCitizen citizenABM = new ABMCitizen(citizenDataStore);
 
     //Efermedades y sintomas predeterminados
-    ArrayList symptoms = (ArrayList) Arrays.asList(new Symptom("Toz"), new Symptom("seca"),
+    static ArrayList symptoms = (ArrayList) Arrays.asList(new Symptom("Toz"), new Symptom("seca"),
                                                 new Symptom( "Cansancio"),new Symptom("Molestias y dolores"),
                                                 new Symptom("Dolor de garganta"),new Symptom("Diarrea"),
                                                 new Symptom("Conjuntivitis"),new Symptom("Dolor de cabeza"),
                                                 new Symptom("Pérdida del sentido del olfato o del gusto"),
                                                 new Symptom("Dificultad para respirar o sensación de falta de aire"),
                                                 new Symptom("Dolor o presión en el pecho"));
-    Disease covid = new Disease("COVID", symptoms);
-    // Falta agregar estos sintomas
-    //{"Tos", "seca", "Cansancio", "Molestias y dolores", "Dolor de garganta", "Diarrea", "Conjuntivitis", "Dolor de cabeza", "Pérdida del sentido del olfato o del gusto", "Dificultad para respirar o sensación de falta de aire", "Dolor o presión en el pecho"}
+    static Disease covid = new Disease("COVID", symptoms);
 
     public static void main(String[] args) {
         menuPrincipal();
