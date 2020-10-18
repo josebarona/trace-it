@@ -11,7 +11,9 @@ import TpProg2.Users.*;
 import TpProg2.util.Scanner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 // main pasado un poco mas en limpio.
 
@@ -27,7 +29,14 @@ public class Main2 {
     static ABMCitizen citizenABM = new ABMCitizen(citizenDataStore);
 
     //Efermedades y sintomas predeterminados
-    Disease covid = new Disease("COVID", new ArrayList<Symptom>());
+    ArrayList symptoms = (ArrayList) Arrays.asList(new Symptom("Toz"), new Symptom("seca"),
+                                                new Symptom( "Cansancio"),new Symptom("Molestias y dolores"),
+                                                new Symptom("Dolor de garganta"),new Symptom("Diarrea"),
+                                                new Symptom("Conjuntivitis"),new Symptom("Dolor de cabeza"),
+                                                new Symptom("Pérdida del sentido del olfato o del gusto"),
+                                                new Symptom("Dificultad para respirar o sensación de falta de aire"),
+                                                new Symptom("Dolor o presión en el pecho"));
+    Disease covid = new Disease("COVID", symptoms);
     // Falta agregar estos sintomas
     //{"Tos", "seca", "Cansancio", "Molestias y dolores", "Dolor de garganta", "Diarrea", "Conjuntivitis", "Dolor de cabeza", "Pérdida del sentido del olfato o del gusto", "Dificultad para respirar o sensación de falta de aire", "Dolor o presión en el pecho"}
 
