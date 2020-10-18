@@ -9,7 +9,6 @@ import TpProg2.Exceptions.ABMCitizenException;
 import TpProg2.Exceptions.ABMUserException;
 import TpProg2.Users.*;
 import TpProg2.util.Scanner;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -29,7 +28,7 @@ public class Main2 {
     static ABMCitizen citizenABM = new ABMCitizen(citizenDataStore);
 
     //Efermedades y sintomas predeterminados
-    static ArrayList symptoms = (ArrayList) Arrays.asList(new Symptom("Toz"), new Symptom("seca"),
+    static List<Symptom> symptoms = Arrays.asList(new Symptom("Toz"), new Symptom("seca"),
                                                 new Symptom( "Cansancio"),new Symptom("Molestias y dolores"),
                                                 new Symptom("Dolor de garganta"),new Symptom("Diarrea"),
                                                 new Symptom("Conjuntivitis"),new Symptom("Dolor de cabeza"),
