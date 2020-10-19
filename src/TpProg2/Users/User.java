@@ -41,9 +41,11 @@ public abstract class User implements FileSaveable {
 
     public String viewSymptoms(ArrayList<Symptom> symptoms){
         String lista = "";
-        if (symptoms.size() > 0) {
+        if (symptoms != null) {
             for (int i = 0; i < symptoms.size(); i++) {
-                lista += i + ". " + symptoms.get(i).getName() + "\n";
+                if (symptoms.get(i) != null){
+                    lista += i + ". " + symptoms.get(i).getName() + "\n";
+                }
             }
         }else{
             lista += "\n (No hay sintomas registrados en la base de datos!)\n";

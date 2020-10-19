@@ -18,23 +18,24 @@ import java.util.List;
 
 public class Main2 {
     // DATA DE adminis:
-    //public static DataStore<Administrator> administratorDataStore = new CollectionStore<>(new HashMap<>()); // GUARDADO EN COLLECTIONS
-    static DataStore<Administrator> administratorDataStore = new AdminFileStore("FileAdminData"); // GUARDADO EN FILES
+    public static DataStore<Administrator> administratorDataStore = new CollectionStore<>(new HashMap<>()); // GUARDADO EN COLLECTIONS
+    //static DataStore<Administrator> administratorDataStore = new AdminFileStore("FileAdminData"); // GUARDADO EN FILES
     static ABMAdmin adminABM = new ABMAdmin(administratorDataStore);
 
     // DATA DE Citizens:
-    //public static DataStore<Citizen> citizenDataStore = new CollectionStore<>(new HashMap<>()); // GUARDADO EN COLLECTIONS
-    public static DataStore<Citizen> citizenDataStore = new CitizenFileStore("FileCitizenData"); // GUARDADO EN FILES
+    public static DataStore<Citizen> citizenDataStore = new CollectionStore<>(new HashMap<>()); // GUARDADO EN COLLECTIONS
+    //public static DataStore<Citizen> citizenDataStore = new CitizenFileStore("FileCitizenData"); // GUARDADO EN FILES
     static ABMCitizen citizenABM = new ABMCitizen(citizenDataStore);
 
     //Efermedades y sintomas predeterminados
-    public static ArrayList<Symptom> symptoms = (ArrayList<Symptom>) Arrays.asList(new Symptom("Toz"), new Symptom("seca"),
-                                                new Symptom( "Cansancio"),new Symptom("Molestias y dolores"),
-                                                new Symptom("Dolor de garganta"),new Symptom("Diarrea"),
-                                                new Symptom("Conjuntivitis"),new Symptom("Dolor de cabeza"),
-                                                new Symptom("Pérdida del sentido del olfato o del gusto"),
-                                                new Symptom("Dificultad para respirar o sensación de falta de aire"),
-                                                new Symptom("Dolor o presión en el pecho"));
+
+    public static ArrayList<Symptom> symptoms = new ArrayList<>(Arrays.asList(new Symptom("Toz seca"),
+            new Symptom( "Cansancio"),new Symptom("Molestias y dolores"),
+            new Symptom("Dolor de garganta"),new Symptom("Diarrea"),
+            new Symptom("Conjuntivitis"),new Symptom("Dolor de cabeza"),
+            new Symptom("Pérdida del sentido del olfato o del gusto"),
+            new Symptom("Dificultad para respirar o sensación de falta de aire"),
+            new Symptom("Dolor o presión en el pecho")));
     static Disease covid = new Disease("COVID", symptoms);
 
     public static void main(String[] args) {
