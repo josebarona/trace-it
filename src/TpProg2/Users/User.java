@@ -1,6 +1,9 @@
 package TpProg2.Users;
 
 import TpProg2.DataStore.FileSaveable;
+import TpProg2.Events.Symptom;
+
+import java.util.ArrayList;
 
 public abstract class User implements FileSaveable {
     String userName;
@@ -34,5 +37,17 @@ public abstract class User implements FileSaveable {
 
     public String getType() {
         return type;
+    }
+
+    public String viewSymptoms(ArrayList<Symptom> symptoms){
+        String lista = "";
+        if (symptoms.size() > 0) {
+            for (int i = 0; i < symptoms.size(); i++) {
+                lista += i + ". " + symptoms.get(i).getName() + "\n";
+            }
+        }else{
+            lista += "\n (No hay sintomas registrados en la base de datos!)\n";
+        }
+        return lista;
     }
 }

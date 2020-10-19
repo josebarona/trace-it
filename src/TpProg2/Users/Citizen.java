@@ -1,5 +1,6 @@
 package TpProg2.Users;
 
+import TpProg2.Events.Symptom;
 import TpProg2.Exceptions.ABMUserException;
 import TpProg2.ImplementOfUsers.Date;
 import TpProg2.ImplementOfUsers.FaceToFaceMeeting;
@@ -17,6 +18,7 @@ public class Citizen extends User {
     ArrayList<Invitation> receivedInvitations; // todas las invitaciones llegan aca. Una vez que se acepta o se rechaza una invitacion se remueve de esta bandeja.
     ArrayList<FaceToFaceMeeting> acceptedRequest; // bandeja de invitaciones aceptadas.
     ArrayList<FaceToFaceMeeting> rejectedInvitations; // bandejas de invitaciones rechzadas.
+    ArrayList<Symptom> registeredSymptoms;
     int rejections;
 
     public Citizen(String userName, String cuil, String phoneNumber) {
@@ -182,5 +184,37 @@ public class Citizen extends User {
             sendRequest(presentCitizens[i], invitation);
         }
         System.out.println(" Perfecto, la solicitud de evento fue creada y enviada a todos los participantes del mismo.");
+    }
+
+    public void registerSymptom(){
+        int opcion;
+        do {
+            System.out.println(" Registro de sintomas:\n ¿Usted presenta alguno de los siguientes sintomas?" + viewSymptoms(Main2.symptoms) + "\n99. (volver)");
+            opcion = Scanner.getInt(" Que sintoma desea registrar: ");
+            if (opcion != 99 && opcion < Main2.symptoms.size()){
+                if (registeredSymptoms.contains(Main2.symptoms.get(opcion))){
+                    registeredSymptoms.add(Main2.symptoms.get(opcion));
+                    System.out.println("\n El sintoma fue registrado!");
+                }else{
+                    System.out.println(" Ya tienes registrado este sintoma!");
+                }
+            }else if(opcion != 99){
+                System.out.println(" Opcion invalida!");
+            }
+        }while(opcion != 99);
+    }
+
+    public void removeSymptom(){
+        int opcion;
+        do {
+            System.out.println(" Sintomas registrados: \n" + viewSymptoms(registeredSymptoms) + "\n99. (volver)");
+            opcion = Scanner.getInt(" Que sintoma registrado desea eliminar: ");
+            if (opcion != 99 && opcion < registeredSymptoms.size()){
+                registeredSymptoms.remove(registeredSymptoms.get(opcion));
+                System.out.println("\n El sintoma fue eliminado de su registro!");
+            }else if(opcion != 99){
+                System.out.println(" Opcion invalida!");
+            }
+        }while (opcion != 99);
     }
 }

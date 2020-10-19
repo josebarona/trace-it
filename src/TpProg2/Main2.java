@@ -28,7 +28,7 @@ public class Main2 {
     static ABMCitizen citizenABM = new ABMCitizen(citizenDataStore);
 
     //Efermedades y sintomas predeterminados
-    static List<Symptom> symptoms = Arrays.asList(new Symptom("Toz"), new Symptom("seca"),
+    public static ArrayList<Symptom> symptoms = (ArrayList<Symptom>) Arrays.asList(new Symptom("Toz"), new Symptom("seca"),
                                                 new Symptom( "Cansancio"),new Symptom("Molestias y dolores"),
                                                 new Symptom("Dolor de garganta"),new Symptom("Diarrea"),
                                                 new Symptom("Conjuntivitis"),new Symptom("Dolor de cabeza"),
@@ -125,7 +125,7 @@ public class Main2 {
         int opcion;
         do {
             System.out.println("\n  Menu Ciudadano: ");
-            System.out.println(" _________________________________________\n Operaciones: \n 1 Bandeja de entrada de invitaciones \n 2. Mandar solicitudes de encuentro \n 3. Registro de sintomas  \n 4. ... \n 5. ... \n 6. Log Out \n 7. Exit ");
+            System.out.println(" _________________________________________\n Operaciones: \n 1 Bandeja de entrada de invitaciones \n 2. Mandar solicitudes de encuentro \n 3. Registro de sintomas  \n 4. Ver/eliminar sintomas registrados \n 5. ... \n 6. Log Out \n 7. Exit ");
             opcion = Scanner.getInt(" Que operación desea realizar: ");
 
             switch (opcion){
@@ -136,13 +136,13 @@ public class Main2 {
                     citizen.createIvitation();
                     break;
                 case 3:
-                    //registro de sintomas;
+                    citizen.registerSymptom();
                     break;
                 case 4:
-                    //remover sintomas;
+                    citizen.removeSymptom();
                     break;
                 case 5:
-                    // añadir sintomas
+                    // ver en las meetings en las que estuvo; ----> (?)
                     break;
                 case 6: //volver atras
                     // menuPrincipal(); //no es necesario, termina volviendo solo.
@@ -152,10 +152,6 @@ public class Main2 {
                     System.out.println("Adios ;D");
                     System.exit(0);
                     break;
-                /*
-                   case 8:
-                        ver en las meetings en las que estuvo; ----> (?)
-                 */
                 default:
                     System.out.println("opcion invalida!");
             }
@@ -166,13 +162,12 @@ public class Main2 {
         int opcion;
         do {
             System.out.println("\n  Menu Administrador: ");
-            System.out.println(" _________________________________________\n Operaciones: \n 1... \n 2...  \n 3...  \n 4. Bloquear Ciudadano \n 5. Desbloquear Cuidadano \n 6. Log Out \n 7. Exit ");
+            System.out.println(" _________________________________________\n Operaciones: \n 1 (sintomas) \n 2...  \n 3...  \n 4. Bloquear Ciudadano \n 5. Desbloquear Cuidadano \n 6. Log Out \n 7. Exit ");
             opcion = Scanner.getInt(" Que operación desea realizar: ");
 
             switch (opcion){
                 case 1:
-                    // dar de alta sintoma ---> CREARLOS(?)
-                    // sacaralos agregarlos
+                    System.out.println("Sintomas: ");
                     break;
                 case 2:
                     // ver los sintomas que hay
