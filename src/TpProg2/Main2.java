@@ -92,9 +92,9 @@ public class Main2 {
                     break;
                 case 2:
                     String userName = Scanner.getString("Nombre de Usuario: ");
-                    String phoneNumber = Scanner.getString("Numero de Telefono: ");
+                    String cuil = Scanner.getString("Numero de Cuil: ");
                     try {
-                        iniciarSesion(userName,phoneNumber);
+                        iniciarSesion(userName,cuil);
                     } catch (ABMUserException e) {
                         e.printStackTrace();
                     }
