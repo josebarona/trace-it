@@ -126,7 +126,7 @@ public class Main2 {
         int opcion;
         do {
             System.out.println("\n  Menu Ciudadano: ");
-            System.out.println(" _________________________________________\n Operaciones: \n 1 Bandeja de entrada de invitaciones \n 2. Mandar solicitudes de encuentro \n 3. Registro de sintomas  \n 4. Ver/eliminar sintomas registrados \n 5. ... \n 6. Log Out \n 7. Exit ");
+            System.out.println(" _________________________________________\n Operaciones: \n 1. Bandeja de entrada de invitaciones \n 2. Mandar solicitudes de encuentro \n 3. Registro de sintomas  \n 4. Ver/eliminar sintomas registrados \n 5. ... \n 6. Log Out \n 7. Exit ");
             opcion = Scanner.getInt(" Que operación desea realizar: ");
 
             switch (opcion){
@@ -137,7 +137,7 @@ public class Main2 {
                     citizen.createIvitation();
                     break;
                 case 3:
-                    citizen.registerSymptom();
+                    citizen.selfRecordingOfSymptoms();
                     break;
                 case 4:
                     citizen.removeSymptom();

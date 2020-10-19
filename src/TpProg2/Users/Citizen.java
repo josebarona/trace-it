@@ -92,18 +92,6 @@ public class Citizen extends User {
         invitation.transmitter.rejections ++;
     } // Metodo que rechaza una invitacion dentro de su bandeja de entrada y se suma a la cuenta de rechazos del emisor.
 
-    public void SelfRecordingOfSymptoms() {
-        // auto registro de sintomas
-    } // Con este metodo un ciudadano deberia poder seleccionar los sintomas que posee y asi guardar un registro.
-
-    public void addEvent(){
-
-    } // Metodo para agregar un evento/enfermedad a un paciente
-
-    public void removeEvent(){
-
-    } // Metodo para eliminar un evento/enfermedad de un paciente
-
     public void inbox (){
         int opcion;
         do {
@@ -163,10 +151,10 @@ public class Citizen extends User {
         //1 Location
         Location location = new Location(Scanner.getString(" El nombre de la ubicacion del encuentro: "));
         //2 Date
-        Date start = new Date(Scanner.getDate(" Utilizando dos digitos ingrese el numero de mes en el cual inicio este evento: "),
+        Date start = new Date(Scanner.getDate(" Ingrese el numero de mes en el cual inicio este evento: "),
                               Scanner.getDate(" Ingrese el dia en el cual inicio el evento: "),
                               Scanner.getDate(" Ingrese la hora a la cual inicio el evento: "));
-        Date end = new Date(Scanner.getDate(" Utilizando dos digitos ingrese el numero de mes en el cual finalizo este evento: "),
+        Date end = new Date(Scanner.getDate(" Ingrese el numero de mes en el cual finalizo este evento: "),
                 Scanner.getDate(" Ingrese el dia en el cual finalizo el evento: "),
                 Scanner.getDate(" Ingrese la hora a la cual finalizo el evento: "));
         //3 Citizens
@@ -186,7 +174,7 @@ public class Citizen extends User {
         System.out.println(" Perfecto, la solicitud de evento fue creada y enviada a todos los participantes del mismo.");
     }
 
-    public void registerSymptom(){
+    public void selfRecordingOfSymptoms(){
         int opcion;
         do {
             System.out.println(" Registro de sintomas:\n ¿Usted presenta alguno de los siguientes sintomas?\n" + viewSymptoms(Main2.symptoms) + "\n99. (volver)");
@@ -202,19 +190,19 @@ public class Citizen extends User {
                 System.out.println(" Opcion invalida!");
             }
         }while(opcion != 99);
-    }
+    }// Con este metodo un ciudadano deberia poder seleccionar los sintomas que posee y asi guardar un registro.
 
     public void removeSymptom(){
         int opcion;
         do {
             System.out.println("\n Sintomas registrados: \n" + viewSymptoms(registeredSymptoms) + "\n99. (volver)");
             opcion = Scanner.getInt(" Que sintoma registrado desea eliminar: ");
-            if (opcion != 99 && opcion < registeredSymptoms.size()){
+            if (opcion != 99 && opcion < registeredSymptoms.size() && opcion >= 0){
                 registeredSymptoms.remove(registeredSymptoms.get(opcion));
                 System.out.println("\n El sintoma fue eliminado de su registro!");
             }else if(opcion != 99){
                 System.out.println(" Opcion invalida!");
             }
         }while (opcion != 99);
-    }
+    } // Permite a un ciudadano eliminar un sintoma previamente autodiagnosticado.
 }

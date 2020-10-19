@@ -88,9 +88,9 @@ public class Scanner {
     public static int getDate(String message) {
         System.out.print(message);
         try {
-            int date = Integer.parseInt(scanner.nextLine());
-            if (Integer.toString(date).length() != 2){
-                System.out.println("Please enter two digits for the date.");
+            int date = (int)Integer.parseInt(scanner.nextLine());
+            if (String.valueOf(date).length() > 2 || date < 1){
+                System.out.println("Ingrese 1 o 2 digitos para la fecha.");
                 return getDate(message);
             }else{return date;}
         } catch (NumberFormatException e) {
@@ -98,6 +98,4 @@ public class Scanner {
             return getInt(message);
         }
     }
-
-
 }
