@@ -211,4 +211,10 @@ public class Main2 {
 
         }while (opcion != 6); // seguramente va a haber mas opciones
     }
+    void clear(){
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+    }
+    void message(String message){
+        System.out.println("- - - - - - - - - - - - - - - -\n " + message+ "- - - - - - - - - - - - - - - -\n ");
+    }
 }
