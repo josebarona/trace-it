@@ -167,10 +167,10 @@ public class Main2 {
 
             switch (opcion){
                 case 1:
-                    System.out.println("Sintomas: ");
+                    admin.symptomRegister(); //se ven los sintomas, se pueden eliminar o agregar nuevos.
                     break;
                 case 2:
-                    // ver los sintomas que hay
+                    //
                     break;
                 case 3:
                     //ver citizens bloqueados.

@@ -23,9 +23,6 @@ public class Administrator extends User {
         citizen.isBan = false;
     }
 
-    public void symptomRegister(){
-    } // Con este metodo cualquier administrador deberia poder dar de alta/baja cualquier sintoma
-
     @Override
     public String getType() {
         return this.type + "es";
@@ -51,7 +48,7 @@ public class Administrator extends User {
         return super.getUserName();
     }
 
-    public void adjustSymptom(){
+    public void symptomRegister(){
         int opcion;
         do {
             System.out.println(" Sintomas: \n" + viewSymptoms(Main2.symptoms) + "\n97. Agregar sintoma\n98. Eliminar sintoma\n99. (volver)");
@@ -76,5 +73,5 @@ public class Administrator extends User {
                     System.out.println(" Opcion invalida!");
             }
         }while (opcion != 99);
-    }
+    } // Con este metodo cualquier administrador deberia poder dar de alta/baja cualquier sintoma
 }
