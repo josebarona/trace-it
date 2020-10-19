@@ -82,4 +82,22 @@ public class Scanner {
             return getDouble(message);
         }
     }
+
+    //Particulares
+
+    public static int getDate(String message) {
+        System.out.print(message);
+        try {
+            int date = Integer.parseInt(scanner.nextLine());
+            if (Integer.toString(date).length() != 2){
+                System.out.println("Please enter two digits for the date.");
+                return getDate(message);
+            }else{return date;}
+        } catch (NumberFormatException e) {
+            System.out.println("Please enter an integer.");
+            return getInt(message);
+        }
+    }
+
+
 }
