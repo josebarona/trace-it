@@ -7,8 +7,11 @@ import TpProg2.Events.Symptom;
 import TpProg2.Exceptions.ABMAdminException;
 import TpProg2.Exceptions.ABMCitizenException;
 import TpProg2.Exceptions.ABMUserException;
+import TpProg2.ImplementOfUsers.Zone;
 import TpProg2.Users.*;
 import TpProg2.util.Scanner;
+
+import javax.swing.plaf.synth.SynthStyle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -28,7 +31,6 @@ public class Main2 {
     static ABMCitizen citizenABM = new ABMCitizen(citizenDataStore);
 
     //Efermedades y sintomas predeterminados
-
     public static ArrayList<Symptom> symptoms = new ArrayList<>(Arrays.asList(new Symptom("Toz seca"),
             new Symptom( "Cansancio"),new Symptom("Molestias y dolores"),
             new Symptom("Dolor de garganta"),new Symptom("Diarrea"),
@@ -37,6 +39,10 @@ public class Main2 {
             new Symptom("Dificultad para respirar o sensación de falta de aire"),
             new Symptom("Dolor o presión en el pecho")));
     static Disease covid = new Disease("COVID", symptoms);
+
+    //Zonas
+    static ArrayList<Zone> zones = new ArrayList<>(Arrays.asList(new Zone("A"),
+            new Zone("B"), new Zone("C"), new Zone("D")));
 
     public static void main(String[] args) {
         menuPrincipal();
@@ -49,8 +55,10 @@ public class Main2 {
     }
 
     public static void citizenRegister() throws ABMCitizenException, ABMUserException {
-        Citizen citizen = new Citizen(Scanner.getString("Ingrese su nombre de usuario: "),Scanner.getString("Ingrese su cuil: "),Scanner.getString("Ingrese su numero de telefono: "));
-        citizenABM.add(citizen.getUserName(),citizen.getId(),citizen.getCuil());
+        //Zone zone = zones.get((int) (Math.random() * (4 - 0 + 1) + 0));
+        Zone zone = zones.get(0);
+        Citizen citizen = new Citizen(Scanner.getString("Ingrese su nombre de usuario: "),Scanner.getString("Ingrese su cuil: "),Scanner.getString("Ingrese su numero de telefono: "), zone);
+        citizenABM.add(citizen.getUserName(),citizen.getId(),citizen.getCuil(), zone);
         //System.out.println("la base de datos esta vacia? " + citizenDataStore.isEmpty());
     }
 
@@ -143,6 +151,9 @@ public class Main2 {
                     citizen.removeSymptom();
                     break;
                 case 5:
+                    HashMap<Symptom, Integer> data = zones.get(0).top3CommonSymptoms(symptoms);
+                    System.out.println(zones.get(0).convertWithIteration(data));
+
                     // ver en las meetings en las que estuvo; ----> (?)
                     break;
                 case 6: //volver atras
@@ -212,9 +223,9 @@ public class Main2 {
         }while (opcion != 6); // seguramente va a haber mas opciones
     }
     void clear(){
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        for (int i = 0; i < 50; ++i) System.out.println();
     }
     void message(String message){
-        System.out.println("- - - - - - - - - - - - - - - -\n " + message+ "- - - - - - - - - - - - - - - -\n ");
+        System.out.println("- - - - - - - - - - - - - - - -\n " + message + "- - - - - - - - - - - - - - - -\n ");
     }
 }

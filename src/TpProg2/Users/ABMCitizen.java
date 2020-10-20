@@ -4,6 +4,7 @@ import TpProg2.DataStore.DataStore;
 import TpProg2.Exceptions.ABMCitizenException;
 import TpProg2.Exceptions.ABMCitizenException2;
 import TpProg2.Exceptions.ABMUserException;
+import TpProg2.ImplementOfUsers.Zone;
 
 public class ABMCitizen {
     DataStore<Citizen> dataStore;
@@ -12,9 +13,9 @@ public class ABMCitizen {
         this.dataStore = dataStore;
     }
 
-    public Citizen add(String userName,String cuil, String phoneNumber) throws ABMCitizenException, ABMUserException {  // chquear excepciones
+    public Citizen add(String userName,String cuil, String phoneNumber, Zone zone) throws ABMCitizenException, ABMUserException {  // chquear excepciones
         if (this.dataStore.findById(phoneNumber) == null){
-            Citizen citizen = new Citizen(userName,cuil,phoneNumber);
+            Citizen citizen = new Citizen(userName,cuil,phoneNumber, zone);
             this.dataStore.save(citizen);
             return citizen;
         }

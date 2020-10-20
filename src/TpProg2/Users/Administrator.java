@@ -1,11 +1,8 @@
 package TpProg2.Users;
 
 import TpProg2.Events.Symptom;
-import TpProg2.Main;
 import TpProg2.Main2;
 import TpProg2.util.Scanner;
-
-import java.lang.reflect.InvocationTargetException;
 
 public class Administrator extends User {
     String type;

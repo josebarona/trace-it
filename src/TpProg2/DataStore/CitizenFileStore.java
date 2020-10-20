@@ -1,5 +1,6 @@
 package TpProg2.DataStore;
 
+import TpProg2.ImplementOfUsers.Zone;
 import TpProg2.Users.Citizen;
 
 public class CitizenFileStore extends FileStore<Citizen>{
@@ -11,7 +12,9 @@ public class CitizenFileStore extends FileStore<Citizen>{
     private boolean stringToBoolean(String string){
         return string.equals("true");
     }
-
+    private Zone stringToZone (String string){
+        return new Zone(string);
+    }
     @Override
     public Citizen lineToObject(String line) {
         String[] data = line.split(",");
@@ -20,7 +23,9 @@ public class CitizenFileStore extends FileStore<Citizen>{
         String cuil = data[2];
         String ban = data[3];
         String rejections = data[4];
-        Citizen citizen = new Citizen(userName,cuil,id);
+        String zone = data[5];
+        Zone zone1 = stringToZone(zone);
+        Citizen citizen = new Citizen(userName,cuil,id,zone1);
         citizen.setBan(this.stringToBoolean(ban));
         citizen.setRejections(Integer.parseInt(rejections.trim()));
         return citizen;

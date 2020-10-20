@@ -2,10 +2,7 @@ package TpProg2.Users;
 
 import TpProg2.Events.Symptom;
 import TpProg2.Exceptions.ABMUserException;
-import TpProg2.ImplementOfUsers.Date;
-import TpProg2.ImplementOfUsers.FaceToFaceMeeting;
-import TpProg2.ImplementOfUsers.Invitation;
-import TpProg2.ImplementOfUsers.Location;
+import TpProg2.ImplementOfUsers.*;
 import TpProg2.Main2;
 import TpProg2.util.Scanner;
 
@@ -20,8 +17,9 @@ public class Citizen extends User {
     ArrayList<FaceToFaceMeeting> rejectedInvitations; // bandejas de invitaciones rechzadas.
     ArrayList<Symptom> registeredSymptoms = new ArrayList<Symptom>();
     int rejections;
+    Zone zone;
 
-    public Citizen(String userName, String cuil, String phoneNumber) {
+    public Citizen(String userName, String cuil, String phoneNumber, Zone zone) {
         super(userName, cuil, phoneNumber);
         this.receivedInvitations = new ArrayList<>(); // ArrayList<Invitation>
         this.acceptedRequest = new ArrayList<>(); //ArrayList<FaceToFaceMeeting>
@@ -29,8 +27,14 @@ public class Citizen extends User {
         this.isBan = false;
         this.rejections = 0;
         this.type = "Ciudadano";
+        this.zone = zone;
         registeredSymptoms.add(null);
     }
+
+    public ArrayList<Symptom> getRegisteredSymptoms() {
+        return registeredSymptoms;
+    }
+
     @Override
     public String getFileRepresentation() {
         return super.getFileRepresentation() + "," + isBan + "," + rejections;

@@ -15,3 +15,10 @@ Gestion de eventos:
 - Faltaria ver como crear invitaciones, porque aparte de meterle la ubicacion y el horario del meeting, tambien habria que ver
 como hacemos la lista con todos los que estuvieron presentes, y despues podriamos hacer que se envie automaticamente a todos esos ciudadanos.
 
+///
+- correcciones
+    - organizar los metodos
+- metodo en Zone, para ver los 3 sintomas mas comunes
+- metodo para citizen, para chquiar cantidad de sintomas y si presenta alguna enfermedad, de ser positivo avisar a todos sus contactos
+    - crear bandeja de alerta/notificaciones
+
