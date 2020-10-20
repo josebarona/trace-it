@@ -4,6 +4,7 @@ import TpProg2.Events.Symptom;
 import TpProg2.Main2;
 import TpProg2.util.Scanner;
 
+
 public class Administrator extends User {
     String type;
 

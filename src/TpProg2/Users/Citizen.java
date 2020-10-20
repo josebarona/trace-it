@@ -15,7 +15,7 @@ public class Citizen extends User {
     ArrayList<Invitation> receivedInvitations; // todas las invitaciones llegan aca. Una vez que se acepta o se rechaza una invitacion se remueve de esta bandeja.
     ArrayList<FaceToFaceMeeting> acceptedRequest; // bandeja de invitaciones aceptadas.
     ArrayList<FaceToFaceMeeting> rejectedInvitations; // bandejas de invitaciones rechzadas.
-    ArrayList<Symptom> registeredSymptoms = new ArrayList<Symptom>();
+    ArrayList<Symptom> registeredSymptoms;
     int rejections;
     Zone zone;
 
@@ -24,15 +24,19 @@ public class Citizen extends User {
         this.receivedInvitations = new ArrayList<>(); // ArrayList<Invitation>
         this.acceptedRequest = new ArrayList<>(); //ArrayList<FaceToFaceMeeting>
         this.rejectedInvitations = new ArrayList<>(); //ArrayList<FaceToFaceMeeting>
+        this.registeredSymptoms = new ArrayList<Symptom>();
         this.isBan = false;
         this.rejections = 0;
         this.type = "Ciudadano";
         this.zone = zone;
-        registeredSymptoms.add(null);
     }
 
     public ArrayList<Symptom> getRegisteredSymptoms() {
         return registeredSymptoms;
+    }
+
+    public Zone getZone() {
+        return zone;
     }
 
     @Override

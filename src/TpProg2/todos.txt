@@ -22,3 +22,6 @@ como hacemos la lista con todos los que estuvieron presentes, y despues podriamo
 - metodo para citizen, para chquiar cantidad de sintomas y si presenta alguna enfermedad, de ser positivo avisar a todos sus contactos
     - crear bandeja de alerta/notificaciones
 
+//
+- zonas seguir viedo. agregar citizen segun la zona.
+
