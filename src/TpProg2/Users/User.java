@@ -47,7 +47,7 @@ public abstract class User implements FileSaveable {
         if (symptoms != null) {
             for (int i = 0; i < symptoms.size(); i++) {
                 if (symptoms.get(i) != null){
-                    lista += i + ". " + symptoms.get(i).getName() + "\n";
+                    lista += "   " + i + ". " + symptoms.get(i).getName() + "\n";
                 }
             }
         }else{

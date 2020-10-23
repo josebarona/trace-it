@@ -18,12 +18,14 @@ public class UserInterface {
     private UserInterface() { }
 
     public static void menuPrincipal(){
+        traceIt();
         int opcion;
         String password = "TpGrupo14";
         do{
             System.out.println("\n  Menu: ");
             System.out.println(" _________________________________________\n Operaciones: \n 1. Registrarse \n 2. Iniciar sesion \n 3.Exit");
             opcion = Scanner.getInt("Que operación desea realizar: ");
+            clear();
 
             switch (opcion) {
                 case 1:
@@ -32,6 +34,7 @@ public class UserInterface {
                     } catch (ABMCitizenException | ABMUserException e) {
                         e.printStackTrace();
                     }
+                    clear();
                     break;
                 case 2:
                     String userName = Scanner.getString("Nombre de Usuario: ");
@@ -51,7 +54,8 @@ public class UserInterface {
                             e.printStackTrace();
                         }
                     }else{
-                        System.out.println("haz sido bloqueado del servidor");
+                        clear();
+                        message("haz sido bloqueado del servidor");
                         System.exit(0);
                     }
                     break;
@@ -59,31 +63,38 @@ public class UserInterface {
                     System.out.println();
                     System.out.println("Adios ;D, gracias por usar nuestro programa");
                 default:
-                    System.out.println("\n Opcion invalida! (intente con otra opcion).\n");
+                    clear();
+                    message("\n Opcion invalida! (intente con otra opcion).\n");
             }
         }while(opcion != 3);
         System.exit(0);
     }
 
     public static void menuCitizen(Citizen citizen) throws ABMUserException {
+        clear();
         int opcion;
         do {
             System.out.println("\n  Menu Ciudadano: ");
             System.out.println(" _________________________________________\n Operaciones: \n 1. Bandeja de entrada de invitaciones \n 2. Mandar solicitudes de encuentro \n 3. Registro de sintomas  \n 4. Ver/eliminar sintomas registrados \n 5. ... \n 6. Log Out \n 7. Exit ");
             opcion = Scanner.getInt(" Que operación desea realizar: ");
+            clear();
 
             switch (opcion){
                 case 1:
                     inbox(citizen);
+                    clear();
                     break;
                 case 2:
                     createIvitation(citizen);
+                    clear();
                     break;
                 case 3:
                     selfRecordingOfSymptoms(citizen);
+                    clear();
                     break;
                 case 4:
                     removeSymptom(citizen);
+                    clear();
                     break;
                 case 5:
                     // ver en las meetings en las que estuvo; ----> (?)
@@ -97,7 +108,7 @@ public class UserInterface {
                     System.exit(0);
                     break;
                 default:
-                    System.out.println("opcion invalida!");
+                    message("opcion invalida!");
             }
         }while (opcion != 6);// seguramente vaya a haber mas opciones
     }
@@ -156,18 +167,18 @@ public class UserInterface {
     }
 
     public static void clear(){
-        for (int i = 0; i < 50; ++i) System.out.println();
+        for (int i = 0; i < 30; ++i) System.out.println();
     }
 
     public static void message(String message){
-        System.out.println("- - - - - - - - - - - - - - - -\n " + message + "- - - - - - - - - - - - - - - -\n ");
+        System.out.println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n " + message + "\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n ");
     }
 
     public static void inbox (Citizen citizen){
         int opcion;
         do {
-            System.out.println("\n  Bandeja de entrada de invitaciones: ");
-            System.out.println(viewInvitationsNames(citizen) + "\n99. (volver)");
+            System.out.println("\n  -Bandeja de entrada de invitaciones: ");
+            System.out.println(viewInvitationsNames(citizen) + "\n  99. (volver)");
             opcion = Scanner.getInt(" Que invitacion deseas ver: ");
 
             if (opcion < citizen.getReceivedInvitations().size()) {
@@ -175,21 +186,22 @@ public class UserInterface {
                 do {
                     System.out.println(viewInvitationInfo(citizen.getReceivedInvitations().get(opcion)));
                     opcion1 = Scanner.getInt(" Usted confirma haber estado en este encuentro? \n1. Aceptar \n2. Rechazar \n3. (volver)\n Opcion: ");
+                    clear();
                     switch (opcion1){
                         case 1:
                             citizen.acceptedRequest(citizen.getReceivedInvitations().get(opcion));
-                            System.out.println(" Solicitud aceptada!!");
+                            message(" Solicitud aceptada!!");
                             opcion1 = 3;
                             break;
                         case 2:
                             citizen.rejectedRequest(citizen.getReceivedInvitations().get(opcion));
-                            System.out.println(" Solicitud rechazada!!");
+                            message(" Solicitud rechazada!!");
                             opcion1 = 3;
                             break;
                         case 3:
                             break;
                         default:
-                            System.out.println(" Opcion invalida!");
+                            message(" Opcion invalida!");
                     }
                 }while(opcion1 != 3);
             }else if(opcion != 99){
@@ -202,10 +214,10 @@ public class UserInterface {
         String lista = "";
         if (citizen.getReceivedInvitations().size() > 0) {
             for (int i = 0; i < citizen.getReceivedInvitations().size(); i++) {
-                lista += i + ". " + citizen.getReceivedInvitations().get(i).transmitter.getUserName() + "\n";
+                lista += "  " + i + ". " + citizen.getReceivedInvitations().get(i).transmitter.getUserName() + "\n";
             }
         }else{
-            lista += "\n (No tienes ninguna invitacion a eventos en tu bandeja de entrada)\n";
+            lista += "\n    (No tienes ninguna invitacion a eventos en tu bandeja de entrada)\n";
         }
         return lista;
     } // Devuelve un String con los nombres de los emisores de cada invitacion dentro de la bandeja de entrada (en forma de lista).
@@ -218,7 +230,7 @@ public class UserInterface {
     } //Metodo que devuelve un String con toda la informacion que lleva una invitacion (location, date, citizens)
 
     public static void createIvitation(Citizen citizen) throws ABMUserException {
-        System.out.println(" Porfavor ingrese los siguientes datos sobre el encuentro al cual asistio: ");
+        System.out.println(" -Porfavor ingrese los siguientes datos sobre el encuentro al cual asistio: \n\n\n\n\n");
         //1 Location
         String location = Scanner.getString(" El nombre de la ubicacion del encuentro: ");
         //2 Date
@@ -257,7 +269,7 @@ public class UserInterface {
     public static void selfRecordingOfSymptoms(Citizen citizen){
         int opcion;
         do {
-            System.out.println(" Registro de sintomas:\n ¿Usted presenta alguno de los siguientes sintomas?\n" + citizen.viewSymptoms(Main2.symptoms) + "\n99. (volver)");
+            System.out.println(" -Registro de sintomas:\n ¿Usted presenta alguno de los siguientes sintomas?\n" + citizen.viewSymptoms(Main2.symptoms) + "\n   99. (volver)");
             opcion = Scanner.getInt(" Que sintoma desea registrar: ");
             if (opcion != 99 && opcion < Main2.symptoms.size()){
                 if (!citizen.getRegisteredSymptoms().contains(Main2.symptoms.get(opcion))){
@@ -319,5 +331,15 @@ public class UserInterface {
         }while (opcion != 99);
     } // Con este metodo cualquier administrador deberia poder dar de alta/baja cualquier sintoma
 
+    static void traceIt(){
+        clear();
+        System.out.println( "|''||''|        (presione enter)         '||'   .   \n" +
+                            "   ||    ... ..   ....     ....    ....   ||  .||.  \n" +
+                            "   ||     ||' '' '' .||  .|   '' .|...||  ||   ||   \n" +
+                            "   ||     ||     .|' ||  ||      ||       ||   ||   \n" +
+                            "  .||.   .||.    '|..'|'  '|...'  '|...' .||.  '|.' \n\n");
+        Scanner.enter();
+        clear();
+    }
 }
 
