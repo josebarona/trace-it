@@ -1,5 +1,7 @@
 package TpProg2.DataStore;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
 
 public class CollectionStore<T extends Saveable> implements DataStore<T>{
@@ -50,5 +52,11 @@ public class CollectionStore<T extends Saveable> implements DataStore<T>{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public ArrayList<T> toArrayList() {
+        Collection<T> values = collectionStore.values();
+        return new ArrayList<T>(values);
     }
 }

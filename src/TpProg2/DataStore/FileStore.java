@@ -1,6 +1,7 @@
 package TpProg2.DataStore;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class FileStore<T extends FileSaveable> implements DataStore<T>{
     String fileName;
@@ -92,5 +93,10 @@ public class FileStore<T extends FileSaveable> implements DataStore<T>{
             System.out.println(e.getMessage());
         }
         return false;
+    }
+
+    @Override
+    public ArrayList<T> toArrayList() {
+        return null;
     }
 }

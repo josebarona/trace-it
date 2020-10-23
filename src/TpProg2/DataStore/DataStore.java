@@ -2,6 +2,8 @@ package TpProg2.DataStore;
 
 import TpProg2.Exceptions.ABMUserException;
 
+import java.util.ArrayList;
+
 public interface DataStore<T extends Saveable> {
     void save(T t);
     void remove(String id);
@@ -9,4 +11,5 @@ public interface DataStore<T extends Saveable> {
     void edit(T t);
     boolean isEmpty();
     boolean exists(String id);
+    ArrayList<T> toArrayList();
 }

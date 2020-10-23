@@ -1,6 +1,7 @@
 package TpProg2.ImplementOfUsers;
 
 import TpProg2.Events.Symptom;
+import TpProg2.Main2;
 import TpProg2.Users.Citizen;
 
 import java.util.ArrayList;
@@ -13,6 +14,17 @@ public class Zone {
 
     public Zone(String name) {
         this.name = name;
+    }
+
+    public void refresh (){
+        ArrayList<Citizen> allCitizens = Main2.citizenDataStore.toArrayList();
+        ArrayList<Citizen> localCitizens = new ArrayList<>();
+        for (int i = 0; i < allCitizens.size(); i++) {
+            if (allCitizens.get(i).getZone().equals(this)){
+                localCitizens.add(allCitizens.get(i));
+            }
+        }
+        citizens = localCitizens;
     }
 
     public void addCitizen(Citizen citizen){
@@ -30,6 +42,8 @@ public class Zone {
 
     public HashMap<Symptom, Integer> symptomCounter (ArrayList<Symptom> symptoms){ //Rellena un HashMap con un valor para cada sintoma segun cuantos ciudadanos en la zona lo hayan registrado.
         HashMap<Symptom, Integer> count = arrayListToHashMap(symptoms);
+        System.out.println(citizens.size());
+        System.out.println(citizens.get(0).getRegisteredSymptoms().size());
         for (int i = 0; i < citizens.size(); i++){
             for (int j = 0; j < citizens.get(i).getRegisteredSymptoms().size(); j++) {
                 Symptom key = citizens.get(i).getRegisteredSymptoms().get(j);
@@ -57,29 +71,33 @@ public class Zone {
     }
 
     public HashMap<Symptom, Integer> top3CommonSymptoms(ArrayList<Symptom> symptoms){
+        refresh();
         HashMap<Symptom, Integer> count = symptomCounter(symptoms);
         HashMap<Symptom, Integer> topSymptoms = new HashMap<>();
 
         Symptom symptom1 = commonSymptom(count, symptoms);
         topSymptoms.put(symptom1, count.get(symptom1));
-        count.remove(symptom1);
+        count.put(symptom1, 0);
 
         Symptom symptom2 = commonSymptom(count, symptoms);
         topSymptoms.put(symptom2, count.get(symptom2));
-        count.remove(symptom2);
+        count.put(symptom2, 0);
 
         Symptom symptom3 = commonSymptom(count, symptoms);
         topSymptoms.put(symptom3, count.get(symptom3));
+        count.put(symptom3, 0);
 
         return topSymptoms;
     }
 
 
     public String convertWithIteration(HashMap<Symptom, ?> map) {
-        String mapAsString = map.keySet().stream()
-                .map(key -> key + "=" + map.get(key))
-                .collect(Collectors.joining(", ", "{", "}"));
-        return mapAsString;
+        StringBuilder mapAsString = new StringBuilder("{");
+        for (Symptom key : map.keySet()) {
+            mapAsString.append(key.getName() + ": " + map.get(key) + ", ");
+        }
+        mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
+        return mapAsString.toString();
     }
 
 }

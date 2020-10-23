@@ -10,6 +10,8 @@ import TpProg2.Exceptions.ABMUserException;
 import TpProg2.ImplementOfUsers.Zone;
 import TpProg2.Users.*;
 import TpProg2.util.Scanner;
+import TpProg2.util.UserInterface;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -17,6 +19,9 @@ import java.util.HashMap;
 // main pasado un poco mas en limpio.
 
 public class Main2 {
+    //ANSES
+    public static DataStore<Citizen> anses = new FileStore<>("FileAnsesData");
+
     // DATA DE adminis:
     public static DataStore<Administrator> administratorDataStore = new CollectionStore<>(new HashMap<>()); // GUARDADO EN COLLECTIONS
     //static DataStore<Administrator> administratorDataStore = new AdminFileStore("FileAdminData"); // GUARDADO EN FILES
@@ -42,7 +47,7 @@ public class Main2 {
             new Zone("B"), new Zone("C"), new Zone("D")));
 
     public static void main(String[] args) {
-        menuPrincipal();
+        UserInterface.menuPrincipal();
     }
 
     public static void adminRegister() throws ABMAdminException, ABMUserException {
@@ -52,9 +57,13 @@ public class Main2 {
     }
 
     public static void citizenRegister() throws ABMCitizenException, ABMUserException {
-        Zone zone = zones.get((int) (Math.random() * (zones.size() + 1) + 0));
-        Citizen citizen = new Citizen(Scanner.getString("Ingrese su nombre de usuario: "),Scanner.getString("Ingrese su cuil: "),Scanner.getString("Ingrese su numero de telefono: "), zone);
-        citizenABM.add(citizen.getUserName(),citizen.getId(),citizen.getCuil(), zone);
+        //Zone zone = zones.get((int) (Math.random() * (zones.size() + 1) + 0));
+
+        String id = Scanner.getString("Ingrese su cuil: ");
+        if (anses.exists(id)) {
+            Citizen citizen = new Citizen(Scanner.getString("Ingrese su nombre de usuario: "), id, Scanner.getString("Ingrese su numero de telefono: "), zones.get(0));
+            citizenABM.add(citizen.getUserName(), citizen.getId(), citizen.getCuil(), zones.get(0));
+        }
 
         // HAY QUE AGREGARLO EN LA LISTA DE ZONES.
 
@@ -64,11 +73,11 @@ public class Main2 {
     public static void iniciarSesion(String userName, String phoneNumber) throws ABMUserException {
         if (administratorDataStore.exists(phoneNumber)){
             Administrator admin = administratorDataStore.findById(phoneNumber);
-            menuAdministrator(admin);
+            UserInterface.menuAdministrator(admin);
         }else if (citizenDataStore.exists(phoneNumber)) {
             Citizen citizen = citizenDataStore.findById(phoneNumber);
             if (!citizen.isBan()){
-                menuCitizen(citizen);
+                UserInterface.menuCitizen(citizen);
             }else{
                 System.out.println("El cuidadano se encuentra bloqueado momentaneamente");
             }
@@ -79,152 +88,5 @@ public class Main2 {
         busca en los datos si existe un usuario con el nombre y id que le pasa
         si existe pasa al menu del usuario al cual se asigna
          */
-    }
-
-    public static void menuPrincipal(){
-        int opcion;
-        String password = "TpGrupo14";
-        do{
-            System.out.println("\n  Menu: ");
-            System.out.println(" _________________________________________\n Operaciones: \n 1. Registrarse \n 2. Iniciar sesion \n 3.Exit");
-            opcion = Scanner.getInt("Que operación desea realizar: ");
-
-            switch (opcion) {
-                case 1:
-                    try {
-                        citizenRegister();
-                    } catch (ABMCitizenException | ABMUserException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                case 2:
-                    String userName = Scanner.getString("Nombre de Usuario: ");
-                    String cuil = Scanner.getString("Numero de Cuil: ");
-                    try {
-                        iniciarSesion(userName,cuil);
-                    } catch (ABMUserException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                case 999: //Registro secreto para ser administrador
-                    String word = Scanner.getString("Contraseña de usuarios administradores: ");
-                    if (word.equals(password)) {
-                        try {
-                            adminRegister();
-                        } catch (ABMAdminException | ABMUserException e) {
-                            e.printStackTrace();
-                        }
-                    }else{
-                        System.out.println("haz sido bloqueado del servidor");
-                        System.exit(0);
-                    }
-                    break;
-                case 3:
-                    System.out.println();
-                    System.out.println("Adios ;D, gracias por usar nuestro programa");
-                    System.exit(0);
-                default:
-                    System.out.println("\n Opcion invalida! (intente con otra opcion).\n");
-            }
-        }while(opcion != 3);
-    }
-
-    public static void menuCitizen(Citizen citizen) throws ABMUserException {
-        int opcion;
-        do {
-            System.out.println("\n  Menu Ciudadano: ");
-            System.out.println(" _________________________________________\n Operaciones: \n 1. Bandeja de entrada de invitaciones \n 2. Mandar solicitudes de encuentro \n 3. Registro de sintomas  \n 4. Ver/eliminar sintomas registrados \n 5. ... \n 6. Log Out \n 7. Exit ");
-            opcion = Scanner.getInt(" Que operación desea realizar: ");
-
-            switch (opcion){
-                case 1:
-                    citizen.inbox();
-                    break;
-                case 2:
-                    citizen.createIvitation();
-                    break;
-                case 3:
-                    citizen.selfRecordingOfSymptoms();
-                    break;
-                case 4:
-                    citizen.removeSymptom();
-                    break;
-                case 5:
-                    System.out.println(citizen.getRegisteredSymptoms().size());
-                    HashMap<Symptom, Integer> data = zones.get(0).top3CommonSymptoms(symptoms);
-                    System.out.println(zones.get(0).convertWithIteration(data));
-                    // ver en las meetings en las que estuvo; ----> (?)
-                    break;
-                case 6: //volver atras
-                    // menuPrincipal(); //no es necesario, termina volviendo solo.
-                    break;
-                case 7: // finalizar programa
-                    System.out.println();
-                    System.out.println("Adios ;D");
-                    System.exit(0);
-                    break;
-                default:
-                    System.out.println("opcion invalida!");
-            }
-        }while (opcion != 6);// seguramente vaya a haber mas opciones
-    }
-
-    public static void menuAdministrator(Administrator admin) throws ABMUserException {
-        int opcion;
-        do {
-            System.out.println("\n  Menu Administrador: ");
-            System.out.println(" _________________________________________\n Operaciones: \n 1 (sintomas) \n 2...  \n 3...  \n 4. Bloquear Ciudadano \n 5. Desbloquear Cuidadano \n 6. Log Out \n 7. Exit ");
-            opcion = Scanner.getInt(" Que operación desea realizar: ");
-
-            switch (opcion){
-                case 1:
-                    admin.symptomRegister(); //se ven los sintomas, se pueden eliminar o agregar nuevos.
-                    break;
-                case 2:
-                    //
-                    break;
-                case 3:
-                    //ver citizens bloqueados.
-                    break;
-                case 4:
-                    // el administrador deberia bloquear a un ciudadano?? preguntar ---> si no bloquea, se saca la opcion.
-                    String idCitizen = Scanner.getString("Ingrese id del ciudadano al que quiere Bloquear: ");
-                    if (citizenDataStore.exists(idCitizen)) {
-                        admin.banCitizen(citizenDataStore.findById(idCitizen));
-                        System.out.println("El ciudadano a sido bloqueado. ");
-                    }else{
-                        System.out.println("el usuario al que quiere bloquear no existe");
-                    }
-                    break;
-                case 5:
-                    String idCitizen2 = Scanner.getString("Pase id de ciudadano que quiere Desbloquear: ");
-                    if (citizenDataStore.exists(idCitizen2)) {
-                        admin.unbanCitizen(citizenDataStore.findById(idCitizen2));
-                        System.out.println("El ciudadano a sido desbloqueado. ");
-                    }else{
-                        System.out.println("el usuario al que quiere desbloquear no existe");
-                    }
-                    break;
-                case 6:
-                    //volver atras
-                    //menuPrincipal(); //no es necesario
-                    break;
-                case 7: // finalizar programa
-                    System.out.println();
-                    System.out.println("Adios ;D");
-                    System.exit(0);
-                    break;
-                default:
-                    System.out.println("opcion invalida!");
-
-            }
-
-        }while (opcion != 6); // seguramente va a haber mas opciones
-    }
-    void clear(){
-        for (int i = 0; i < 50; ++i) System.out.println();
-    }
-    void message(String message){
-        System.out.println("- - - - - - - - - - - - - - - -\n " + message + "- - - - - - - - - - - - - - - -\n ");
     }
 }
