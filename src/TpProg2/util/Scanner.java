@@ -98,4 +98,8 @@ public class Scanner {
             return getInt(message);
         }
     }
+
+    public static void enter(){
+        scanner.nextLine();
+    }
 }

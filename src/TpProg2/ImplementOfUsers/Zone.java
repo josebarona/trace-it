@@ -2,9 +2,10 @@ package TpProg2.ImplementOfUsers;
 
 import TpProg2.Events.Symptom;
 import TpProg2.Users.Citizen;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.stream.Collectors;
 
 public class Zone {
     String name;
@@ -48,6 +49,7 @@ public class Zone {
             }
         }
         if (max == 0){
+            System.out.println("fdlkjkjfkjfsdñlkj");
             return null;
         }else{
             return commonSymptom;
@@ -60,28 +62,24 @@ public class Zone {
 
         Symptom symptom1 = commonSymptom(count, symptoms);
         topSymptoms.put(symptom1, count.get(symptom1));
-        count.put(symptom1, 0);
-
+        count.remove(symptom1);
 
         Symptom symptom2 = commonSymptom(count, symptoms);
         topSymptoms.put(symptom2, count.get(symptom2));
-        count.put(symptom2, 0);
+        count.remove(symptom2);
 
         Symptom symptom3 = commonSymptom(count, symptoms);
         topSymptoms.put(symptom3, count.get(symptom3));
-        count.put(symptom3, 0);
 
         return topSymptoms;
     }
 
 
     public String convertWithIteration(HashMap<Symptom, ?> map) {
-        StringBuilder mapAsString = new StringBuilder("{");
-        for (Symptom key : map.keySet()) {
-            mapAsString.append(key.getName() + ": " + map.get(key) + ", ");
-        }
-        mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
-        return mapAsString.toString();
+        String mapAsString = map.keySet().stream()
+                .map(key -> key + "=" + map.get(key))
+                .collect(Collectors.joining(", ", "{", "}"));
+        return mapAsString;
     }
 
 }

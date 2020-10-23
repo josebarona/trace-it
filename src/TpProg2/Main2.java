@@ -53,11 +53,9 @@ public class Main2 {
 
     public static void citizenRegister() throws ABMCitizenException, ABMUserException {
         Zone zone = zones.get((int) (Math.random() * (zones.size() + 1) + 0));
-        //Zone zone = zones.get(0); ----> para probar en una zona
         Citizen citizen = new Citizen(Scanner.getString("Ingrese su nombre de usuario: "),Scanner.getString("Ingrese su cuil: "),Scanner.getString("Ingrese su numero de telefono: "), zone);
         citizenABM.add(citizen.getUserName(),citizen.getId(),citizen.getCuil(), zone);
 
-        //zone.addCitizen(citizen); ----> chequear
         // HAY QUE AGREGARLO EN LA LISTA DE ZONES.
 
         //System.out.println("la base de datos esta vacia? " + citizenDataStore.isEmpty());
@@ -154,7 +152,6 @@ public class Main2 {
                 case 5:
                     System.out.println(citizen.getRegisteredSymptoms().size());
                     HashMap<Symptom, Integer> data = zones.get(0).top3CommonSymptoms(symptoms);
-                    //zones.get(0).addCitizen(citizen); -----> chequear
                     System.out.println(zones.get(0).convertWithIteration(data));
                     // ver en las meetings en las que estuvo; ----> (?)
                     break;

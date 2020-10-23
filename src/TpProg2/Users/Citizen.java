@@ -15,7 +15,7 @@ public class Citizen extends User {
     ArrayList<Invitation> receivedInvitations; // todas las invitaciones llegan aca. Una vez que se acepta o se rechaza una invitacion se remueve de esta bandeja.
     ArrayList<FaceToFaceMeeting> acceptedRequest; // bandeja de invitaciones aceptadas.
     ArrayList<FaceToFaceMeeting> rejectedInvitations; // bandejas de invitaciones rechzadas.
-    ArrayList<Symptom> registeredSymptoms;
+    ArrayList<Symptom> registeredSymptoms = new ArrayList<Symptom>();
     int rejections;
     Zone zone;
 
@@ -24,19 +24,15 @@ public class Citizen extends User {
         this.receivedInvitations = new ArrayList<>(); // ArrayList<Invitation>
         this.acceptedRequest = new ArrayList<>(); //ArrayList<FaceToFaceMeeting>
         this.rejectedInvitations = new ArrayList<>(); //ArrayList<FaceToFaceMeeting>
-        this.registeredSymptoms = new ArrayList<Symptom>();
         this.isBan = false;
         this.rejections = 0;
         this.type = "Ciudadano";
         this.zone = zone;
+        registeredSymptoms.add(null);
     }
 
     public ArrayList<Symptom> getRegisteredSymptoms() {
         return registeredSymptoms;
-    }
-
-    public Zone getZone() {
-        return zone;
     }
 
     @Override
@@ -149,7 +145,7 @@ public class Citizen extends User {
 
     public String viewInvitationInfo(Invitation invitation){
         String info = " Invitacion de " + invitation.transmitter.getUserName() + ": \n";
-        info += " Ecuentro realizado en " + invitation.meeting.location.locationName + ", el dia " + invitation.meeting.start.mes + "/" + invitation.meeting.start.dia + " a las " + invitation.meeting.start.hora + "hs.";
+        info += " Ecuentro realizado en " + invitation.meeting.location + ", el dia " + invitation.meeting.start.mes + "/" + invitation.meeting.start.dia + " a las " + invitation.meeting.start.hora + "hs.";
         info += "\n hasta el dia " + invitation.meeting.finish.mes + "/" + invitation.meeting.finish.dia + " a las " + invitation.meeting.finish.hora + "hs.";
         return info;
     } //Metodo que devuelve un String con toda la informacion que lleva una invitacion (location, date, citizens)
@@ -157,7 +153,7 @@ public class Citizen extends User {
     public void createIvitation() throws ABMUserException {
         System.out.println(" Porfavor ingrese los siguientes datos sobre el encuentro al cual asistio: ");
         //1 Location
-        Location location = new Location(Scanner.getString(" El nombre de la ubicacion del encuentro: "));
+        String location = Scanner.getString(" El nombre de la ubicacion del encuentro: ");
         //2 Date
         Date start = new Date(Scanner.getDate(" Ingrese el numero de mes en el cual inicio este evento: "),
                               Scanner.getDate(" Ingrese el dia en el cual inicio el evento: "),

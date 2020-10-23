@@ -3,12 +3,12 @@ package TpProg2.ImplementOfUsers;
 import TpProg2.Users.Citizen;
 
 public class FaceToFaceMeeting {
-    public Location location;
+    public String location;
     public Date start;
     public Date finish;
     public Citizen[] attendeesCitizens;
 
-    public FaceToFaceMeeting(Location location, Date start, Date finish, Citizen[] meeting){
+    public FaceToFaceMeeting(String location, Date start, Date finish, Citizen[] meeting){
         this.location = location;
         this.start = start;
         this.finish = finish;
