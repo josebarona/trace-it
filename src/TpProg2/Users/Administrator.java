@@ -1,10 +1,5 @@
 package TpProg2.Users;
 
-import TpProg2.Events.Symptom;
-import TpProg2.Main2;
-import TpProg2.util.Scanner;
-
-
 public class Administrator extends User {
     String type;
 
@@ -29,11 +24,6 @@ public class Administrator extends User {
     @Override
     public String getFileRepresentation() {
         return super.getFileRepresentation();
-    }
-
-    @Override
-    public String getCuil() {
-        return super.getCuil();
     }
 
     @Override

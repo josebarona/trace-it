@@ -1,7 +1,6 @@
 package TpProg2.DataStore;
 
 import TpProg2.Exceptions.ABMUserException;
-
 import java.util.ArrayList;
 
 public interface DataStore<T extends Saveable> {

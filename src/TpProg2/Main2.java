@@ -11,7 +11,6 @@ import TpProg2.ImplementOfUsers.Zone;
 import TpProg2.Users.*;
 import TpProg2.util.Scanner;
 import TpProg2.util.UserInterface;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -61,6 +60,7 @@ public class Main2 {
 
         String id = Scanner.getString("Ingrese su cuil: ");
         if (anses.exists(id)) {
+
             Citizen citizen = new Citizen(Scanner.getString("Ingrese su nombre de usuario: "), id, Scanner.getString("Ingrese su numero de telefono: "), zones.get(0));
             citizenABM.add(citizen.getUserName(), citizen.getId(), citizen.getCuil(), zones.get(0));
         }

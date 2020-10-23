@@ -2,7 +2,6 @@ package TpProg2.Users;
 
 import TpProg2.DataStore.FileSaveable;
 import TpProg2.Events.Symptom;
-
 import java.util.ArrayList;
 
 public abstract class User implements FileSaveable {
@@ -18,13 +17,17 @@ public abstract class User implements FileSaveable {
     }
 
     public String getFileRepresentation() {
-        String fileData = getId() + "," + getUserName() + "," + getCuil(); //por ahora... despues hay que agregar + cosas.
+        String fileData = getId() + "," + getUserName() + "," + getPhoneNumber(); //por ahora... despues hay que agregar + cosas.
         return fileData;
     }
 
-    @Override
-     public String getId() {
+    public String getPhoneNumber() {
         return this.phoneNumber;
+    }
+
+    @Override
+     public String getId() { // hacer abstracto para que despues el admin no tenga cuil. 
+        return this.cuil;
     }
 
     public String getCuil() {
