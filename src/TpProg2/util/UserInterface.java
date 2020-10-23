@@ -15,6 +15,7 @@ import java.util.HashMap;
 
 //La idea de este metodo es tener todos los metodos de interfaz que se ven en consola, para no cargar el main
 public class UserInterface {
+
     private UserInterface() { }
 
     public static void menuPrincipal(){
@@ -64,7 +65,7 @@ public class UserInterface {
                     System.out.println("Adios ;D, gracias por usar nuestro programa");
                 default:
                     clear();
-                    message("\n Opcion invalida! (intente con otra opcion).\n");
+                    message(" Opcion invalida! (intente con otra opcion).");
             }
         }while(opcion != 3);
         System.exit(0);
@@ -164,14 +165,6 @@ public class UserInterface {
             }
 
         }while (opcion != 6); // seguramente va a haber mas opciones
-    }
-
-    public static void clear(){
-        for (int i = 0; i < 30; ++i) System.out.println();
-    }
-
-    public static void message(String message){
-        System.out.println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n " + message + "\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n ");
     }
 
     public static void inbox (Citizen citizen){
@@ -284,26 +277,6 @@ public class UserInterface {
         }while(opcion != 99);
     }// Con este metodo un ciudadano deberia poder seleccionar los sintomas que posee y asi guardar un registro.
 
-    public static void removeSymptom(Citizen citizen){
-        int opcion;
-        do {
-            System.out.println("\n Sintomas registrados: \n" + citizen.viewSymptoms(citizen.getRegisteredSymptoms()) + "\n99. (volver)");
-            opcion = Scanner.getInt(" Que sintoma registrado desea eliminar: ");
-            if (opcion != 99 && opcion < citizen.getRegisteredSymptoms().size() && opcion >= 0){
-                citizen.getRegisteredSymptoms().remove(citizen.getRegisteredSymptoms().get(opcion));
-                System.out.println("\n El sintoma fue eliminado de su registro!");
-            }else if(opcion != 99){
-                System.out.println(" Opcion invalida!");
-            }
-        }while (opcion != 99);
-    } // Permite a un ciudadano eliminar un sintoma previamente autodiagnosticado.
-
-    public static void estadisticasZona(){
-        //System.out.println(citizen.getRegisteredSymptoms().size());
-        HashMap<Symptom, Integer> data = Main2.zones.get(0).top3CommonSymptoms(Main2.symptoms);
-        System.out.println(Main2.zones.get(0).convertWithIteration(data));
-    }
-
     public static void symptomRegister(Administrator administrator){
         int opcion;
         do {
@@ -331,6 +304,26 @@ public class UserInterface {
         }while (opcion != 99);
     } // Con este metodo cualquier administrador deberia poder dar de alta/baja cualquier sintoma
 
+    public static void removeSymptom(Citizen citizen){
+        int opcion;
+        do {
+            System.out.println("\n Sintomas registrados: \n" + citizen.viewSymptoms(citizen.getRegisteredSymptoms()) + "\n99. (volver)");
+            opcion = Scanner.getInt(" Que sintoma registrado desea eliminar: ");
+            if (opcion != 99 && opcion < citizen.getRegisteredSymptoms().size() && opcion >= 0){
+                citizen.getRegisteredSymptoms().remove(citizen.getRegisteredSymptoms().get(opcion));
+                System.out.println("\n El sintoma fue eliminado de su registro!");
+            }else if(opcion != 99){
+                System.out.println(" Opcion invalida!");
+            }
+        }while (opcion != 99);
+    } // Permite a un ciudadano eliminar un sintoma previamente autodiagnosticado.
+
+    public static void estadisticasZona(){
+        //System.out.println(citizen.getRegisteredSymptoms().size());
+        HashMap<Symptom, Integer> data = Main2.zones.get(0).top3CommonSymptoms(Main2.symptoms);
+        System.out.println(Main2.zones.get(0).convertWithIteration(data));
+    }
+
     static void traceIt(){
         clear();
         System.out.println( "|''||''|        (presione enter)         '||'   .   \n" +
@@ -340,6 +333,14 @@ public class UserInterface {
                             "  .||.   .||.    '|..'|'  '|...'  '|...' .||.  '|.' \n\n");
         Scanner.enter();
         clear();
+    }
+
+    public static void clear(){
+        for (int i = 0; i < 30; ++i) System.out.println();
+    }
+
+    public static void message(String message){
+        System.out.println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n " + message + "\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n ");
     }
 }
 
