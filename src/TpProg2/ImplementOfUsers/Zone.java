@@ -24,33 +24,23 @@ public class Zone {
             }
         }
         citizens = localCitizens;
-    }
+    } //Actualiza y guarda la informacion de todos los ciudadanos de esta zona
 
-    public void addCitizen(Citizen citizen){
-        citizens.add(citizen);
-    }
-
-    //mire a los ciudadanos y vea cuente los sintomas
-    public HashMap<Symptom, Integer> arrayListToHashMap(ArrayList<Symptom> symptoms){ //crea un HashMap con los sintomas (key) y ceros predeterminados
+    public HashMap<Symptom, Integer> symptomCounter (ArrayList<Symptom> symptoms){
         HashMap<Symptom, Integer> count = new HashMap<>();
-        for (int i = 0; i < symptoms.size(); i++){
+
+        for (int i = 0; i < symptoms.size(); i++){ //Crea un HashMap con los sintomas (key) y ceros predeterminados
             count.put(symptoms.get(i), 0);
         }
-        return count;
-    }
 
-    public HashMap<Symptom, Integer> symptomCounter (ArrayList<Symptom> symptoms){ //Rellena un HashMap con un valor para cada sintoma segun cuantos ciudadanos en la zona lo hayan registrado.
-        HashMap<Symptom, Integer> count = arrayListToHashMap(symptoms);
-        System.out.println(citizens.size());
-        System.out.println(citizens.get(0).getRegisteredSymptoms().size());
-        for (int i = 0; i < citizens.size(); i++){
+        for (int i = 0; i < citizens.size(); i++){ //Se hace un conteo de todos los sintomas registrados.
             for (int j = 0; j < citizens.get(i).getRegisteredSymptoms().size(); j++) {
                 Symptom key = citizens.get(i).getRegisteredSymptoms().get(j);
                 count.put(key, count.get(key) + 1);
             }
         }
         return count;
-    }
+    } //Rellena un HashMap con un valor para cada sintoma segun cuantos ciudadanos en la zona lo hayan registrado.
 
     public Symptom commonSymptom (HashMap<Symptom, Integer> count, ArrayList<Symptom> symptoms){ //Devuelve el sintoma mas comun dentro de un HashMap
         int max = 0;
@@ -67,7 +57,7 @@ public class Zone {
         }else{
             return commonSymptom;
         }
-    }
+    } //Devuelva el sintoma que haya sido registrado mas veces dentro de la zona.
 
     public HashMap<Symptom, Integer> top3CommonSymptoms(ArrayList<Symptom> symptoms){
         refresh();
@@ -87,8 +77,7 @@ public class Zone {
         count.put(symptom3, 0);
 
         return topSymptoms;
-    }
-
+    } //Devuelve un HashMap con las 3 enfermedades mas comunes por zona y la cantidad de ciudadanos que la registraron.
 
     public String convertWithIteration(HashMap<Symptom, ?> map) {
         StringBuilder mapAsString = new StringBuilder("{");
@@ -97,6 +86,6 @@ public class Zone {
         }
         mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
         return mapAsString.toString();
-    }
+    } //Convierte un HashMap a string.
 
 }
