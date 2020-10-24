@@ -1,10 +1,7 @@
 package TpProg2.Users;
 
 import TpProg2.Events.Symptom;
-import TpProg2.Exceptions.ABMUserException;
 import TpProg2.ImplementOfUsers.*;
-import TpProg2.Main2;
-import TpProg2.util.Scanner;
 
 import java.util.ArrayList;
 
@@ -28,7 +25,7 @@ public class Citizen extends User {
         this.rejections = 0;
         this.type = "Ciudadano";
         this.zone = zone;
-        this.registeredSymptoms = new ArrayList<Symptom>();
+        this.registeredSymptoms = new ArrayList<>();
     }
 
     public ArrayList<Invitation> getReceivedInvitations() {

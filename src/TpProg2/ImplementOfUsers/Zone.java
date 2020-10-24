@@ -1,12 +1,11 @@
 package TpProg2.ImplementOfUsers;
 
 import TpProg2.Events.Symptom;
-import TpProg2.Main2;
+import TpProg2.Main;
 import TpProg2.Users.Citizen;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.stream.Collectors;
 
 public class Zone {
     String name;
@@ -17,7 +16,7 @@ public class Zone {
     }
 
     public void refresh (){
-        ArrayList<Citizen> allCitizens = Main2.citizenDataStore.toArrayList();
+        ArrayList<Citizen> allCitizens = Main.generalAMB.citizenDataStore.toArrayList();
         ArrayList<Citizen> localCitizens = new ArrayList<>();
         for (int i = 0; i < allCitizens.size(); i++) {
             if (allCitizens.get(i).getZone().equals(this)){
