@@ -22,8 +22,8 @@ public class AMBGeneral {
     public ArrayList<Symptom> symptoms;
     public Disease disease; // No usamos una lista de enfermedades por ahora, solo hay una.
     public ArrayList<Zone> zones;
-    //ArrayList<Citizen> enfermos;
-    //ArrayList<Citizen> bloqueados;
+    //public ArrayList<Citizen> enfermos;
+    //public ArrayList<Citizen> bloqueados;
 
     public AMBGeneral(DataStore<Citizen> anses, ABMAdmin adminABM, ABMCitizen citizenABM, ArrayList<Symptom> symptoms, Disease disease, ArrayList<Zone> zones) {
         this.anses = anses;

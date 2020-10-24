@@ -63,6 +63,7 @@ public class UserInterface {
                 case 3:
                     System.out.println();
                     System.out.println("Adios ;D, gracias por usar nuestro programa");
+                    break;
                 default:
                     clear();
                     message(" Opcion invalida! (intente con otra opcion).");
