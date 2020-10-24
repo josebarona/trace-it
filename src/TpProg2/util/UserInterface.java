@@ -230,16 +230,16 @@ public class UserInterface {
         title(" Ubicacion");
         String location = Scanner.getString(" El nombre de la ubicacion del encuentro: ");
         //2 Date
-        title(" Fecha de inicio");
+        title("\n Fecha de inicio");
         Date start = new Date(Scanner.getDate(" Ingrese el numero de mes en el cual inicio este evento: "),
                 Scanner.getDate(" Ingrese el dia en el cual inicio el evento: "),
                 Scanner.getDate(" Ingrese la hora a la cual inicio el evento: "));
-        title(" Fecha de cierre");
+        title("\n Fecha de cierre");
         Date end = new Date(Scanner.getDate(" Ingrese el numero de mes en el cual finalizo este evento: "),
                 Scanner.getDate(" Ingrese el dia en el cual finalizo el evento: "),
                 Scanner.getDate(" Ingrese la hora a la cual finalizo el evento: "));
         //3 Citizens
-        title(" Ciudadanos presentes");
+        title("\n Ciudadanos presentes");
         int cantidad = Scanner.getInt(" Cuantas pesonas asistieron a este evento? ");
         Citizen[] presentCitizens = new Citizen[cantidad];
         for (int i = 0; i < cantidad; i++){
@@ -294,8 +294,8 @@ public class UserInterface {
             opcion = Scanner.getInt(" Que sintoma registrado desea eliminar: ");
             clear();
             if (opcion != 99 && opcion < citizen.getRegisteredSymptoms().size() && opcion >= 0){
+                message(" El sintoma (" + citizen.getRegisteredSymptoms().get(opcion).getName() +") eliminado de su registro!!");
                 citizen.getRegisteredSymptoms().remove(citizen.getRegisteredSymptoms().get(opcion));
-                message(" El sintoma (" + Main.generalAMB.symptoms.get(opcion).getName() +") eliminado de su registro!!");
             }else if(opcion != 99){
                 message(" Opcion invalida!");
             }
