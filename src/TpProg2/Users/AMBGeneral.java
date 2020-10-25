@@ -22,7 +22,7 @@ public class AMBGeneral {
     public ArrayList<Symptom> symptoms;
     public Disease disease; // No usamos una lista de enfermedades por ahora, solo hay una.
     public ArrayList<Zone> zones;
-    //public ArrayList<Citizen> enfermos;
+    public ArrayList<Citizen> seekCitizens;
     //public ArrayList<Citizen> bloqueados;
 
     public AMBGeneral(DataStore<Citizen> anses, ABMAdmin adminABM, ABMCitizen citizenABM, ArrayList<Symptom> symptoms, Disease disease, ArrayList<Zone> zones) {
@@ -65,6 +65,23 @@ public class AMBGeneral {
                 new Zone("C"),
                 new Zone("D")
         ));
+
+        this.seekCitizens = new ArrayList<Citizen>();
+    }
+
+    public void addSeekCitizen(Citizen citizen){
+        if (seekCitizens == null || !seekCitizens.contains(citizen)) {
+            seekCitizens.add(citizen);
+        }
+    }
+    public void removeSeekCitizen(Citizen citizen){
+        if (seekCitizens != null && seekCitizens.contains(citizen)) {
+            seekCitizens.remove(citizen);
+        }
+    }
+
+    public ArrayList<Symptom> getSymptoms() {
+        return symptoms;
     }
 
     public void adminRegister() throws ABMAdminException, ABMUserException {

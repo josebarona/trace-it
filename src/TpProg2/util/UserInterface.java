@@ -81,7 +81,7 @@ public class UserInterface {
         int opcion;
         do {
             title("  Menu Ciudadano: ");
-            System.out.println("  Operaciones: \n\n 1. Notificaciones(" + citizen.getReceivedNotifications().size()+ ") \n 2. Bandeja de entrada de invitaciones \n 3. Mandar solicitudes de encuentro \n 4. Registro de sintomas  \n 5. Ver/eliminar sintomas registrados\n 6. Log Out \n 7. Exit\n");
+            System.out.println("  Operaciones: \n\n 1. Notificaciones(" + citizen.getNotifications().size()+ ") \n 2. Bandeja de entrada de invitaciones(" + citizen.getReceivedInvitations().size()+ ") \n 3. Mandar solicitudes de encuentro \n 4. Registro de sintomas  \n 5. Ver/eliminar sintomas registrados\n 6. Log Out \n 7. Exit\n");
             opcion = Scanner.getInt(" Que operación desea realizar: ");
             clear();
 
@@ -183,17 +183,17 @@ public class UserInterface {
             opcion = Scanner.getInt(" Que notificacion deseas ver: ");
             clear();
 
-            if (opcion < citizen.getReceivedNotifications().size()) {
+            if (opcion < citizen.getNotifications().size()) {
                 int opcion1;
                 do {
-                    System.out.println(viewNotificationInfo(citizen.getReceivedNotifications().get(opcion)));
+                    System.out.println(viewNotificationInfo(citizen.getNotifications().get(opcion)));
                     opcion1 = Scanner.getInt("\n   1. Borrar notificacion \n   2. (volver)\n\n   Opcion: ");
                     clear();
                     switch (opcion1) {
                         case 1:
-                            citizen.getReceivedNotifications().remove(citizen.getReceivedNotifications().get(opcion));
+                            citizen.getNotifications().remove(citizen.getNotifications().get(opcion));
                             message(" Notificacion eliminada!!");
-                            opcion1 = 3;
+                            opcion1 = 2;
                             break;
                         case 2:
                             break;
@@ -209,9 +209,9 @@ public class UserInterface {
 
     private static String viewNotificationsTitles(Citizen citizen) {
         String lista = "";
-        if (citizen.getReceivedNotifications().size() > 0) {
-            for (int i = 0; i < citizen.getReceivedNotifications().size(); i++) {
-                lista += "  " + i + ". " + citizen.getReceivedNotifications().get(i).seekCitizen.getUserName() + "\n";
+        if (citizen.getNotifications().size() > 0) {
+            for (int i = 0; i < citizen.getNotifications().size(); i++) {
+                lista += "  " + i + ". " + citizen.getNotifications().get(i).seekCitizen.getUserName() + "\n";
             }
         } else {
             lista += "\n    (No tienes ninguna notificacion)\n";
@@ -222,7 +222,6 @@ public class UserInterface {
     private static String viewNotificationInfo(Notification notification) {
         return " - Hace menos de 48 horas estuviste reunido con " + notification.seekCitizen.getUserName() + "\n el cual recientemente presento mas de 3 sintomas de COVID!!";
     }
-
 
     public static void inbox(Citizen citizen) {
         int opcion;
@@ -298,11 +297,12 @@ public class UserInterface {
         //3 Citizens
         title("\n Ciudadanos presentes");
         int cantidad = Scanner.getInt(" Cuantas pesonas asistieron a este evento? ");
-        Citizen[] presentCitizens = new Citizen[cantidad];
-        for (int i = 0; i < cantidad; i++) {
+        Citizen[] presentCitizens = new Citizen[cantidad+1];
+        presentCitizens[0] = citizen;
+        for (int i = 1; i < cantidad+1; i++) {
             boolean v = true;
             do {
-                Citizen citizen1 = Main.generalAMB.citizenDataStore.findById(Scanner.getString(" Ingrese el cuil del ciudadano (" + (i + 1) + "): "));
+                Citizen citizen1 = Main.generalAMB.citizenDataStore.findById(Scanner.getString(" Ingrese el cuil del ciudadano (" + (i) + "): "));
                 if (citizen1 != null) {
                     presentCitizens[i] = citizen1;
                     v = false;
@@ -316,10 +316,13 @@ public class UserInterface {
         FaceToFaceMeeting meeting = new FaceToFaceMeeting(location, start, end, presentCitizens);
         Invitation invitation = new Invitation(meeting, citizen);
         //enviarla a todos los participantes
-        for (int i = 0; i < cantidad; i++) {
+        for (int i = 1; i < cantidad+1; i++) {
             citizen.sendRequest(presentCitizens[i], invitation);
+            if (isSeek(citizen)){
+                citizen.sendNotification(presentCitizens[i], new Notification(citizen, citizen.getGotSeek()));
+            }
         }
-        citizen.acceptedRequest(invitation);//tambien se agrega este encuentro a la persona que lo creo
+        citizen.getAcceptedRequest().add(invitation.meeting);;//tambien se agrega este encuentro a la persona que lo creo
         clear();
         message(" La solicitud del evento fue enviada a todos los participantes del mismo.");
     } // Con este metodo un ciudadano deberia poder crear una invitacion sobre una meeting/encuento, el cual debe tener una localizacion, fecha e integrantes de la misma.
@@ -360,6 +363,7 @@ public class UserInterface {
             if (opcion != 99 && opcion < citizen.getRegisteredSymptoms().size() && opcion >= 0) {
                 message(" El sintoma (" + citizen.getRegisteredSymptoms().get(opcion).getName() + ") eliminado de su registro!!");
                 citizen.getRegisteredSymptoms().remove(citizen.getRegisteredSymptoms().get(opcion));
+                isSeek(citizen);//con esto lo elimina de la lista de enfermos
             } else if (opcion != 99) {
                 message(" Opcion invalida!");
             }
@@ -368,32 +372,56 @@ public class UserInterface {
 
     public static boolean isSeek(Citizen citizen){
         int count = 0;
-        ArrayList<Symptom> diseaseSymptoms = Main.generalAMB.disease.getSymptomArrayList();
+        ArrayList<Symptom> diseaseSymptoms = Main.generalAMB.getSymptoms();
         for (int i = 0; i < citizen.getRegisteredSymptoms().size(); i++) {
-            for (int j = 0; j < diseaseSymptoms.size(); j++) {
-                if (citizen.getRegisteredSymptoms().get(i).equals(diseaseSymptoms.get(j))){
-                    count ++;
-                }
+            if (diseaseSymptoms.contains(citizen.getRegisteredSymptoms().get(i))){
+                count ++;
             }
         }
-        return count >= 3;
+        if (count >= 3) {
+            Main.generalAMB.addSeekCitizen(citizen);
+            citizen.setGotSeek(new Date(Calendar.MONTH ,Calendar.DAY_OF_MONTH, Calendar.HOUR_OF_DAY));
+            return true;
+        } else{
+            Main.generalAMB.removeSeekCitizen(citizen);
+            return false;
+        }
     } // Confirma si un ciudadano tiene suficientes sintomas como para considerarse enfermo
 
     public static void alertRecentCitizens(Citizen citizen){
-        Date today = new Date(Calendar.MONTH ,Calendar.DAY_OF_MONTH, Calendar.HOUR_OF_DAY);
-        int todayHours = monthdays(Calendar.MONTH-1)*24 + (Calendar.DAY_OF_MONTH-1)*24 + Calendar.HOUR_OF_DAY;
+        /*
+        int todayHours = monthday(Calendar.MONTH-1)*24 + (Calendar.DAY_OF_MONTH-1)*24 + Calendar.HOUR_OF_DAY;
         for (int i = 0; i < citizen.getAcceptedRequest().size(); i++) {
             Date meetingDate = citizen.getAcceptedRequest().get(i).finish;
-            int meetingHours = monthdays(meetingDate.mes-1)*24 + (meetingDate.dia-1)*24 + meetingDate.hora;
+            int meetingHours = monthday(meetingDate.mes-1)*24 + (meetingDate.dia-1)*24 + meetingDate.hora;
             if (todayHours - meetingHours < 48) {
                 for (int j = 0; j < citizen.getAcceptedRequest().get(i).getAttendeesCitizens().length; j++) {
-                    citizen.getAcceptedRequest().get(i).getAttendeesCitizens()[j].receiveNotification(new Notification(citizen, today));
+                    if (!citizen.getAcceptedRequest().get(i).getAttendeesCitizens()[j].equals(citizen)) {
+                        citizen.getAcceptedRequest().get(i).getAttendeesCitizens()[j].receiveNotification(new Notification(citizen, today));
+                    }
                 }
             }
         }
+        */
+        // 1 primero deberiamos armar una lista con los encuentros que pasaron hace menos de 48 horas, por ahora lo hago con todos los encuentros.
+        // 2 armamos una lista con toda la gente a la que deberiamos notificar (no se repiten y no nos incluye)
+        ArrayList<Citizen> deberiamosAviar = new ArrayList<>();
+        for (int i = 0; i < citizen.getAcceptedRequest().size(); i++) {
+            for (int j = 0; j < citizen.getAcceptedRequest().get(i).getAttendeesCitizens().length; j++) {
+                if (!citizen.getAcceptedRequest().get(i).getAttendeesCitizens()[j].equals(citizen) && !deberiamosAviar.contains(citizen.getAcceptedRequest().get(i).getAttendeesCitizens()[j])) { // si no soy yo, y todavia no esta en la lista
+                    deberiamosAviar.add(citizen.getAcceptedRequest().get(i).getAttendeesCitizens()[j]);
+                }
+            }
+        }
+        //3 creamos la notificacion
+        Notification notification = new Notification(citizen, citizen.getGotSeek());
+        //4 ahora le mandamos la notificacion a esta lista de gente (no queremos que tenga dos notificaciones de la misma persona)
+        for (int i = 0; i < deberiamosAviar.size(); i++) {
+            citizen.sendNotification(deberiamosAviar.get(i), notification);
+        }
     }
 
-    public static int monthdays(int mes){
+    public static int pastMonthDays(int mes){//Hay que cambiarlo a todos los dias anteriores
 
         int numeroDias=-1;
 
