@@ -6,9 +6,9 @@ import java.util.List;
 
 public class Disease implements FileSaveable {
     String name;
-    List<Symptom> symptomArrayList;
+    ArrayList<Symptom> symptomArrayList;
 
-    public Disease(String name, List<Symptom> symptomArrayList) {
+    public Disease(String name, ArrayList<Symptom> symptomArrayList) {
         this.name = name;
         this.symptomArrayList = symptomArrayList;
     }
@@ -20,6 +20,10 @@ public class Disease implements FileSaveable {
 
     public String getName() {
         return name;
+    }
+
+    public ArrayList<Symptom> getSymptomArrayList() {
+        return symptomArrayList;
     }
 
     @Override

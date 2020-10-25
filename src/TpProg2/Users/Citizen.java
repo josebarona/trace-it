@@ -9,6 +9,7 @@ public class Citizen extends User {
 
     String type;
     boolean isBan;
+    ArrayList<Notification> receivedNotifications;
     ArrayList<Invitation> receivedInvitations; // todas las invitaciones llegan aca. Una vez que se acepta o se rechaza una invitacion se remueve de esta bandeja.
     ArrayList<FaceToFaceMeeting> acceptedRequest; // bandeja de invitaciones aceptadas.
     ArrayList<FaceToFaceMeeting> rejectedInvitations; // bandejas de invitaciones rechzadas.
@@ -18,6 +19,7 @@ public class Citizen extends User {
 
     public Citizen(String userName, String cuil, String phoneNumber, Zone zone) {
         super(userName, cuil, phoneNumber);
+        this.receivedNotifications = new ArrayList<>();
         this.receivedInvitations = new ArrayList<>(); // ArrayList<Invitation>
         this.acceptedRequest = new ArrayList<>(); //ArrayList<FaceToFaceMeeting>
         this.rejectedInvitations = new ArrayList<>(); //ArrayList<FaceToFaceMeeting>
@@ -26,6 +28,10 @@ public class Citizen extends User {
         this.type = "Ciudadano";
         this.zone = zone;
         this.registeredSymptoms = new ArrayList<>();
+    }
+
+    public ArrayList<Notification> getReceivedNotifications() {
+        return receivedNotifications;
     }
 
     public ArrayList<Invitation> getReceivedInvitations() {
@@ -92,6 +98,10 @@ public class Citizen extends User {
     public void receiveMeetingRequest(Invitation invitation){ // aceptar o rechazar invitacion para faceToFaceMeeting; - Nacho B
         this.receivedInvitations.add(invitation);
     } // Recibe una invitacion dentro del inbox/bandeja de entrada
+
+    public void receiveNotification(Notification notification){this.receivedNotifications.add(notification); }
+
+    public void sendNotification(Citizen sendTo, Notification notification){ sendTo.receiveNotification(notification);}
 
     public void sendRequest(Citizen sendTo, Invitation invitation){
         sendTo.receiveMeetingRequest(invitation);

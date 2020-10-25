@@ -14,5 +14,9 @@ public class FaceToFaceMeeting {
         this.finish = finish;
         this.attendeesCitizens = meeting;
     }
+
+    public Citizen[] getAttendeesCitizens() {
+        return attendeesCitizens;
+    }
 }
 //Esta clase representa un encuentro social que haya sucedido en el pasado, inclye una localizacion, fecha e integrantes de la misma.
