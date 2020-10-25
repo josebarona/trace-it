@@ -11,17 +11,16 @@ import TpProg2.ImplementOfUsers.Notification;
 import TpProg2.Main;
 import TpProg2.Users.Administrator;
 import TpProg2.Users.Citizen;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
-//La idea de este metodo es tener todos los metodos de interfaz que se ven en consola, para no cargar el main
+//La idea de este metodo es tener todos los metodos de interfaz que se ven en consola, principalmente para no cargar el main.
 public class UserInterface {
 
     private UserInterface() {
     }
-
+    //Menus
     public static void menuPrincipal() {
         traceIt();
         int opcion;
@@ -175,6 +174,7 @@ public class UserInterface {
         } while (opcion != 6); // seguramente va a haber mas opciones
     }
 
+    //Notificaciones
     public static void notifications(Citizen citizen) {
         int opcion;
         do {
@@ -223,6 +223,78 @@ public class UserInterface {
         return " - Hace menos de 48 horas estuviste reunido con " + notification.seekCitizen.getUserName() + "\n el cual recientemente presento mas de 3 sintomas de COVID!!";
     }
 
+    public static void alertRecentCitizens(Citizen citizen){
+        Date today = actualDate();
+        int todayHours = pastMonthDays(today.mes)*24 + today.dia*24 + today.hora;
+        //1 Primero creamos una lista con todos los encuentros que sucedieron hace menos de 48 horas
+        ArrayList<FaceToFaceMeeting> recentMeetings = new ArrayList<>();
+        for (int i = 0; i < citizen.getAcceptedRequest().size(); i++) {
+            Date meetingDate = citizen.getAcceptedRequest().get(i).finish;
+            int meetingHours = pastMonthDays(meetingDate.mes)*24 + meetingDate.dia*24 + meetingDate.hora;
+            if (Math.abs(todayHours - meetingHours) < 48) {
+                recentMeetings.add(citizen.getAcceptedRequest().get(i));
+            }
+        }
+        //2 Armamos una lista con todos los ciudadanos que asistieron a estos encuentros y deberiamos notificar (no debemos estar en ella y no se tienen que repetir los ciudadanos)
+        ArrayList<Citizen> deberiamosAviar = new ArrayList<>();
+        for (int i = 0; i < recentMeetings.size(); i++) {
+            for (int j = 0; j < recentMeetings.get(i).getAttendeesCitizens().length; j++) {
+                if (!recentMeetings.get(i).getAttendeesCitizens()[j].equals(citizen) && !deberiamosAviar.contains(recentMeetings.get(i).getAttendeesCitizens()[j])) { // (si no soy yo, y todavia no esta en la lista)
+                    deberiamosAviar.add(recentMeetings.get(i).getAttendeesCitizens()[j]);
+                }
+            }
+        }
+        //3 Creamos la notificacion
+        Notification notification = new Notification(citizen, citizen.getGotSeek());
+        //4 Enviamos la notificacion a esta lista de gente
+        for (int i = 0; i < deberiamosAviar.size(); i++) {
+            citizen.sendNotification(deberiamosAviar.get(i), notification);
+        }
+    }
+
+    public static Date actualDate(){
+        Calendar fecha = Calendar.getInstance();
+        int dia = fecha.get(Calendar.DAY_OF_MONTH);
+        int mes = fecha.get(Calendar.MONTH)+1;
+        int hora = fecha.get(Calendar.HOUR_OF_DAY);
+        return new Date(mes, dia, hora);
+    }
+
+    public static int pastMonthDays(int mes){// Hay que hacer que devuelva la cantidad de dias que hubieron en los meses anteriores a ese (solo para 2020 en este caso)
+
+        int numeroDias=-1;
+
+        switch(mes){
+
+            case 12:
+                numeroDias += 30;
+            case 11:
+                numeroDias += 31;
+            case 10:
+                numeroDias += 30;
+            case 9:
+                numeroDias += 31;
+            case 8:
+                numeroDias += 31;
+            case 7:
+                numeroDias += 30;
+            case 6:
+                numeroDias += 31;
+            case 5:
+                numeroDias += 30;
+            case 4:
+                numeroDias += 31;
+            case 3:
+                numeroDias += 29;
+            case 2:
+                numeroDias += 31;
+            case 1:
+                break;
+        }
+        return numeroDias;
+    }
+
+    //Ecuentros/Invitaciones
     public static void inbox(Citizen citizen) {
         int opcion;
         do {
@@ -318,7 +390,7 @@ public class UserInterface {
         //enviarla a todos los participantes
         for (int i = 1; i < cantidad+1; i++) {
             citizen.sendRequest(presentCitizens[i], invitation);
-            if (isSeek(citizen)){
+            if (citizen.isSeek()){
                 citizen.sendNotification(presentCitizens[i], new Notification(citizen, citizen.getGotSeek()));
             }
         }
@@ -327,6 +399,7 @@ public class UserInterface {
         message(" La solicitud del evento fue enviada a todos los participantes del mismo.");
     } // Con este metodo un ciudadano deberia poder crear una invitacion sobre una meeting/encuento, el cual debe tener una localizacion, fecha e integrantes de la misma.
 
+    //Sintomas
     public static void selfRecordingOfSymptoms(Citizen citizen) {
         int opcion;
         do {
@@ -340,7 +413,7 @@ public class UserInterface {
                     message("El sintoma (" + Main.generalAMB.symptoms.get(opcion).getName() + ") fue registrado!");
 
                     //aca tendriamos que ver si se considera que esta enfermo.
-                    if (isSeek(citizen)) {
+                    if (citizen.isSeek()) {
                         alertRecentCitizens(citizen);
                     }
 
@@ -363,90 +436,12 @@ public class UserInterface {
             if (opcion != 99 && opcion < citizen.getRegisteredSymptoms().size() && opcion >= 0) {
                 message(" El sintoma (" + citizen.getRegisteredSymptoms().get(opcion).getName() + ") eliminado de su registro!!");
                 citizen.getRegisteredSymptoms().remove(citizen.getRegisteredSymptoms().get(opcion));
-                isSeek(citizen);//con esto lo elimina de la lista de enfermos
+                citizen.isSeek();//con esto lo elimina de la lista de enfermos
             } else if (opcion != 99) {
                 message(" Opcion invalida!");
             }
         } while (opcion != 99);
     } // Permite a un ciudadano eliminar un sintoma previamente autodiagnosticado.
-
-    public static boolean isSeek(Citizen citizen){
-        int count = 0;
-        ArrayList<Symptom> diseaseSymptoms = Main.generalAMB.getSymptoms();
-        for (int i = 0; i < citizen.getRegisteredSymptoms().size(); i++) {
-            if (diseaseSymptoms.contains(citizen.getRegisteredSymptoms().get(i))){
-                count ++;
-            }
-        }
-        if (count >= 3) {
-            Main.generalAMB.addSeekCitizen(citizen);
-            citizen.setGotSeek(new Date(Calendar.MONTH ,Calendar.DAY_OF_MONTH, Calendar.HOUR_OF_DAY));
-            return true;
-        } else{
-            Main.generalAMB.removeSeekCitizen(citizen);
-            return false;
-        }
-    } // Confirma si un ciudadano tiene suficientes sintomas como para considerarse enfermo
-
-    public static void alertRecentCitizens(Citizen citizen){
-        /*
-        int todayHours = monthday(Calendar.MONTH-1)*24 + (Calendar.DAY_OF_MONTH-1)*24 + Calendar.HOUR_OF_DAY;
-        for (int i = 0; i < citizen.getAcceptedRequest().size(); i++) {
-            Date meetingDate = citizen.getAcceptedRequest().get(i).finish;
-            int meetingHours = monthday(meetingDate.mes-1)*24 + (meetingDate.dia-1)*24 + meetingDate.hora;
-            if (todayHours - meetingHours < 48) {
-                for (int j = 0; j < citizen.getAcceptedRequest().get(i).getAttendeesCitizens().length; j++) {
-                    if (!citizen.getAcceptedRequest().get(i).getAttendeesCitizens()[j].equals(citizen)) {
-                        citizen.getAcceptedRequest().get(i).getAttendeesCitizens()[j].receiveNotification(new Notification(citizen, today));
-                    }
-                }
-            }
-        }
-        */
-        // 1 primero deberiamos armar una lista con los encuentros que pasaron hace menos de 48 horas, por ahora lo hago con todos los encuentros.
-        // 2 armamos una lista con toda la gente a la que deberiamos notificar (no se repiten y no nos incluye)
-        ArrayList<Citizen> deberiamosAviar = new ArrayList<>();
-        for (int i = 0; i < citizen.getAcceptedRequest().size(); i++) {
-            for (int j = 0; j < citizen.getAcceptedRequest().get(i).getAttendeesCitizens().length; j++) {
-                if (!citizen.getAcceptedRequest().get(i).getAttendeesCitizens()[j].equals(citizen) && !deberiamosAviar.contains(citizen.getAcceptedRequest().get(i).getAttendeesCitizens()[j])) { // si no soy yo, y todavia no esta en la lista
-                    deberiamosAviar.add(citizen.getAcceptedRequest().get(i).getAttendeesCitizens()[j]);
-                }
-            }
-        }
-        //3 creamos la notificacion
-        Notification notification = new Notification(citizen, citizen.getGotSeek());
-        //4 ahora le mandamos la notificacion a esta lista de gente (no queremos que tenga dos notificaciones de la misma persona)
-        for (int i = 0; i < deberiamosAviar.size(); i++) {
-            citizen.sendNotification(deberiamosAviar.get(i), notification);
-        }
-    }
-
-    public static int pastMonthDays(int mes){//Hay que cambiarlo a todos los dias anteriores
-
-        int numeroDias=-1;
-
-        switch(mes){
-            case 1:
-            case 3:
-            case 5:
-            case 7:
-            case 8:
-            case 10:
-            case 12:
-                numeroDias=31;
-                break;
-            case 4:
-            case 6:
-            case 9:
-            case 11:
-                numeroDias=30;
-                break;
-            case 2:
-                numeroDias = 29;
-                break;
-        }
-        return numeroDias;
-    }
 
     public static void symptomRegister(Administrator administrator){
         int opcion;
@@ -475,12 +470,14 @@ public class UserInterface {
         }while (opcion != 99);
     } // Con este metodo cualquier administrador deberia poder dar de alta/baja cualquier sintoma
 
+    //Estadisticas
     public static void estadisticasZona(){
         //System.out.println(citizen.getRegisteredSymptoms().size());
         HashMap<Symptom, Integer> data = Main.generalAMB.zones.get(0).top3CommonSymptoms(Main.generalAMB.symptoms);
         System.out.println(Main.generalAMB.zones.get(0).convertWithIteration(data));
     }
 
+    //Extras
     static void traceIt(){
         clear();
         System.out.println( "|''||''|        (presione enter)         '||'   .   \n" +

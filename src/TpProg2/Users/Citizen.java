@@ -2,9 +2,11 @@ package TpProg2.Users;
 
 import TpProg2.Events.Symptom;
 import TpProg2.ImplementOfUsers.*;
+import TpProg2.Main;
 import TpProg2.util.UserInterface;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Citizen extends User {
 
@@ -73,6 +75,22 @@ public class Citizen extends User {
         return registeredSymptoms;
     }
 
+    public Zone getZone() {
+        return zone;
+    }
+
+    public void setRejections(int rejections) {
+        this.rejections = rejections;
+    }
+
+    public boolean isBan() {
+        return isBan;
+    }
+
+    public void setBan(boolean ban) {
+        isBan = ban;
+    }
+
     @Override
     public String getFileRepresentation() {
         return super.getFileRepresentation() + "," + isBan + "," + rejections;
@@ -98,30 +116,31 @@ public class Citizen extends User {
         return this.type + "s";
     }
 
-    public boolean isBan() {
-        return isBan;
-    }
-
-    public void setBan(boolean ban) {
-        isBan = ban;
-    }
-
-    public Zone getZone() {
-        return zone;
-    }
-
-    public int getRejections() {
-        return rejections;
-    }
-
-    public void setRejections(int rejections) {
-        this.rejections = rejections;
-    }
-
+    // Meetings
     public void receiveMeetingRequest(Invitation invitation){ // aceptar o rechazar invitacion para faceToFaceMeeting; - Nacho B
         receivedInvitations.add(invitation);
     } // Recibe una invitacion dentro del inbox/bandeja de entrada
 
+    public void sendRequest(Citizen sendTo, Invitation invitation){
+        sendTo.receiveMeetingRequest(invitation);
+    }
+
+    public void acceptedRequest(Invitation invitation){
+        receivedInvitations.remove(invitation);
+        acceptedRequest.add(invitation.meeting);
+        this.addContact(invitation.transmitter);
+        invitation.transmitter.addContact(this);
+        if (isSeek()){
+            sendNotification(invitation.transmitter, new Notification(this, this.getGotSeek()));
+        }
+    } // Metodo que acepta una invitacion dentro de su bandeja de entrada y guarda registro de este encuentro/meeting.
+
+    public void rejectedRequest(Invitation invitation){
+        receivedInvitations.remove(invitation);
+        invitation.transmitter.rejections ++;
+    } // Metodo que rechaza una invitacion dentro de su bandeja de entrada y se suma a la cuenta de rechazos del emisor.
+
+    //Notifications
     public void receiveNotification(Notification notification){
         if (contacts.contains(notification.seekCitizen)){
             notifications.add(notification);
@@ -148,25 +167,11 @@ public class Citizen extends User {
         }
     }
 
-    public void sendRequest(Citizen sendTo, Invitation invitation){
-        sendTo.receiveMeetingRequest(invitation);
-    }
-
-    public void acceptedRequest(Invitation invitation){
-        receivedInvitations.remove(invitation);
-        acceptedRequest.add(invitation.meeting);
-        this.addContact(invitation.transmitter);
-        invitation.transmitter.addContact(this);
-        if (UserInterface.isSeek(this)){
-            this.sendNotification(invitation.transmitter, new Notification(this, this.getGotSeek()));
-        }
-    } // Metodo que acepta una invitacion dentro de su bandeja de entrada y guarda registro de este encuentro/meeting.
-
     public void addContact(Citizen contact){
         if (contacts == null || !contacts.contains(contact)){
             contacts.add(contact);
         }
-        refreshNotifications();
+        refreshNotifications();// Es posible tener una notificacion de esta persona antes de tenerla como contacto, por eso se actualiza la lista despues de "agregar a alguien"
     }
 
     public void refreshNotifications(){
@@ -178,9 +183,23 @@ public class Citizen extends User {
         }
     }
 
-    public void rejectedRequest(Invitation invitation){
-        receivedInvitations.remove(invitation);
-        invitation.transmitter.rejections ++;
-    } // Metodo que rechaza una invitacion dentro de su bandeja de entrada y se suma a la cuenta de rechazos del emisor.
+    //Sintomas
+    public boolean isSeek(){
+        int count = 0;
+        ArrayList<Symptom> diseaseSymptoms = Main.generalAMB.getSymptoms();
+        for (int i = 0; i < registeredSymptoms.size(); i++) {
+            if (diseaseSymptoms.contains(registeredSymptoms.get(i))){
+                count ++;
+            }
+        }
+        if (count >= 3) {
+            Main.generalAMB.addSeekCitizen(this);
+            gotSeek = new Date(Calendar.MONTH ,Calendar.DAY_OF_MONTH, Calendar.HOUR_OF_DAY);
+            return true;
+        } else{
+            Main.generalAMB.removeSeekCitizen(this);
+            return false;
+        }
+    } // Confirma si un ciudadano tiene suficientes sintomas como para considerarse enfermo
 
 }
