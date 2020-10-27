@@ -2,8 +2,10 @@ package TpProg2.DataStore;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class FileStore<T extends FileSaveable> implements DataStore<T>{
+
     String fileName;
 
     public FileStore(String fileName) {
@@ -26,10 +28,60 @@ public class FileStore<T extends FileSaveable> implements DataStore<T>{
 
     }
 
+    // Metodo remove line de un file ---> chequealo mas a fondo.
     @Override
-    public void remove(String id) {
+    public void remove/*FileLine*/(String id) { /* leer archivo guardar en un arraylist users, borro el user con ese id y lo escribo devuelta.*/
+        ArrayList<String> allLines = collectFileLines();
+        for(Iterator<String> itr = allLines.iterator(); itr.hasNext();){
+            String line = itr.next();
+            if(line.startsWith(id)){
+                itr.remove();
+                cleanFile();
+            }
 
+        }
+        for (String line : allLines) {
+            writeFile(line);
+
+        }
     }
+
+    public ArrayList<String> collectFileLines(){
+        ArrayList<String> lines = new ArrayList<>();
+        try(BufferedReader br = new BufferedReader(new FileReader(this.fileName));){
+            String line = br.readLine();
+            int i = 0;
+            while(line != null){
+                lines.add(line);
+                line = br.readLine();
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lines;
+    }
+
+    public void writeFile(String toWrite){
+        //metodo para abstraer escribir en un archivo.
+        try(BufferedWriter br = new BufferedWriter(new FileWriter(this.fileName, true));){
+            br.write(toWrite + "\n");
+        } catch(IOException e){
+            e.getMessage();
+        }
+    }
+
+    private void cleanFile(){
+        try {
+            PrintWriter writer = new PrintWriter(new File((this.fileName)));
+            writer.print("");
+            writer.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public T findById(String id) {
