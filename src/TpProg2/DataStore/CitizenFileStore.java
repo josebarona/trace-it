@@ -1,6 +1,6 @@
 package TpProg2.DataStore;
 
-import TpProg2.ImplementOfUsers.Zone;
+import TpProg2.ImplementOfUsers.Zone.Zone;
 import TpProg2.Users.Citizen;
 
 import java.util.ArrayList;
@@ -28,9 +28,10 @@ public class CitizenFileStore extends FileStore<Citizen>{
         String rejections = data[4];
         String zone = data[5];
         Zone zone1 = stringToZone(zone);
-        Citizen citizen = new Citizen(userName,id,phoneNumber,zone1);
+        Citizen citizen = new Citizen(userName,id,phoneNumber);
         citizen.setBan(this.stringToBoolean(ban));
         citizen.setRejections(Integer.parseInt(rejections.trim()));
+        citizen.setZone(zone1);
         return citizen;
     }
 

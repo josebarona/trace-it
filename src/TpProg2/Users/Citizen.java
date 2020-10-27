@@ -2,8 +2,8 @@ package TpProg2.Users;
 
 import TpProg2.Events.Symptom;
 import TpProg2.ImplementOfUsers.*;
+import TpProg2.ImplementOfUsers.Zone.Zone;
 import TpProg2.Main;
-import TpProg2.util.UserInterface;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,7 +23,7 @@ public class Citizen extends User {
     int rejections;
     Zone zone;
 
-    public Citizen(String userName, String cuil, String phoneNumber, Zone zone) {
+    public Citizen(String userName, String cuil, String phoneNumber) {
         super(userName, cuil, phoneNumber);
         this.receivedNotifications = new ArrayList<>();
         this.notifications = new ArrayList<>();
@@ -34,7 +34,7 @@ public class Citizen extends User {
         this.isBan = false;
         this.rejections = 0;
         this.type = "Ciudadano";
-        this.zone = zone;
+        this.zone = null;
         this.registeredSymptoms = new ArrayList<>();
 
     }
@@ -90,6 +90,12 @@ public class Citizen extends User {
     public void setBan(boolean ban) {
         isBan = ban;
     }
+
+    public void setZone(Zone zone) {
+        this.zone = zone;
+    }
+
+
 
     @Override
     public String getFileRepresentation() {

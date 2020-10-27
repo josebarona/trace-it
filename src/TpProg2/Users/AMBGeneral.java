@@ -6,7 +6,7 @@ import TpProg2.Events.Symptom;
 import TpProg2.Exceptions.ABMAdminException;
 import TpProg2.Exceptions.ABMCitizenException;
 import TpProg2.Exceptions.ABMUserException;
-import TpProg2.ImplementOfUsers.Zone;
+import TpProg2.ImplementOfUsers.Zone.Zone;
 import TpProg2.util.Scanner;
 import TpProg2.util.UserInterface;
 import java.util.ArrayList;
@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class AMBGeneral {
+
     public DataStore<Citizen> anses;
     public DataStore<Administrator> administratorDataStore;
     public ABMAdmin adminABM;
@@ -25,20 +26,20 @@ public class AMBGeneral {
     public ArrayList<Citizen> seekCitizens;
     //public ArrayList<Citizen> bloqueados;
 
-    public AMBGeneral(DataStore<Citizen> anses, ABMAdmin adminABM, ABMCitizen citizenABM, ArrayList<Symptom> symptoms, Disease disease, ArrayList<Zone> zones) {
+    /*public AMBGeneral(DataStore<Citizen> anses, ABMAdmin adminABM, ABMCitizen citizenABM, ArrayList<Symptom> symptoms, Disease disease, ArrayList<Zone> zones) {
         this.anses = anses;
         this.adminABM = adminABM;
         this.citizenABM = citizenABM;
         this.symptoms = symptoms;
         this.disease = disease;
         this.zones = zones;
-    }
+    }*/
 
     public AMBGeneral(){
         anses = new FileStore<>("FileAnsesData");
 
-        administratorDataStore = new CollectionStore<>(new HashMap<>()); // GUARDADO EN COLLECTIONS
-        //administratorDataStore = new AdminFileStore("FileAdminData"); // GUARDADO EN FILES
+        //administratorDataStore = new CollectionStore<>(new HashMap<>()); // GUARDADO EN COLLECTIONS
+        administratorDataStore = new AdminFileStore("FileAdminData"); // GUARDADO EN FILES
         adminABM = new ABMAdmin(administratorDataStore);
 
         citizenDataStore = new CollectionStore<>(new HashMap<>());    // GUARDADO EN COLLECTIONS
@@ -57,6 +58,7 @@ public class AMBGeneral {
                 new Symptom("Dificultad para respirar o sensación de falta de aire"),
                 new Symptom("Dolor o presión en el pecho")
         ));
+
         disease = new Disease("COVID", symptoms);
 
         zones = new ArrayList<>(Arrays.asList(
@@ -96,13 +98,23 @@ public class AMBGeneral {
         String id = Scanner.getString("Ingrese su cuil: ");
         if (anses.exists(id)) {
 
-            Citizen citizen = new Citizen(Scanner.getString("Ingrese su nombre de usuario: "), id, Scanner.getString("Ingrese su numero de telefono: "), zones.get(0));
-            citizenABM.add(citizen.getUserName(), citizen.getId(), citizen.getCuil(), zones.get(0));
+            Citizen citizen = new Citizen(Scanner.getString("Ingrese su nombre de usuario: "), id, Scanner.getString("Ingrese su numero de telefono: "));
+            citizenABM.add(citizen.getUserName(), citizen.getId(), citizen.getCuil());
+            /* hacer metodo que al buscar en el anses al citizen
+            segun su cuil, guarde la zona que va a tener a su lado
+            en una variable y setear la zona de donde vive al citizen como esta abajo*/
+            Zone zone = obtenerZona(citizen);
+            citizen.setZone(zone);
         }
 
         // HAY QUE AGREGARLO EN LA LISTA DE ZONES.
 
         //System.out.println("la base de datos esta vacia? " + citizenDataStore.isEmpty());
+    }
+
+    private Zone obtenerZona(Citizen citizen) { // Metodo que sirve para obtener la zona de un Citizen al buscar en El DataStore de Anses.
+        Zone zone = zones.get(0); // Solo para testear ----> Hacer metodo
+        return zone;
     }
 
     public void iniciarSesion(String userName, String phoneNumber) throws ABMUserException {

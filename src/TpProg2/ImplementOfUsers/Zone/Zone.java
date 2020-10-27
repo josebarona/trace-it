@@ -1,5 +1,6 @@
-package TpProg2.ImplementOfUsers;
+package TpProg2.ImplementOfUsers.Zone;
 
+import TpProg2.DataStore.Saveable;
 import TpProg2.Events.Symptom;
 import TpProg2.Main;
 import TpProg2.Users.Citizen;
@@ -7,7 +8,7 @@ import TpProg2.Users.Citizen;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Zone {
+public class Zone{
     String name;
     ArrayList<Citizen> citizens = new ArrayList<>();
 
@@ -27,6 +28,7 @@ public class Zone {
     } //Actualiza y guarda la informacion de todos los ciudadanos de esta zona
 
     public HashMap<Symptom, Integer> symptomCounter (ArrayList<Symptom> symptoms){
+
         HashMap<Symptom, Integer> count = new HashMap<>();
 
         for (int i = 0; i < symptoms.size(); i++){ //Crea un HashMap con los sintomas (key) y ceros predeterminados
@@ -52,7 +54,6 @@ public class Zone {
             }
         }
         if (max == 0){
-            System.out.println("fdlkjkjfkjfsdñlkj");
             return null;
         }else{
             return commonSymptom;
@@ -87,5 +88,4 @@ public class Zone {
         mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
         return mapAsString.toString();
     } //Convierte un HashMap a string.
-
 }
