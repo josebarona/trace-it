@@ -96,10 +96,9 @@ public class Citizen extends User {
     }
 
 
-
     @Override
     public String getFileRepresentation() {
-        return super.getFileRepresentation() + "," + isBan + "," + rejections;
+        return super.getFileRepresentation() + "," + isBan + "," + rejections + "," + zone;
     }
 
     @Override
