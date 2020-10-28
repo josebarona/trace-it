@@ -98,8 +98,16 @@ public class AMBGeneral {
 
         String id = Scanner.getString("Ingrese su cuil: ");
         if (anses.exists(id)) {
+            String userName;
+            Boolean segui = false;
+            do {
+                userName = Scanner.getString("Ingrese su nombre de usuario: ");
+                if(administratorDataStore.exists(userName)){
+                    System.out.println(" Este nombre de usuario no esta disponible!");
+                }else{segui = true;}
+            }while (!segui);
 
-            Citizen citizen = new Citizen(Scanner.getString("Ingrese su nombre de usuario: "), id, Scanner.getString("Ingrese su numero de telefono: "));
+            Citizen citizen = new Citizen(userName, id, Scanner.getString("Ingrese su numero de telefono: "));
             citizenABM.add(citizen.getUserName(), citizen.getId(), citizen.getCuil());
             /* hacer metodo que al buscar en el anses al citizen
             segun su cuil, guarde la zona que va a tener a su lado
@@ -118,12 +126,14 @@ public class AMBGeneral {
         return zone;
     }
 
-    public void iniciarSesion(String userName, String phoneNumber) throws ABMUserException {
-        if (administratorDataStore.exists(phoneNumber)){
-            Administrator admin = administratorDataStore.findById(phoneNumber);
+    public void iniciarSesion(String userName, String cuil) throws ABMUserException {
+
+        if (administratorDataStore.exists(userName)){
+
+            Administrator admin = administratorDataStore.findById(userName);
             UserInterface.menuAdministrator(admin);
-        }else if (citizenDataStore.exists(phoneNumber)) {
-            Citizen citizen = citizenDataStore.findById(phoneNumber);
+        }else if (citizenDataStore.exists(cuil)) {
+            Citizen citizen = citizenDataStore.findById(cuil);
             if (!citizen.isBan()){
                 UserInterface.menuCitizen(citizen);
             }else{

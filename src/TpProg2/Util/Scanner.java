@@ -1,5 +1,7 @@
 package TpProg2.Util;
 
+import TpProg2.ImplementOfUsers.Date;
+
 public class Scanner {
     private static final java.util.Scanner scanner = new java.util.Scanner(System.in);
 
@@ -115,10 +117,10 @@ public class Scanner {
 
     public static int getDay(String message, int year, int month) {
         System.out.print(message);
-        int monthDays = UserInterface.monthDays(month, year);
+        int monthDays = Date.monthDays(month, year);
         try {
             int date = Integer.parseInt(scanner.nextLine());
-            if (date < 1 || date > UserInterface.monthDays(month, year)){
+            if (date < 1 || date > Date.monthDays(month, year)){
                 System.out.println("  (Ingrese un valor entre 1 y "+ monthDays+" para el mes)");
                 return getDay(message, year, month);
             }else{return date;}

@@ -23,7 +23,7 @@ public class Administrator extends User {
 
     @Override
     public String getFileRepresentation() {
-        return super.getFileRepresentation();
+        return getId() + "," + getCuil() + "," + getPhoneNumber();
     }
 
     @Override

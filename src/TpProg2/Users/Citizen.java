@@ -197,7 +197,7 @@ public class Citizen extends User {
             }
         }
         if (count >= 3) {
-            gotSeek = UserInterface.actualDate();
+            gotSeek = Date.actualDate();
             Main.generalAMB.addSeekCitizen(this);
             seek = true;
             return true;

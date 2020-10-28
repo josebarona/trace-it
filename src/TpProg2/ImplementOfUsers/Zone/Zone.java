@@ -121,7 +121,7 @@ public class Zone{
             for (int j = 0; j < seekCitizens.size(); j++) {
                 Date thisCitizenDate = seekCitizens.get(i).getGotSeek();
                 Date otherCitizenDate = seekCitizens.get(j).getGotSeek();
-                int dateDiference = UserInterface.dateDiference(otherCitizenDate, thisCitizenDate);
+                int dateDiference = Date.dateDiference(otherCitizenDate, thisCitizenDate);
                 if (i != j && dateDiference > 0 && dateDiference < 47){
                     tamañoDeEsteBrote ++;
                     if (tamañoDeEsteBrote > mayorBrote){mayorBrote = tamañoDeEsteBrote;}
