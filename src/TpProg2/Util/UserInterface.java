@@ -1,5 +1,4 @@
 package TpProg2.Util;
-
 import TpProg2.Events.Symptom;
 import TpProg2.Exceptions.ABMAdminException;
 import TpProg2.Exceptions.ABMCitizenException;
@@ -11,15 +10,19 @@ import TpProg2.ImplementOfUsers.Notification;
 import TpProg2.Main;
 import TpProg2.Users.Administrator;
 import TpProg2.Users.Citizen;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+//La idea de este metodo es tener todos los metodos de interfaz que se imprimen en consola por  parte de los usuarios, principalmente para no cargar el main.
 
-//La idea de este metodo es tener todos los metodos de interfaz que se ven en consola, principalmente para no cargar el main.
 public class UserInterface {
 
     private UserInterface() {
     }
+
     //Menus
     public static void menuPrincipal() {
         traceIt();
@@ -243,13 +246,16 @@ public class UserInterface {
         String location = Scanner.getString(" El nombre de la ubicacion del encuentro: ");
         //2 Date
         title("\n Fecha de inicio");
-        Date start = new Date(Scanner.getDate(" Ingrese el numero de mes en el cual inicio este evento: "),
-                Scanner.getDate(" Ingrese el dia en el cual inicio el evento: "),
-                Scanner.getDate(" Ingrese la hora a la cual inicio el evento: "));
+
+        int month = Scanner.getMonth(" Ingrese el numero de mes en el cual inicio este evento: ");
+        Date start = new Date(month,
+                Scanner.getDay(" Ingrese el dia en el cual inicio el evento: ", month, 2020),
+                Scanner.getHour(" Ingrese la hora a la cual inicio el evento: "));
         title("\n Fecha de cierre");
-        Date end = new Date(Scanner.getDate(" Ingrese el numero de mes en el cual finalizo este evento: "),
-                Scanner.getDate(" Ingrese el dia en el cual finalizo el evento: "),
-                Scanner.getDate(" Ingrese la hora a la cual finalizo el evento: "));
+        month = Scanner.getMonth(" Ingrese el numero de mes en el cual finalizo este evento: ");
+        Date end = new Date(month,
+                Scanner.getDay(" Ingrese el dia en el cual finalizo el evento: ", month, 2020),
+                Scanner.getHour(" Ingrese la hora a la cual finalizo el evento: "));
         //3 Citizens
         title("\n Ciudadanos presentes");
         int cantidad = Scanner.getInt(" Cuantas pesonas asistieron a este evento? ");
@@ -442,12 +448,16 @@ public class UserInterface {
         System.out.println(Main.generalAMB.zones.get(0).convertWithIteration(data));
     }
 
-    //Extras
+    //Tiempo
     public static int howLongAgo (Date date){
         Date today = actualDate();
-        int todayHours = pastMonthDays(today.mes)*24 + today.dia*24 + today.hora;
-        int dateHours = pastMonthDays(date.mes)*24 + date.dia*24 + date.hora;
-        return Math.abs(todayHours - dateHours);
+        return dateDiference(today,date);
+    } //Devuelve las horas transcurridas desde una fecha hasta el dia de hoy.
+
+    public static int dateDiference (Date date1, Date date2){
+        int date1Hours = pastMonthDays(date1.mes)*24 + date1.dia*24 + date1.hora;
+        int date2Hours = pastMonthDays(date2.mes)*24 + date2.dia*24 + date2.hora;
+        return date1Hours - date2Hours;
     }
 
     public static Date actualDate(){
@@ -456,7 +466,7 @@ public class UserInterface {
         int mes = fecha.get(Calendar.MONTH)+1;
         int hora = fecha.get(Calendar.HOUR_OF_DAY);
         return new Date(mes, dia, hora);
-    }
+    } //Devuelve la fecha actual (mes, dia, hora).
 
     public static int pastMonthDays(int mes){// Hay que hacer que devuelva la cantidad de dias que hubieron en los meses anteriores a ese (solo para 2020 en este caso)
 
@@ -490,7 +500,35 @@ public class UserInterface {
                 break;
         }
         return numeroDias;
+    } //Devuelve todos los dias que pasaron desde principio de año hasta el comienzo del mes ingresado.
+
+    public static int monthDays(int mes, int año) {
+        switch (mes) {
+            case 1:  // Enero
+            case 3:  // Marzo
+            case 5:  // Mayo
+            case 7:  // Julio
+            case 8:  // Agosto
+            case 10:  // Octubre
+            case 12: // Diciembre
+                return 31;
+            case 4:  // Abril
+            case 6:  // Junio
+            case 9:  // Septiembre
+            case 11: // Noviembre
+                return 30;
+            case 2:  // Febrero
+                if (((año % 100 == 0) && (año % 400 == 0)) ||
+                        ((año % 100 != 0) && (año % 4 == 0)))
+                    return 29;  // Año Bisiesto
+                else
+                    return 28;
+            default:
+                return -1;
+        }
     }
+
+    //Extras
 
     static void traceIt(){
         clear();

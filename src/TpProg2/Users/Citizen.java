@@ -4,6 +4,7 @@ import TpProg2.Events.Symptom;
 import TpProg2.ImplementOfUsers.*;
 import TpProg2.ImplementOfUsers.Zone.Zone;
 import TpProg2.Main;
+import TpProg2.Util.UserInterface;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -12,11 +13,11 @@ public class Citizen extends User {
 
     String type;
     boolean isBan;
+    boolean seek;
     ArrayList<Notification> receivedNotifications;
     ArrayList<Notification> notifications;
     ArrayList<Invitation> receivedInvitations; // todas las invitaciones llegan aca. Una vez que se acepta o se rechaza una invitacion se remueve de esta bandeja.
     ArrayList<FaceToFaceMeeting> acceptedRequest; // bandeja de invitaciones aceptadas.
-    ArrayList<FaceToFaceMeeting> rejectedInvitations; // bandejas de invitaciones rechzadas.
     ArrayList<Symptom> registeredSymptoms;
     ArrayList<Citizen> contacts;
     Date gotSeek;
@@ -30,7 +31,6 @@ public class Citizen extends User {
         this.contacts = new ArrayList<>();
         this.receivedInvitations = new ArrayList<>(); // ArrayList<Invitation>
         this.acceptedRequest = new ArrayList<>(); //ArrayList<FaceToFaceMeeting>
-        this.rejectedInvitations = new ArrayList<>(); //ArrayList<FaceToFaceMeeting>
         this.isBan = false;
         this.rejections = 0;
         this.type = "Ciudadano";
@@ -38,6 +38,8 @@ public class Citizen extends User {
         this.registeredSymptoms = new ArrayList<>();
 
     }
+
+    public boolean getSeek(){ return seek;}
 
     public void setGotSeek(Date gotSeek) {
         this.gotSeek = gotSeek;
@@ -67,9 +69,6 @@ public class Citizen extends User {
         return acceptedRequest;
     }
 
-    public ArrayList<FaceToFaceMeeting> getRejectedInvitations() {
-        return rejectedInvitations;
-    }
 
     public ArrayList<Symptom> getRegisteredSymptoms() {
         return registeredSymptoms;
@@ -198,11 +197,13 @@ public class Citizen extends User {
             }
         }
         if (count >= 3) {
+            gotSeek = UserInterface.actualDate();
             Main.generalAMB.addSeekCitizen(this);
-            gotSeek = new Date(Calendar.MONTH ,Calendar.DAY_OF_MONTH, Calendar.HOUR_OF_DAY);
+            seek = true;
             return true;
         } else{
             Main.generalAMB.removeSeekCitizen(this);
+            seek = false;
             return false;
         }
     } // Confirma si un ciudadano tiene suficientes sintomas como para considerarse enfermo

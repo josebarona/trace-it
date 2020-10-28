@@ -99,6 +99,49 @@ public class Scanner {
         }
     }
 
+    public static int getMonth(String message) {
+        System.out.print(message);
+        try {
+            int date = Integer.parseInt(scanner.nextLine());
+            if (date < 1 || date > 12){
+                System.out.println("  (Ingrese un valor entre 1 y 12 para el mes)");
+                return getMonth(message);
+            }else{return date;}
+        } catch (NumberFormatException e) {
+            System.out.println("Please enter an integer.");
+            return getInt(message);
+        }
+    }
+
+    public static int getDay(String message, int year, int month) {
+        System.out.print(message);
+        int monthDays = UserInterface.monthDays(month, year);
+        try {
+            int date = Integer.parseInt(scanner.nextLine());
+            if (date < 1 || date > UserInterface.monthDays(month, year)){
+                System.out.println("  (Ingrese un valor entre 1 y "+ monthDays+" para el mes)");
+                return getDay(message, year, month);
+            }else{return date;}
+        } catch (NumberFormatException e) {
+            System.out.println("Please enter an integer.");
+            return getInt(message);
+        }
+    }
+
+    public static int getHour(String message) {
+        System.out.print(message);
+        try {
+            int date = Integer.parseInt(scanner.nextLine());
+            if (date < 0 || date > 24){
+                System.out.println("  (Ingrese un valor entre 1 y 24 para la hora)");
+                return getHour(message);
+            }else{return date;}
+        } catch (NumberFormatException e) {
+            System.out.println("Please enter an integer.");
+            return getInt(message);
+        }
+    }
+
     public static void enter(){
         scanner.nextLine();
     }

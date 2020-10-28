@@ -2,8 +2,10 @@ package TpProg2.ImplementOfUsers.Zone;
 
 import TpProg2.DataStore.Saveable;
 import TpProg2.Events.Symptom;
+import TpProg2.ImplementOfUsers.Date;
 import TpProg2.Main;
 import TpProg2.Users.Citizen;
+import TpProg2.Util.UserInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +18,14 @@ public class Zone{
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public ArrayList<Citizen> getCitizens() {
+        return citizens;
+    }
+
     public void refresh (){
         ArrayList<Citizen> allCitizens = Main.generalAMB.citizenDataStore.toArrayList();
         ArrayList<Citizen> localCitizens = new ArrayList<>();
@@ -26,6 +36,22 @@ public class Zone{
         }
         citizens = localCitizens;
     } //Actualiza y guarda la informacion de todos los ciudadanos de esta zona
+
+    public Symptom commonSymptom (HashMap<Symptom, Integer> count, ArrayList<Symptom> symptoms){ //Devuelve el sintoma mas comun dentro de un HashMap
+        int max = 0;
+        Symptom commonSymptom = null;
+        for (int i = 0; i < symptoms.size(); i++){
+            if (count.get(symptoms.get(i)) > max){
+                commonSymptom = symptoms.get(i);
+                max = count.get(symptoms.get(i));
+            }
+        }
+        if (max == 0){
+            return null;
+        }else{
+            return commonSymptom;
+        }
+    } //Devuelva el sintoma que haya sido registrado mas veces dentro de la zona.
 
     public HashMap<Symptom, Integer> symptomCounter (ArrayList<Symptom> symptoms){
 
@@ -44,21 +70,6 @@ public class Zone{
         return count;
     } //Rellena un HashMap con un valor para cada sintoma segun cuantos ciudadanos en la zona lo hayan registrado.
 
-    public Symptom commonSymptom (HashMap<Symptom, Integer> count, ArrayList<Symptom> symptoms){ //Devuelve el sintoma mas comun dentro de un HashMap
-        int max = 0;
-        Symptom commonSymptom = null;
-        for (int i = 0; i < symptoms.size(); i++){
-            if (count.get(symptoms.get(i)) > max){
-                commonSymptom = symptoms.get(i);
-                max = count.get(symptoms.get(i));
-            }
-        }
-        if (max == 0){
-            return null;
-        }else{
-            return commonSymptom;
-        }
-    } //Devuelva el sintoma que haya sido registrado mas veces dentro de la zona.
 
     public HashMap<Symptom, Integer> top3CommonSymptoms(ArrayList<Symptom> symptoms){
         refresh();
@@ -78,7 +89,7 @@ public class Zone{
         count.put(symptom3, 0);
 
         return topSymptoms;
-    } //Devuelve un HashMap con las 3 enfermedades mas comunes por zona y la cantidad de ciudadanos que la registraron.
+    } //Devuelve un HashMap con los 3 sintomas mas comunes por zona y la cantidad de ciudadanos que la registraron.
 
     public String convertWithIteration(HashMap<Symptom, ?> map) {
         StringBuilder mapAsString = new StringBuilder("{");
@@ -87,9 +98,40 @@ public class Zone{
         }
         mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
         return mapAsString.toString();
-    } //Convierte un HashMap a string.
+    } //Convierte un HashMap a string. (para testear)
 
-    public ArrayList<Citizen> getCitizens() {
-        return citizens;
+    public ArrayList<Citizen> seekCitizens (){
+        refresh();
+        ArrayList<Citizen> seekCitizens = new ArrayList<>();
+        for (int i = 0; i < citizens.size(); i++) {
+            if (citizens.get(i).getSeek()){
+                seekCitizens.add(citizens.get(i));
+            }
+        }
+        return seekCitizens;
     }
+
+    public int brote(){
+        refresh();
+        ArrayList<Citizen> seekCitizens = seekCitizens();
+        int tamañoDelBroteMin = 5;
+        int mayorBrote = 0;
+        for (int i = 0; i < seekCitizens.size(); i++) {
+            int tamañoDeEsteBrote = 0;
+            for (int j = 0; j < seekCitizens.size(); j++) {
+                Date thisCitizenDate = seekCitizens.get(i).getGotSeek();
+                Date otherCitizenDate = seekCitizens.get(j).getGotSeek();
+                int dateDiference = UserInterface.dateDiference(otherCitizenDate, thisCitizenDate);
+                if (i != j && dateDiference > 0 && dateDiference < 47){
+                    tamañoDeEsteBrote ++;
+                    if (tamañoDeEsteBrote > mayorBrote){mayorBrote = tamañoDeEsteBrote;}
+                }
+            }
+        }
+        if (mayorBrote >= tamañoDelBroteMin){
+            return mayorBrote;
+        }else{return 0;}
+    }
+
+
 }
