@@ -26,14 +26,16 @@ public class Administrator extends User {
         return getId() + "," + getCuil() + "," + getPhoneNumber();
     }
 
+
     @Override
     public String getId() {
-        return super.getId();
+        return this.userName;
     }
 
     @Override
     public String getUserName() {
         return super.getUserName();
     }
+
 
 }

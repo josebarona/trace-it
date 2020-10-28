@@ -7,6 +7,8 @@ import TpProg2.ImplementOfUsers.Date;
 import TpProg2.ImplementOfUsers.FaceToFaceMeeting;
 import TpProg2.ImplementOfUsers.Invitation;
 import TpProg2.ImplementOfUsers.Notification;
+import TpProg2.ImplementOfUsers.Zone.EstadisticasSegunZona;
+import TpProg2.ImplementOfUsers.Zone.Zone;
 import TpProg2.Main;
 import TpProg2.Users.Administrator;
 import TpProg2.Users.Citizen;
@@ -27,7 +29,7 @@ public class UserInterface {
     public static void menuPrincipal() {
         traceIt();
         int opcion;
-        String password = "TpGrupo14";
+
         do {
             title("  Menu: ");
             System.out.println("  Operaciones: \n\n 1. Registrarse \n 2. Iniciar sesion \n 3.Exit\n");
@@ -45,25 +47,10 @@ public class UserInterface {
                     break;
                 case 2:
                     String userName = Scanner.getString("Nombre de Usuario: ");
-                    String cuil = Scanner.getString("Numero de Cuil: ");
                     try {
-                        Main.generalAMB.iniciarSesion(userName, cuil);
+                        Main.generalAMB.iniciarSesion(userName);
                     } catch (ABMUserException e) {
                         e.printStackTrace();
-                    }
-                    break;
-                case 999: //Registro secreto para ser administrador
-                    String word = Scanner.getString("Contraseña de usuarios administradores: ");
-                    if (word.equals(password)) {
-                        try {
-                            Main.generalAMB.adminRegister();
-                        } catch (ABMAdminException | ABMUserException e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        clear();
-                        message("haz sido bloqueado del servidor");
-                        System.exit(0);
                     }
                     break;
                 case 3:
@@ -441,17 +428,14 @@ public class UserInterface {
         }while (opcion != 99);
     } // Con este metodo cualquier administrador deberia poder dar de alta/baja cualquier sintoma
 
-    //Estadisticas
-    public static void estadisticasZona(){
+    //Estadisticas (Para prueba)
+    public static void estadisticasZona(Zone zone){ // Para testear estadistica
         //System.out.println(citizen.getRegisteredSymptoms().size());
-        HashMap<Symptom, Integer> data = Main.generalAMB.zones.get(0).top3CommonSymptoms(Main.generalAMB.symptoms);
-        System.out.println(Main.generalAMB.zones.get(0).convertWithIteration(data));
+        HashMap<Symptom, Integer> data = EstadisticasSegunZona.top3CommonSymptoms(zone,Main.generalAMB.symptoms);
+        System.out.println(EstadisticasSegunZona.convertWithIteration(data));
     }
 
-    //Tiempo
-
-
-    //Extras
+    //Extras graficas.
 
     static void traceIt(){
         clear();

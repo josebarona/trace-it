@@ -6,7 +6,7 @@ import TpProg2.Exceptions.*;
 public interface ABM<T extends FileSaveable>{  //T(generico) puede ser cualquier tipo de cla
 
     // Agrega un T a la base de datos.
-    public T add(String userName, String phoneNumber, String cuil) throws ABMException;
+    public T add(String userName, String cuil_password, String phoneNumber) throws ABMException;
 
     // Elimina a un ciudadano de la base de datos.
     public void remove(T t) throws ABMException;

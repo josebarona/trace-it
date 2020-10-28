@@ -2,6 +2,10 @@ package TpProg2.DataStore;
 
 import TpProg2.Users.Administrator;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class AdminFileStore extends FileStore<Administrator>{
@@ -15,8 +19,8 @@ public class AdminFileStore extends FileStore<Administrator>{
         String[] data = line.split(",");
         String id = data[0];
         String phoneNumber = data[2];
-        String userName = data[1];
-        return new Administrator(userName,id,phoneNumber);
+        String cuil = data[1];
+        return new Administrator(id,cuil,phoneNumber);
     }
 
     @Override
@@ -24,4 +28,5 @@ public class AdminFileStore extends FileStore<Administrator>{
         // leer el archivo completo y por linea crear un Administrator(lineToObject(line);), y meter citizens en arrays.
         return null;
     }
+
 }

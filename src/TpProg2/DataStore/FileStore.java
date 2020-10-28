@@ -25,7 +25,6 @@ public class FileStore<T extends FileSaveable> implements DataStore<T>{
                 System.out.println(e.getMessage());
             }
         }
-
     }
 
     // Metodo remove line de un file ---> chequealo mas a fondo.
@@ -135,7 +134,6 @@ public class FileStore<T extends FileSaveable> implements DataStore<T>{
             while ((strLine = br.readLine()) != null) {
                 String[] data = strLine.split(",");
                 if (data[0].equals(id)) {
-                    System.out.println(data[0]);
                     return true;
                 }
             }

@@ -33,9 +33,9 @@ public class AMBGeneral {
         this.symptoms = symptoms;
         this.disease = disease;
         this.zones = zones;
-    }*/
+    }*/// ----- para crearlo y hacerlo mas a tu gusto
 
-    public AMBGeneral(){
+    public AMBGeneral(){ // --------> predeterminado covid.
         anses = new FileStore<>("FileAnsesData");
 
         //administratorDataStore = new CollectionStore<>(new HashMap<>()); // GUARDADO EN COLLECTIONS
@@ -100,6 +100,7 @@ public class AMBGeneral {
         if (anses.exists(id)) {
             String userName;
             Boolean segui = false;
+
             do {
                 userName = Scanner.getString("Ingrese su nombre de usuario: ");
                 if(administratorDataStore.exists(userName)){
@@ -126,25 +127,39 @@ public class AMBGeneral {
         return zone;
     }
 
-    public void iniciarSesion(String userName, String cuil) throws ABMUserException {
-
+    public void iniciarSesion(String userName) throws ABMUserException {
+        // "TpGrupo14" ---> contrasnia de administradores.
         if (administratorDataStore.exists(userName)){
-
-            Administrator admin = administratorDataStore.findById(userName);
-            UserInterface.menuAdministrator(admin);
-        }else if (citizenDataStore.exists(cuil)) {
-            Citizen citizen = citizenDataStore.findById(cuil);
-            if (!citizen.isBan()){
-                UserInterface.menuCitizen(citizen);
+            String password = Scanner.getString("Ingrese contraseña de administrador: ");
+            if (password.equals("TpGrupo14")) {
+                Administrator admin = administratorDataStore.findById(userName);
+                UserInterface.menuAdministrator(admin);
             }else{
-                System.out.println("El cuidadano se encuentra bloqueado momentaneamente");
+                UserInterface.clear();
+                UserInterface.message("CONTRASEÑA INCORRECTA");
+                return;
             }
-        }else{
-            System.out.println("\n Este usuario no existe!");
+        }else {
+            String cuil = Scanner.getString("Ingrese su cuil: ");
+            if (citizenDataStore.exists(cuil)) {
+                Citizen citizen = citizenDataStore.findById(cuil);
+                if (!citizen.isBan()) {
+                    UserInterface.menuCitizen(citizen);
+                } else {
+                    System.out.println("El cuidadano se encuentra bloqueado momentaneamente");
+                }
+            } else {
+                UserInterface.clear();
+                UserInterface.message("Este usuario no existe!");
+                return;
+            }
         }
         /*
         busca en los datos si existe un usuario con el nombre y id que le pasa
         si existe pasa al menu del usuario al cual se asigna
          */
     }
+
+
+
 }
