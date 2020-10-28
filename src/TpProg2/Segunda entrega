@@ -1,9 +1,14 @@
 Durante estas ultimas semanas pudimos terminar y mejorar tanto la gestión de usuarios y eventos, cerrando algunas funcionalidades para los usuarios como el envío de solicitudes de encuentro,
-auto-diagnostico de síntomas y ahora no solo tiene una bandeja de entrada para sus invitaciones de encuentro, sino también una para notificaciones, donde por el momento solo se les notificara
-si se enferma alguno de sus contactos (ciudadanos con los cuales acepto alguna invitación de encuentro) con los que estuvo reunido hace menos de 48 horas.
-Aplicamos muchas de las correcciones de la primera entrega y también pudimos limpiar y organizar bastante la estructura de nuestro código (con algunas "superclases" como el main en su momento),
-lo cual hace mucho mas fácil de entender el código y construir sobre el.
-Actualmente estamos profundizando con el monitoreo del programa. Ya asignamos zonas a cada usuario (encontrada en la data del ANSES) y empezamos a armar algunos métodos para las estadísticas de las mismas.
-Gran parte del trabajo lo estamos haciendo sobre generics mientras vamos resolviendo poco a poco la persistencia del mismo.
+auto-diagnostico de síntomas y ahora no solo tiene una bandeja de entrada para (aceptar/rechazar) sus invitaciones de encuentro, sino también una para notificaciones, donde por el momento solo se les notificara
+a los ciudadanos si se enferma (presenta más de 3 sintomas de una enfermedad) alguno de sus contactos (ciudadanos con los cuales acepto alguna invitación de encuentro) con los que estuvo reunido hace menos de 48 horas.
 
-Ahora podríamos decir que nos falta terminar algunos métodos para monitoreo y estadísticas por zonas, averiguar como mostrar toda esta información y terminar el tema de la persistencia.
+Aplicamos muchas de las correcciones de la primera entrega y también pudimos limpiar y organizar bastante la estructura de nuestro código (como algunas "superclases" como el main en su momento),
+lo cual hace mucho mas fácil de entender el código y construir sobre el.
+
+Actualmente estamos profundizando con el monitoreo del programa. Ya asignamos zonas a cada usuario (encontrada en la data del ANSES) y empezamos a armar algunos métodos para las estadísticas de las mismas.
+Gran parte del trabajo lo estamos haciendo sobre generics mientras vamos resolviendo poco a poco la persistencia del mismo, podemos ejecutar todo nuestro codigo guardando la información con cualquiera de las dos formas.
+
+Ahora podríamos decir que nos falta terminar algunos métodos para el monitoreo y estadísticas por zonas, averiguar como mostrar toda esta información y terminar el tema de la persistencia.
+
+
+Pueden probar una demo del codigo para ver las funcionalidades de los ciudadanos registrando dos usuarios con Cuil "123" o "456". (ejecutar el Main)
