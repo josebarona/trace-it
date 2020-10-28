@@ -174,126 +174,6 @@ public class UserInterface {
         } while (opcion != 6); // seguramente va a haber mas opciones
     }
 
-    //Notificaciones
-    public static void notifications(Citizen citizen) {
-        int opcion;
-        do {
-            title("  - Notificaciones:");
-            System.out.println("\n" + viewNotificationsTitles(citizen) + "\n  99. (volver)\n");
-            opcion = Scanner.getInt(" Que notificacion deseas ver: ");
-            clear();
-
-            if (opcion < citizen.getNotifications().size()) {
-                int opcion1;
-                do {
-                    System.out.println(viewNotificationInfo(citizen.getNotifications().get(opcion)));
-                    opcion1 = Scanner.getInt("\n   1. Borrar notificacion \n   2. (volver)\n\n   Opcion: ");
-                    clear();
-                    switch (opcion1) {
-                        case 1:
-                            citizen.getNotifications().remove(citizen.getNotifications().get(opcion));
-                            message(" Notificacion eliminada!!");
-                            opcion1 = 2;
-                            break;
-                        case 2:
-                            break;
-                        default:
-                            message(" Opcion invalida!");
-                    }
-                } while (opcion1 != 2);
-            } else if (opcion != 99) {
-                message(" Opcion invalida!");
-            }
-        } while (opcion != 99);
-    }
-
-    private static String viewNotificationsTitles(Citizen citizen) {
-        String lista = "";
-        if (citizen.getNotifications().size() > 0) {
-            for (int i = 0; i < citizen.getNotifications().size(); i++) {
-                lista += "  " + i + ". " + citizen.getNotifications().get(i).seekCitizen.getUserName() + "\n";
-            }
-        } else {
-            lista += "\n    (No tienes ninguna notificacion)\n";
-        }
-        return lista;
-    }
-
-    private static String viewNotificationInfo(Notification notification) {
-        return " - Hace menos de 48 horas estuviste reunido con " + notification.seekCitizen.getUserName() + "\n el cual recientemente presento mas de 3 sintomas de COVID!!";
-    }
-
-    public static void alertRecentCitizens(Citizen citizen){
-        Date today = actualDate();
-        int todayHours = pastMonthDays(today.mes)*24 + today.dia*24 + today.hora;
-        //1 Primero creamos una lista con todos los encuentros que sucedieron hace menos de 48 horas
-        ArrayList<FaceToFaceMeeting> recentMeetings = new ArrayList<>();
-        for (int i = 0; i < citizen.getAcceptedRequest().size(); i++) {
-            Date meetingDate = citizen.getAcceptedRequest().get(i).finish;
-            int meetingHours = pastMonthDays(meetingDate.mes)*24 + meetingDate.dia*24 + meetingDate.hora;
-            if (Math.abs(todayHours - meetingHours) < 48) {
-                recentMeetings.add(citizen.getAcceptedRequest().get(i));
-            }
-        }
-        //2 Armamos una lista con todos los ciudadanos que asistieron a estos encuentros y deberiamos notificar (no debemos estar en ella y no se tienen que repetir los ciudadanos)
-        ArrayList<Citizen> deberiamosAviar = new ArrayList<>();
-        for (int i = 0; i < recentMeetings.size(); i++) {
-            for (int j = 0; j < recentMeetings.get(i).getAttendeesCitizens().length; j++) {
-                if (!recentMeetings.get(i).getAttendeesCitizens()[j].equals(citizen) && !deberiamosAviar.contains(recentMeetings.get(i).getAttendeesCitizens()[j])) { // (si no soy yo, y todavia no esta en la lista)
-                    deberiamosAviar.add(recentMeetings.get(i).getAttendeesCitizens()[j]);
-                }
-            }
-        }
-        //3 Creamos la notificacion
-        Notification notification = new Notification(citizen, citizen.getGotSeek());
-        //4 Enviamos la notificacion a esta lista de gente
-        for (int i = 0; i < deberiamosAviar.size(); i++) {
-            citizen.sendNotification(deberiamosAviar.get(i), notification);
-        }
-    }
-
-    public static Date actualDate(){
-        Calendar fecha = Calendar.getInstance();
-        int dia = fecha.get(Calendar.DAY_OF_MONTH);
-        int mes = fecha.get(Calendar.MONTH)+1;
-        int hora = fecha.get(Calendar.HOUR_OF_DAY);
-        return new Date(mes, dia, hora);
-    }
-
-    public static int pastMonthDays(int mes){// Hay que hacer que devuelva la cantidad de dias que hubieron en los meses anteriores a ese (solo para 2020 en este caso)
-
-        int numeroDias=-1;
-
-        switch(mes){
-
-            case 12:
-                numeroDias += 30;
-            case 11:
-                numeroDias += 31;
-            case 10:
-                numeroDias += 30;
-            case 9:
-                numeroDias += 31;
-            case 8:
-                numeroDias += 31;
-            case 7:
-                numeroDias += 30;
-            case 6:
-                numeroDias += 31;
-            case 5:
-                numeroDias += 30;
-            case 4:
-                numeroDias += 31;
-            case 3:
-                numeroDias += 29;
-            case 2:
-                numeroDias += 31;
-            case 1:
-                break;
-        }
-        return numeroDias;
-    }
-
     //Ecuentros/Invitaciones
     public static void inbox(Citizen citizen) {
         int opcion;
@@ -390,7 +270,7 @@ public class UserInterface {
         //enviarla a todos los participantes
         for (int i = 1; i < cantidad+1; i++) {
             citizen.sendRequest(presentCitizens[i], invitation);
-            if (citizen.isSeek()){
+            if (citizen.isSeek() && howLongAgo(end) < 48){
                 citizen.sendNotification(presentCitizens[i], new Notification(citizen, citizen.getGotSeek()));
             }
         }
@@ -398,6 +278,80 @@ public class UserInterface {
         clear();
         message(" La solicitud del evento fue enviada a todos los participantes del mismo.");
     } // Con este metodo un ciudadano deberia poder crear una invitacion sobre una meeting/encuento, el cual debe tener una localizacion, fecha e integrantes de la misma.
+
+    //Notificaciones
+    public static void notifications(Citizen citizen) {
+        int opcion;
+        do {
+            title("  - Notificaciones:");
+            System.out.println("\n" + viewNotificationsTitles(citizen) + "\n  99. (volver)\n");
+            opcion = Scanner.getInt(" Que notificacion deseas ver: ");
+            clear();
+
+            if (opcion < citizen.getNotifications().size()) {
+                int opcion1;
+                do {
+                    System.out.println(viewNotificationInfo(citizen.getNotifications().get(opcion)));
+                    opcion1 = Scanner.getInt("\n   1. Borrar notificacion \n   2. (volver)\n\n   Opcion: ");
+                    clear();
+                    switch (opcion1) {
+                        case 1:
+                            citizen.getNotifications().remove(citizen.getNotifications().get(opcion));
+                            message(" Notificacion eliminada!!");
+                            opcion1 = 2;
+                            break;
+                        case 2:
+                            break;
+                        default:
+                            message(" Opcion invalida!");
+                    }
+                } while (opcion1 != 2);
+            } else if (opcion != 99) {
+                message(" Opcion invalida!");
+            }
+        } while (opcion != 99);
+    } // Metodo que permite visualiar todas las notificaciones recibidas, solo llegaran alertas de sus contactos (personas a las cuales se les acepto una invitacion de encuentro)
+
+    private static String viewNotificationsTitles(Citizen citizen) {
+        String lista = "";
+        if (citizen.getNotifications().size() > 0) {
+            for (int i = 0; i < citizen.getNotifications().size(); i++) {
+                lista += "  " + i + ". " + citizen.getNotifications().get(i).seekCitizen.getUserName() + "\n";
+            }
+        } else {
+            lista += "\n    (No tienes ninguna notificacion)\n";
+        }
+        return lista;
+    } // Devuelve un String con una lita de los emisores de sus notificaciones visibles
+
+    private static String viewNotificationInfo(Notification notification) {
+        return " - Hace menos de 48 horas estuviste reunido con " + notification.seekCitizen.getUserName() + "\n el cual recientemente presento mas de 3 sintomas de COVID!!";
+    } // Devuelve un String con la informacion de la alerta (en este caso, el nombre de la persona contagiada con la que tuvo contacto reciente)
+
+    public static void alertRecentCitizens(Citizen citizen){
+        //1 Primero creamos una lista con todos los encuentros que sucedieron hace menos de 48 horas
+        ArrayList<FaceToFaceMeeting> recentMeetings = new ArrayList<>();
+        for (int i = 0; i < citizen.getAcceptedRequest().size(); i++) {
+            if (howLongAgo(citizen.getAcceptedRequest().get(i).finish) < 48) {
+                recentMeetings.add(citizen.getAcceptedRequest().get(i));
+            }
+        }
+        //2 Armamos una lista con todos los ciudadanos que asistieron a estos encuentros y deberiamos notificar (no debemos estar en ella y no se tienen que repetir los ciudadanos)
+        ArrayList<Citizen> deberiamosAviar = new ArrayList<>();
+        for (int i = 0; i < recentMeetings.size(); i++) {
+            for (int j = 0; j < recentMeetings.get(i).getAttendeesCitizens().length; j++) {
+                if (!recentMeetings.get(i).getAttendeesCitizens()[j].equals(citizen) && !deberiamosAviar.contains(recentMeetings.get(i).getAttendeesCitizens()[j])) { // (si no soy yo, y todavia no esta en la lista)
+                    deberiamosAviar.add(recentMeetings.get(i).getAttendeesCitizens()[j]);
+                }
+            }
+        }
+        //3 Creamos la notificacion
+        Notification notification = new Notification(citizen, citizen.getGotSeek());
+        //4 Enviamos la notificacion a esta lista de gente
+        for (int i = 0; i < deberiamosAviar.size(); i++) {
+            citizen.sendNotification(deberiamosAviar.get(i), notification);
+        }
+    } // Metodo que una vez que un ciudadano se autodiagnostica como enfermo, este alerta (envia notificacion, esta no sera visible para el otro ciudadano hasta que sean contactos) a todos los ciudadanos con los cuales estuvo en contacto en menos de 48 horas.
 
     //Sintomas
     public static void selfRecordingOfSymptoms(Citizen citizen) {
@@ -478,6 +432,55 @@ public class UserInterface {
     }
 
     //Extras
+    public static int howLongAgo (Date date){
+        Date today = actualDate();
+        int todayHours = pastMonthDays(today.mes)*24 + today.dia*24 + today.hora;
+        int dateHours = pastMonthDays(date.mes)*24 + date.dia*24 + date.hora;
+        return Math.abs(todayHours - dateHours);
+    }
+
+    public static Date actualDate(){
+        Calendar fecha = Calendar.getInstance();
+        int dia = fecha.get(Calendar.DAY_OF_MONTH);
+        int mes = fecha.get(Calendar.MONTH)+1;
+        int hora = fecha.get(Calendar.HOUR_OF_DAY);
+        return new Date(mes, dia, hora);
+    }
+
+    public static int pastMonthDays(int mes){// Hay que hacer que devuelva la cantidad de dias que hubieron en los meses anteriores a ese (solo para 2020 en este caso)
+
+        int numeroDias=-1;
+
+        switch(mes){
+
+            case 12:
+                numeroDias += 30;
+            case 11:
+                numeroDias += 31;
+            case 10:
+                numeroDias += 30;
+            case 9:
+                numeroDias += 31;
+            case 8:
+                numeroDias += 31;
+            case 7:
+                numeroDias += 30;
+            case 6:
+                numeroDias += 31;
+            case 5:
+                numeroDias += 30;
+            case 4:
+                numeroDias += 31;
+            case 3:
+                numeroDias += 29;
+            case 2:
+                numeroDias += 31;
+            case 1:
+                break;
+        }
+        return numeroDias;
+    }
+
     static void traceIt(){
         clear();
         System.out.println( "|''||''|        (presione enter)         '||'   .   \n" +

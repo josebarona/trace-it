@@ -1,0 +1,9 @@
+Durante estas ultimas semanas pudimos terminar y mejorar tanto la gestión de usuarios y eventos, cerrando algunas funcionalidades para los usuarios como el envío de solicitudes de encuentro,
+auto-diagnostico de síntomas y ahora no solo tiene una bandeja de entrada para sus invitaciones de encuentro, sino también una para notificaciones, donde por el momento solo se les notificara
+si se enferma alguno de sus contactos (ciudadanos con los cuales acepto alguna invitación de encuentro) con los que estuvo reunido hace menos de 48 horas.
+Aplicamos muchas de las correcciones de la primera entrega y también pudimos limpiar y organizar bastante la estructura de nuestro código (con algunas "superclases" como el main en su momento),
+lo cual hace mucho mas fácil de entender el código y construir sobre el.
+Actualmente estamos profundizando con el monitoreo del programa. Ya asignamos zonas a cada usuario (encontrada en la data del ANSES) y empezamos a armar algunos métodos para las estadísticas de las mismas.
+Gran parte del trabajo lo estamos haciendo sobre generics mientras vamos resolviendo poco a poco la persistencia del mismo.
+
+Ahora podríamos decir que nos falta terminar algunos métodos para monitoreo y estadísticas por zonas, averiguar como mostrar toda esta información y terminar el tema de la persistencia.

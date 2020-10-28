@@ -76,6 +76,7 @@ public class AMBGeneral {
             seekCitizens.add(citizen);
         }
     }
+
     public void removeSeekCitizen(Citizen citizen){
         if (seekCitizens != null && seekCitizens.contains(citizen)) {
             seekCitizens.remove(citizen);
