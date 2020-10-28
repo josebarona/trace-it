@@ -9,6 +9,22 @@ Actualmente estamos profundizando con el monitoreo del programa. Ya asignamos zo
 Gran parte del trabajo lo estamos haciendo sobre generics mientras vamos resolviendo poco a poco la persistencia del mismo, podemos ejecutar todo nuestro codigo guardando la información con cualquiera de las dos formas.
 
 Ahora podríamos decir que nos falta terminar algunos métodos para el monitoreo y estadísticas por zonas, averiguar como mostrar toda esta información y terminar el tema de la persistencia.
-
+______________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
 Pueden probar una demo del codigo para ver las funcionalidades de los ciudadanos registrando dos usuarios con Cuil "123" o "456". (ejecutar el Main)
+
+Menu de Ciudadano (explicado)
+_________________________________________
+  Operaciones:
+
+ 1. Notificaciones(0)                       -> Una bandeja de notificaciones, por ahora solo recibiras una notificacion si alguno de tus contactos (ciudadanos los cuales aceptaron o de los cuales aceptaste alguna invitación de encuentro)
+                                               presenta más de 3 sintomas de una enfermedad. Dentro de notificaciones podras ver todas las notificaciones, elegir una para ver su informacion, y eliminarla si lo desea.
+
+ 2. Bandeja de entrada de invitaciones(0)   -> Una bandeja de invitaciones de encuentro, mostrara todas las solicitudes recibidas (listadas por el nombre del emisor), podras selecionar una para ver la informacion de la misma
+                                               y podras decidir si rechazarla o aceptarla si lo deseas.
+
+ 3. Mandar solicitudes de encuentro         -> Permite crear una solicitud de encuentro con la informacion necesaria (lugar del encuentro, fecha de inicio/fin y los ciudadanos que asistieron al mismo), lugo se les enviara una solicitud a estos ciudadanos.
+
+ 4. Registro de sintomas                    -> Dispone de todos los sintomas administrados por los administradores, donde puedes selecionar el sintoma que desees diagnosticar. (Si se registran mas de 3 sintomas de una misma enfermedad, el ciudadano se considera enfermo de la misma).
+
+ 5. Ver/eliminar sintomas registrados       -> Permite eliminar los sintomas previamente registrados.
