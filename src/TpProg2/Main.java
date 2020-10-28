@@ -1,7 +1,7 @@
 //pruebas de metodos y menus...
 package TpProg2;
 import TpProg2.Users.*;
-import TpProg2.util.UserInterface;
+import TpProg2.Util.UserInterface;
 
 public class Main {
 

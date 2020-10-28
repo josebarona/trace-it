@@ -1,4 +1,4 @@
-package TpProg2.util;
+package TpProg2.Util;
 
 public class Scanner {
     private static final java.util.Scanner scanner = new java.util.Scanner(System.in);

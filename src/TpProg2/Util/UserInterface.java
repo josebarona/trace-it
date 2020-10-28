@@ -1,4 +1,4 @@
-package TpProg2.util;
+package TpProg2.Util;
 
 import TpProg2.Events.Symptom;
 import TpProg2.Exceptions.ABMAdminException;
@@ -122,11 +122,13 @@ public class UserInterface {
     }
 
     public static void menuAdministrator(Administrator admin) throws ABMUserException {
+        clear();
         int opcion;
         do {
-            System.out.println("\n  Menu Administrador: ");
-            System.out.println(" _________________________________________\n Operaciones: \n 1 (sintomas) \n 2...  \n 3...  \n 4. Bloquear Ciudadano \n 5. Desbloquear Cuidadano \n 6. Log Out \n 7. Exit ");
+            System.out.println("  Menu Administrador: ");
+            System.out.println(" _________________________________________\n Operaciones: \n 1. (sintomas) \n 2...  \n 3...  \n 4. Bloquear Ciudadano \n 5. Desbloquear Cuidadano \n 6. Log Out \n 7. Exit ");
             opcion = Scanner.getInt(" Que operación desea realizar: ");
+            clear();
 
             switch (opcion) {
                 case 1:
@@ -140,21 +142,23 @@ public class UserInterface {
                     break;
                 case 4:
                     // el administrador deberia bloquear a un ciudadano?? preguntar ---> si no bloquea, se saca la opcion.
-                    String idCitizen = Scanner.getString("Ingrese id del ciudadano al que quiere Bloquear: ");
+                    String idCitizen = Scanner.getString("Ingrese cuil del ciudadano al que quiere Bloquear: ");
+                    clear();
                     if (Main.generalAMB.citizenDataStore.exists(idCitizen)) {
                         admin.banCitizen(Main.generalAMB.citizenDataStore.findById(idCitizen));
-                        System.out.println("El ciudadano a sido bloqueado. ");
+                        message("El ciudadano a sido bloqueado");
                     } else {
-                        System.out.println("el usuario al que quiere bloquear no existe");
+                        message("el usuario al que quiere bloquear no existe");
                     }
                     break;
                 case 5:
                     String idCitizen2 = Scanner.getString("Pase id de ciudadano que quiere Desbloquear: ");
+                    clear();
                     if (Main.generalAMB.citizenDataStore.exists(idCitizen2)) {
                         admin.unbanCitizen(Main.generalAMB.citizenDataStore.findById(idCitizen2));
-                        System.out.println("El ciudadano a sido desbloqueado. ");
+                        message("El ciudadano a sido desbloqueado");
                     } else {
-                        System.out.println("el usuario al que quiere desbloquear no existe");
+                        message("el usuario al que quiere desbloquear no existe");
                     }
                     break;
                 case 6:
@@ -167,7 +171,7 @@ public class UserInterface {
                     System.exit(0);
                     break;
                 default:
-                    System.out.println("opcion invalida!");
+                   message("opcion invalida!");
 
             }
 
@@ -400,26 +404,33 @@ public class UserInterface {
     public static void symptomRegister(Administrator administrator){
         int opcion;
         do {
-            System.out.println(" Sintomas: \n" + administrator.viewSymptoms(Main.generalAMB.symptoms) + "\n97. Agregar sintoma\n98. Eliminar sintoma\n99. (volver)");
-            opcion = Scanner.getInt(" Que opcion desea realizar: ");
+            title(" Administracion y configuracion de sintomas");
+            System.out.println("\n Sintomas: \n" + administrator.viewSymptoms(Main.generalAMB.symptoms) + "\n   97. Agregar sintoma\n   98. Eliminar sintoma\n   99. (volver)");
+            opcion = Scanner.getInt("    Que opcion desea realizar: ");
             switch (opcion){
                 case 97:
+                    clear();
                     Main.generalAMB.symptoms.add(new Symptom(Scanner.getString(" Ingrese el nombre del sintoma que desea agregar: ")));
-                    System.out.println(" El sintoma fue agregado!");
+                    clear();
+                    message(" El sintoma fue agregado!");
                     break;
                 case 98:
                     opcion = Scanner.getInt(" Que sintoma desea eliminar (nro): ");
+                    clear();
                     if (opcion != 99 && opcion < Main.generalAMB.symptoms.size()){
+
+                        message("\n El sintoma "+ Main.generalAMB.symptoms.get(opcion).getName() +" fue eliminado de su registro!");
                         Main.generalAMB.symptoms.remove(opcion);
-                        System.out.println("\n El sintoma fue eliminado de su registro!");
                     }else if(opcion != 99){
-                        System.out.println(" Opcion invalida!");
+                        clear();
+                        message(" Opcion invalida!");
                     }
                     break;
                 case 99:
                     break;
                 default:
-                    System.out.println(" Opcion invalida!");
+                    clear();
+                    message(" Opcion invalida!");
             }
         }while (opcion != 99);
     } // Con este metodo cualquier administrador deberia poder dar de alta/baja cualquier sintoma
