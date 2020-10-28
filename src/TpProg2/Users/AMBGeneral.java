@@ -106,6 +106,7 @@ public class AMBGeneral {
             en una variable y setear la zona de donde vive al citizen como esta abajo*/
             Zone zone = obtenerZona(citizen);
             citizen.setZone(zone);
+            zone.getCitizens().add(citizen);
         }
 
         // HAY QUE AGREGARLO EN LA LISTA DE ZONES.

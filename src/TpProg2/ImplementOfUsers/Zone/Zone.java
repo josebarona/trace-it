@@ -88,4 +88,8 @@ public class Zone{
         mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
         return mapAsString.toString();
     } //Convierte un HashMap a string.
+
+    public ArrayList<Citizen> getCitizens() {
+        return citizens;
+    }
 }
