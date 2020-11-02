@@ -68,23 +68,21 @@ public class AMBGeneral {
                 new Zone("D")
         ));
 
-        this.seekCitizens = new ArrayList<Citizen>();
+        this.seekCitizens = new ArrayList<>();
     }
 
     public ArrayList<Symptom> getSymptoms() {
         return symptoms;
     }
-    
+
     public void addSeekCitizen(Citizen citizen){
-        if (seekCitizens == null || !seekCitizens.contains(citizen)) {
+        if (seekCitizens.size() == 0 || !seekCitizens.contains(citizen)) {
             seekCitizens.add(citizen);
         }
     }
 
     public void removeSeekCitizen(Citizen citizen){
-        if (seekCitizens != null && seekCitizens.contains(citizen)) {
-            seekCitizens.remove(citizen);
-        }
+        seekCitizens.remove(citizen);
     }
 
     public void adminRegister() throws ABMAdminException, ABMUserException {
@@ -99,7 +97,7 @@ public class AMBGeneral {
         String id = Scanner.getString("Ingrese su cuil: ");
         if (anses.exists(id)) {
             String userName;
-            Boolean segui = false;
+            boolean segui = false;
 
             do {
                 userName = Scanner.getString("Ingrese su nombre de usuario: ");
@@ -123,8 +121,7 @@ public class AMBGeneral {
     }
 
     private Zone obtenerZona(Citizen citizen) { // Metodo que sirve para obtener la zona de un Citizen al buscar en El DataStore de Anses.
-        Zone zone = zones.get(0); // Solo para testear ----> Hacer metodo
-        return zone;
+        return zones.get(0);// Solo para testear ----> Hacer metodo
     }
 
     public void iniciarSesion(String userName) throws ABMUserException {
@@ -137,7 +134,6 @@ public class AMBGeneral {
             }else{
                 UserInterface.clear();
                 UserInterface.message("CONTRASEÑA INCORRECTA");
-                return;
             }
         }else {
             String cuil = Scanner.getString("Ingrese su cuil: ");
@@ -151,7 +147,6 @@ public class AMBGeneral {
             } else {
                 UserInterface.clear();
                 UserInterface.message("Este usuario no existe!");
-                return;
             }
         }
         /*
