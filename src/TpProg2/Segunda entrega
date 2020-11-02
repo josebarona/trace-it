@@ -11,7 +11,7 @@ Gran parte del trabajo lo estamos haciendo sobre generics mientras vamos resolvi
 Ahora podríamos decir que nos falta terminar algunos métodos para el monitoreo y estadísticas por zonas, averiguar como mostrar toda esta información y terminar el tema de la persistencia.
 ______________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
-Pueden probar una demo del codigo para ver las funcionalidades de los ciudadanos registrando dos usuarios con Cuil "123" o "456". (ejecutar el Main)
+Pueden probar una demo del codigo para ver las funcionalidades de los ciudadanos registrando dos usuarios con Cuil "123" o "456" para luego poder iniciar sesion.(ejecutar el Main)
 
 Menu de Ciudadano (explicado)
 _________________________________________
