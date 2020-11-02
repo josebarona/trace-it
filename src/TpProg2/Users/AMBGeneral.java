@@ -71,6 +71,10 @@ public class AMBGeneral {
         this.seekCitizens = new ArrayList<Citizen>();
     }
 
+    public ArrayList<Symptom> getSymptoms() {
+        return symptoms;
+    }
+    
     public void addSeekCitizen(Citizen citizen){
         if (seekCitizens == null || !seekCitizens.contains(citizen)) {
             seekCitizens.add(citizen);
@@ -81,10 +85,6 @@ public class AMBGeneral {
         if (seekCitizens != null && seekCitizens.contains(citizen)) {
             seekCitizens.remove(citizen);
         }
-    }
-
-    public ArrayList<Symptom> getSymptoms() {
-        return symptoms;
     }
 
     public void adminRegister() throws ABMAdminException, ABMUserException {
