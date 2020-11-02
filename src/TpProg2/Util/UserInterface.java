@@ -397,8 +397,8 @@ public class UserInterface {
         int opcion;
         do {
             title(" Administracion y configuracion de sintomas");
-            System.out.println("\n Sintomas: \n" + administrator.viewSymptoms(Main.generalAMB.symptoms) + "\n   97. Agregar sintoma\n   98. Eliminar sintoma\n   99. (volver)");
-            opcion = Scanner.getInt("    Que opcion desea realizar: ");
+            System.out.println("\n Lista de sintomas: \n" + administrator.viewSymptoms(Main.generalAMB.symptoms) + " Opciones:\n   97. Agregar sintoma\n   98. Eliminar sintoma\n   99. (volver)");
+            opcion = Scanner.getInt(" Que opcion desea realizar: ");
             switch (opcion){
                 case 97:
                     clear();
@@ -411,7 +411,7 @@ public class UserInterface {
                     clear();
                     if (opcion != 99 && opcion < Main.generalAMB.symptoms.size()){
 
-                        message("\n El sintoma "+ Main.generalAMB.symptoms.get(opcion).getName() +" fue eliminado de su registro!");
+                        message(" El sintoma "+ Main.generalAMB.symptoms.get(opcion).getName() +" fue eliminado de su registro!");
                         Main.generalAMB.symptoms.remove(opcion);
                     }else if(opcion != 99){
                         clear();
