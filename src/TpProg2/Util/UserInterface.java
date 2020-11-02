@@ -112,9 +112,9 @@ public class UserInterface {
     }
 
     public static void menuAdministrator(Administrator admin) throws ABMUserException {
-        clear();
         int opcion;
         do {
+            clear();
             System.out.println("  Menu Administrador: ");
             System.out.println(" _________________________________________\n Operaciones: \n 1. (sintomas) \n 2...  \n 3...  \n 4. Bloquear Ciudadano \n 5. Desbloquear Cuidadano \n 6. Log Out \n 7. Exit ");
             opcion = Scanner.getInt(" Que operación desea realizar: ");

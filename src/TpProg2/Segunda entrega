@@ -28,3 +28,6 @@ _________________________________________
  4. Registro de sintomas                    -> Dispone de todos los sintomas administrados por los administradores, donde puedes selecionar el sintoma que desees diagnosticar. (Si se registran mas de 3 sintomas de una misma enfermedad, el ciudadano se considera enfermo de la misma).
 
  5. Ver/eliminar sintomas registrados       -> Permite eliminar los sintomas previamente registrados.
+ ______________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Tambien pueden iniciar sesion como administrador si ingresan con el nombre de admin1 y la contraseña " TpGrupo14 ". Dentro del mismo podran configurar los sintomas disponibles para los ciudadanos y tambien bloquear/desbloquear cualquier ciudadano segun su cuil.
