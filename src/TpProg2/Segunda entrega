@@ -6,7 +6,7 @@ Aplicamos muchas de las correcciones de la primera entrega y también pudimos li
 lo cual hace mucho mas fácil de entender el código y construir sobre el.
 
 Actualmente estamos profundizando con el monitoreo del programa. Ya asignamos zonas a cada usuario (encontrada en la data del ANSES) y empezamos a armar algunos métodos para las estadísticas de las mismas.
-Gran parte del trabajo lo estamos haciendo sobre generics mientras vamos resolviendo poco a poco la persistencia del mismo, podemos ejecutar todo nuestro codigo guardando la información con cualquiera de las dos formas.
+Gran parte del trabajo lo estamos haciendo sobre generics mientras vamos resolviendo poco a poco la persistencia del mismo, podemos ejecutar t0do nuestro codigo guardando la información con cualquiera de las dos formas.
 
 Ahora podríamos decir que nos falta terminar algunos métodos para el monitoreo y estadísticas por zonas, averiguar como mostrar toda esta información y terminar el tema de la persistencia.
 ______________________________________________________________________________________________________________________________________________________________________________________________________________________________
@@ -28,3 +28,7 @@ _________________________________________
  4. Registro de sintomas                    -> Dispone de todos los sintomas administrados por los administradores, donde puedes selecionar el sintoma que desees diagnosticar. (Si se registran mas de 3 sintomas de una misma enfermedad, el ciudadano se considera enfermo de la misma).
 
  5. Ver/eliminar sintomas registrados       -> Permite eliminar los sintomas previamente registrados.
+______________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Tambien pueden iniciar sesion con el nombre de usuario "admin1" y la contraseña "TpGrupo14" para ver todas las funcionalidades de los administradores.
+    (ver estadisticas segun zona, bloquear/desbloquear ciudadanos, agregar/eliminar nuevos sintomas para los ciudadanos)

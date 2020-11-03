@@ -113,7 +113,7 @@ public class UserInterface {
         int opcion;
         do {
             System.out.println("  Menu Administrador: ");
-            System.out.println(" _________________________________________\n Operaciones: \n 1. Estadisticas (falta terminar) \n 2. Sintomas  \n 3...  \n 4. Bloquear Ciudadano \n 5. Desbloquear Cuidadano \n 6. Log Out \n 7. Exit ");
+            System.out.println(" _________________________________________\n Operaciones: \n 1. Estadisticas  \n 2. Sintomas  \n 3 (vacio)  \n 4. Bloquear Ciudadano \n 5. Desbloquear Cuidadano \n 6. Log Out \n 7. Exit ");
             opcion = Scanner.getInt(" Que operación desea realizar: ");
             clear();
 

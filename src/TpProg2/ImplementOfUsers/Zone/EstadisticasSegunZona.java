@@ -111,7 +111,7 @@ public class EstadisticasSegunZona {
                 Date thisCitizenDate = seekCitizens.get(i).getGotSeek();
                 Date otherCitizenDate = seekCitizens.get(j).getGotSeek();
                 int dateDiference = Date.dateDiference(otherCitizenDate, thisCitizenDate);
-                if (i != j && dateDiference > 0 && dateDiference < 47){
+                if (i != j && dateDiference >= 0 && dateDiference < 47){
                     thisBroteSize ++;
                     if (thisBroteSize > mayorBrote){mayorBrote = thisBroteSize;}
                 }
