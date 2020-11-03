@@ -1,7 +1,7 @@
-123,user1,123,false,0
-456,user2,456,false,0
-789,user3,789,false,0
-1,nacho,2,false,0
+123,A
+456,B
+789,C
+111,D
 
 idea para anses:
 cuil(id), zona -----> registre la zona al citizen segun el id que metas

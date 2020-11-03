@@ -6,7 +6,7 @@ Aplicamos muchas de las correcciones de la primera entrega y también pudimos li
 lo cual hace mucho mas fácil de entender el código y construir sobre el.
 
 Actualmente estamos profundizando con el monitoreo del programa. Ya asignamos zonas a cada usuario (encontrada en la data del ANSES) y empezamos a armar algunos métodos para las estadísticas de las mismas.
-Gran parte del trabajo lo estamos haciendo sobre generics mientras vamos resolviendo poco a poco la persistencia del mismo, podemos ejecutar todo nuestro codigo guardando la información con cualquiera de las dos formas.
+Gran parte del trabajo lo estamos haciendo sobre generics mientras vamos resolviendo poco a poco la persistencia del mismo, podemos ejecutar t0do nuestro codigo guardando la información con cualquiera de las dos formas.
 
 Ahora podríamos decir que nos falta terminar algunos métodos para el monitoreo y estadísticas por zonas, averiguar como mostrar toda esta información y terminar el tema de la persistencia.
 ______________________________________________________________________________________________________________________________________________________________________________________________________________________________
