@@ -1,27 +1,5 @@
 notas:
 
-agregar funciones toString() a cada objeto []
-hacer que la clase Face2FaceMeeting reciba un strings fechas tipo: "2020-10-06" y que lo parsee a date dentro del construcor para facilitar testeo []
-
-
-Gestion de eventos:
-- Que los administradores puedan crear eventos/sintomas (pueden ser literal un texto por lo que digieron en clase), y hay que agruparlos segun efermedades.
-- Hay que hacer el autodiagnostico para los ciudadanos, tienen que poder seleccionar todos los eventos que crearon los admins.
-
-- estaria bueno ya ir armado algo en consola como para ver como creamos un usuario más el tema de las invitaciones.
-
-
-- el tema de verificar si un ciudadano esta bloqueado lo haria al iniciar sesion.
-- Faltaria ver como crear invitaciones, porque aparte de meterle la ubicacion y el horario del meeting, tambien habria que ver
-como hacemos la lista con todos los que estuvieron presentes, y despues podriamos hacer que se envie automaticamente a todos esos ciudadanos.
-
-///
-- correcciones
-    - organizar los metodos
-- metodo en Zone, para ver los 3 sintomas mas comunes
-- metodo para citizen, para chquiar cantidad de sintomas y si presenta alguna enfermedad, de ser positivo avisar a todos sus contactos
-    - crear bandeja de alerta/notificaciones
-
-//
-- zonas seguir viedo. agregar citizen segun la zona.
-
+- Armar el tema de estadisticas.
+- Rearmar los metodos para sacar las horas entre dos fechas (no funciona para diferentes años).
+- Terminar la persistencia.

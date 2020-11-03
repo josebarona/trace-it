@@ -23,6 +23,7 @@ public class Zone{
     }
 
     public ArrayList<Citizen> getCitizens() {
+        refresh();
         return citizens;
     }
 

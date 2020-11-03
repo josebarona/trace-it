@@ -1,6 +1,6 @@
 package TpProg2.Util;
+
 import TpProg2.Events.Symptom;
-import TpProg2.Exceptions.ABMAdminException;
 import TpProg2.Exceptions.ABMCitizenException;
 import TpProg2.Exceptions.ABMUserException;
 import TpProg2.ImplementOfUsers.Date;
@@ -12,18 +12,14 @@ import TpProg2.ImplementOfUsers.Zone.Zone;
 import TpProg2.Main;
 import TpProg2.Users.Administrator;
 import TpProg2.Users.Citizen;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
-//La idea de este metodo es tener todos los metodos de interfaz que se imprimen en consola por  parte de los usuarios, principalmente para no cargar el main.
+
+    //La idea de este metodo es tener todos los metodos de interfaz que se imprimen en consola por  parte de los usuarios, principalmente para no cargar el main.
 
 public class UserInterface {
 
-    private UserInterface() {
-    }
+    private UserInterface() {}
 
     //Menus
     public static void menuPrincipal() {
@@ -116,16 +112,18 @@ public class UserInterface {
         int opcion;
         do {
             System.out.println("  Menu Administrador: ");
-            System.out.println(" _________________________________________\n Operaciones: \n 1. (sintomas) \n 2...  \n 3...  \n 4. Bloquear Ciudadano \n 5. Desbloquear Cuidadano \n 6. Log Out \n 7. Exit ");
+            System.out.println(" _________________________________________\n Operaciones: \n 1. Estadisticas (falta terminar) \n 2. Sintomas  \n 3...  \n 4. Bloquear Ciudadano \n 5. Desbloquear Cuidadano \n 6. Log Out \n 7. Exit ");
             opcion = Scanner.getInt(" Que operación desea realizar: ");
             clear();
 
             switch (opcion) {
-                case 1:
-                    symptomRegister(admin); //se ven los sintomas, se pueden eliminar o agregar nuevos.
-                    break;
                 case 2:
-                    //
+                    symptomRegister(admin); //se ven los sintomas, se pueden eliminar o agregar nuevos.
+                    clear();
+                    break;
+                case 1:
+                    viewZoneStatistics();
+                    clear();
                     break;
                 case 3:
                     //ver citizens bloqueados.
@@ -162,9 +160,7 @@ public class UserInterface {
                     break;
                 default:
                    message("opcion invalida!");
-
             }
-
         } while (opcion != 6); // seguramente va a haber mas opciones
     }
 
@@ -398,8 +394,8 @@ public class UserInterface {
         int opcion;
         do {
             title(" Administracion y configuracion de sintomas");
-            System.out.println("\n Sintomas: \n" + administrator.viewSymptoms(Main.generalAMB.symptoms) + "\n   97. Agregar sintoma\n   98. Eliminar sintoma\n   99. (volver)");
-            opcion = Scanner.getInt("    Que opcion desea realizar: ");
+            System.out.println("\n Lista de sintomas: \n" + administrator.viewSymptoms(Main.generalAMB.symptoms) + " Opciones:\n   97. Agregar sintoma\n   98. Eliminar sintoma\n   99. (volver)");
+            opcion = Scanner.getInt(" Que opcion desea realizar: ");
             switch (opcion){
                 case 97:
                     clear();
@@ -412,7 +408,7 @@ public class UserInterface {
                     clear();
                     if (opcion != 99 && opcion < Main.generalAMB.symptoms.size()){
 
-                        message("\n El sintoma "+ Main.generalAMB.symptoms.get(opcion).getName() +" fue eliminado de su registro!");
+                        message(" El sintoma "+ Main.generalAMB.symptoms.get(opcion).getName() +" fue eliminado de su registro!");
                         Main.generalAMB.symptoms.remove(opcion);
                     }else if(opcion != 99){
                         clear();
@@ -429,7 +425,40 @@ public class UserInterface {
     } // Con este metodo cualquier administrador deberia poder dar de alta/baja cualquier sintoma
 
     //Estadisticas (Para prueba)
-    public static void estadisticasZona(Zone zone){ // Para testear estadistica
+
+    private static void viewZoneStatistics() {
+        int opcion;
+        do {
+            title("  - Estadisticas segun zonas:");
+            System.out.println("\n" + viewZonesNames() + "\n  99. (volver)\n");
+            opcion = Scanner.getInt(" De que zona desea ver estadisticas (nro): ");
+            Zone zona = Main.generalAMB.zones.get(opcion);
+            clear();
+            if (opcion < Main.generalAMB.zones.size()) {
+                clear();
+                Scanner.enter(  " \n   Hay un total de " + zona.getCitizens().size() + " ciudadanos en la zona \"" + zona.getName() + "\", de los cuales " + EstadisticasSegunZona.seekCitizens(zona).size() + " estan enfermos." +
+                        "\n   Los tres sintomas registrados mas comunes registrados por ciudadanos de la zona son: " + EstadisticasSegunZona.convertWithIteration(EstadisticasSegunZona.top3CommonSymptoms(zona, Main.generalAMB.getSymptoms())) +
+                        "\n   El mayor brote detectado tiene un tamaño de " + EstadisticasSegunZona.brote(zona) + " contagiados dentro de la zona." +
+                        "\n\n   (Presione enter para regresar): ");
+            } else if (opcion != 99) {
+                message(" Opcion invalida!");
+            }
+        } while (opcion != 99);
+    }
+
+    private static String viewZonesNames() {
+        String lista = "";
+        if (Main.generalAMB.zones.size() > 0) {
+            for (int i = 0; i < Main.generalAMB.zones.size(); i++) {
+                lista += "  " + i + ". " + Main.generalAMB.zones.get(i).getName() + "\n";
+            }
+        } else {
+            lista += "\n    (No ninguna zona registrada en el sistema)\n";
+        }
+        return lista;
+    }
+
+    public static void estadisticasZona(Zone zone){
         //System.out.println(citizen.getRegisteredSymptoms().size());
         HashMap<Symptom, Integer> data = EstadisticasSegunZona.top3CommonSymptoms(zone,Main.generalAMB.symptoms);
         System.out.println(EstadisticasSegunZona.convertWithIteration(data));
@@ -462,4 +491,3 @@ public class UserInterface {
         System.out.println( message + "\n_________________________________________");
     }
 }
-

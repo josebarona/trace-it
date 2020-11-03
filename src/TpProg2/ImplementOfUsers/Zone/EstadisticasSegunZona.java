@@ -2,9 +2,7 @@ package TpProg2.ImplementOfUsers.Zone;
 
 import TpProg2.Events.Symptom;
 import TpProg2.ImplementOfUsers.Date;
-import TpProg2.Main;
 import TpProg2.Users.Citizen;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -24,7 +22,7 @@ public class EstadisticasSegunZona {
         }else{
             return commonSymptom;
         }
-    } //Devuelva el sintoma que haya sido registrado mas veces dentro de la zona.
+    }// Devuelva el sintoma que haya sido registrado mas veces dentro de la zona.
 
     public static HashMap<Symptom, Integer> symptomCounter (Zone zone, ArrayList<Symptom> symptoms){
 
@@ -41,8 +39,7 @@ public class EstadisticasSegunZona {
             }
         }
         return count;
-    } //Rellena un HashMap con un valor para cada sintoma segun cuantos ciudadanos en la zona lo hayan registrado.
-
+    }// Rellena un HashMap con un valor para cada sintoma segun cuantos ciudadanos en la zona lo hayan registrado.
 
     public static HashMap<Symptom, Integer> top3CommonSymptoms(Zone zone,ArrayList<Symptom> symptoms){
         zone.refresh();
@@ -62,7 +59,7 @@ public class EstadisticasSegunZona {
         count.put(symptom3, 0);
 
         return topSymptoms;
-    } //Devuelve un HashMap con los 3 sintomas mas comunes por zona y la cantidad de ciudadanos que la registraron.
+    }// Devuelve un HashMap con los 3 sintomas mas comunes por zona y la cantidad de ciudadanos que la registraron.
 
     public static String convertWithIteration(HashMap<Symptom, ?> map) {
         StringBuilder mapAsString = new StringBuilder("{");
@@ -71,7 +68,7 @@ public class EstadisticasSegunZona {
         }
         mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
         return mapAsString.toString();
-    } //Convierte un HashMap a string. (para testear)
+    }// Convierte un HashMap a string. (para testear)
 
     public static ArrayList<Citizen> seekCitizens (Zone zone){
         zone.refresh();
@@ -87,21 +84,21 @@ public class EstadisticasSegunZona {
     public static int brote(Zone zone){
         zone.refresh();
         ArrayList<Citizen> seekCitizens = seekCitizens(zone);
-        int tamañoDelBroteMin = 5;
+        int minBroteSize = 5;
         int mayorBrote = 0;
         for (int i = 0; i < seekCitizens.size(); i++) {
-            int tamañoDeEsteBrote = 0;
+            int thisBroteSize = 0;
             for (int j = 0; j < seekCitizens.size(); j++) {
                 Date thisCitizenDate = seekCitizens.get(i).getGotSeek();
                 Date otherCitizenDate = seekCitizens.get(j).getGotSeek();
                 int dateDiference = Date.dateDiference(otherCitizenDate, thisCitizenDate);
                 if (i != j && dateDiference > 0 && dateDiference < 47){
-                    tamañoDeEsteBrote ++;
-                    if (tamañoDeEsteBrote > mayorBrote){mayorBrote = tamañoDeEsteBrote;}
+                    thisBroteSize ++;
+                    if (thisBroteSize > mayorBrote){mayorBrote = thisBroteSize;}
                 }
             }
         }
-        if (mayorBrote >= tamañoDelBroteMin){
+        if (mayorBrote >= minBroteSize){
             return mayorBrote;
         }else{return 0;}
     }
