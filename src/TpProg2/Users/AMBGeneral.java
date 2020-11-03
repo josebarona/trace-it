@@ -95,7 +95,8 @@ public class AMBGeneral {
 
     public void adminRegister() throws ABMAdminException, ABMUserException {
         Administrator administrator = new Administrator(Scanner.getString("Ingrese su nombre de usuario: "),Scanner.getString("Ingrese su cuil: "),Scanner.getString("Ingrese su numero de telefono: "));
-        adminABM.add(administrator.getUserName(),administrator.getId(),administrator.getCuil());
+        //adminABM.add(administrator.getUserName(),administrator.getId(),administrator.getCuil());
+        adminABM.add(administrator);
         //System.out.println("la base de datos esta vacia? " + administratorDataStore.isEmpty());
     }
 
@@ -117,7 +118,8 @@ public class AMBGeneral {
             Citizen citizen = new Citizen(userName, id, Scanner.getString("Ingrese su numero de telefono: "));
             Zone zone = obtenerZonaCiudadano(citizen);
             citizen.setZone(zone);
-            citizenABM.add(citizen.getUserName(), citizen.getId(), citizen.getCuil());
+            //citizenABM.add(citizen.getUserName(), citizen.getId(), citizen.getCuil());
+            citizenABM.add(citizen);
             zone.refresh();
             /* hacer metodo que al buscar en el anses al citizen
             segun su cuil, guarde la zona que va a tener a su lado

@@ -13,7 +13,7 @@ public class ABMAdmin implements ABM<Administrator>/*metodos que va a utilizar A
         this.dataStore = dataStore;
     }
 
-    @Override
+    /*@Override
     public Administrator add(String userName, String phoneNumber, String cuil) throws ABMAdminException, ABMUserException {
 
         if (this.dataStore.findById(cuil) == null){
@@ -22,6 +22,16 @@ public class ABMAdmin implements ABM<Administrator>/*metodos que va a utilizar A
             return administrator;
         }
         throw new ABMAdminException(phoneNumber);
+
+    }*/
+
+    @Override
+    public Administrator add(Administrator administrator) throws ABMAdminException, ABMUserException {
+        if (this.dataStore.findById(administrator.getId()) == null){
+            this.dataStore.save(administrator);
+            return administrator;
+        }
+        throw new ABMAdminException(administrator.getId());
 
     }
 
