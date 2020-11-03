@@ -115,8 +115,10 @@ public class AMBGeneral {
             }while (!segui);
 
             Citizen citizen = new Citizen(userName, id, Scanner.getString("Ingrese su numero de telefono: "));
-            obtenerZonaCiudadano(citizen);
+            Zone zone = obtenerZonaCiudadano(citizen);
+            citizen.setZone(zone);
             citizenABM.add(citizen.getUserName(), citizen.getId(), citizen.getCuil());
+            zone.refresh();
             /* hacer metodo que al buscar en el anses al citizen
             segun su cuil, guarde la zona que va a tener a su lado
             en una variable y setear la zona de donde vive al citizen como esta abajo*/
@@ -127,7 +129,7 @@ public class AMBGeneral {
         //System.out.println("la base de datos esta vacia? " + citizenDataStore.isEmpty());
     }
 
-    private void obtenerZonaCiudadano(Citizen citizen) { // Metodo que sirve para obtener la zona de un Citizen al buscar en El DataStore de Anses.
+    private Zone obtenerZonaCiudadano(Citizen citizen) { // Metodo que sirve para obtener la zona de un Citizen al buscar en El DataStore de Anses.
         /*
         idea para anses:
         cuil(id), zona -----> registre la zona al citizen segun el id que metas
@@ -141,8 +143,7 @@ public class AMBGeneral {
                 if (data[0].equals(citizen.getId())) {
                     for (int i = 0; i < zones.size(); i++) {
                         if (zones.get(i).getName().equals(data[1])){
-                            citizen.setZone(zones.get(i));
-                            zones.get(i).refresh();
+                            return zones.get(i);
                         }
                     }
                 }else{
@@ -153,10 +154,11 @@ public class AMBGeneral {
         }catch (IOException | ABMCitizenException2 e){
             e.getMessage();
         }
+        return null;
     }
 
     public void iniciarSesion(String userName) throws ABMUserException {
-        // "TpGrupo14" ---> contrasnia de administradores.
+        // "TpGrupo14" ---> contraseña de administradores.
         if (administratorDataStore.exists(userName)){
             String password = Scanner.getString("Ingrese contraseña de administrador: ");
             if (password.equals("TpGrupo14")) {
