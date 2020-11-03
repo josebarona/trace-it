@@ -2,6 +2,9 @@
 456,user2,456,false,0
 789,user3,789,false,0
 1,nacho,2,false,0
+2,2,2,false,0
+3,3,3,false,0
+4,4,4,false,0
 
 idea para anses:
 cuil(id), zona -----> registre la zona al citizen segun el id que metas
