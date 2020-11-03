@@ -5,10 +5,16 @@ import TpProg2.Events.Disease;
 import TpProg2.Events.Symptom;
 import TpProg2.Exceptions.ABMAdminException;
 import TpProg2.Exceptions.ABMCitizenException;
+import TpProg2.Exceptions.ABMCitizenException2;
 import TpProg2.Exceptions.ABMUserException;
 import TpProg2.ImplementOfUsers.Zone.Zone;
 import TpProg2.Util.Scanner;
 import TpProg2.Util.UserInterface;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -123,8 +129,31 @@ public class AMBGeneral {
     }
 
     private Zone obtenerZona(Citizen citizen) { // Metodo que sirve para obtener la zona de un Citizen al buscar en El DataStore de Anses.
-        Zone zone = zones.get(0); // Solo para testear ----> Hacer metodo
-        return zone;
+        /*
+        idea para anses:
+        cuil(id), zona -----> registre la zona al citizen segun el id que metas
+        */
+        try {
+            FileInputStream fstream = new FileInputStream("src/TpProg2/DataStore/data/FileAnsesData");
+            BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+            String strLine;
+            while ((strLine = br.readLine()) != null) {
+                String[] data = strLine.split(",");
+                if (data[0].equals(citizen.getId())) {
+                    for (int i = 0; i < zones.size(); i++) {
+                        if (zones.get(i).getName().equals(data[1])){
+                            return zones.get(i);
+                        }
+                    }
+                }else{
+                    throw new ABMCitizenException2(citizen.getId());
+                }
+            }
+            fstream.close();
+        }catch (IOException | ABMCitizenException2 e){
+            e.getMessage();
+        }
+        return null;
     }
 
     public void iniciarSesion(String userName) throws ABMUserException {
