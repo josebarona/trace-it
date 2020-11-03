@@ -77,6 +77,10 @@ public class AMBGeneral {
         this.seekCitizens = new ArrayList<Citizen>();
     }
 
+    public ArrayList<Zone> getZones() {
+        return zones;
+    }
+
     public void addSeekCitizen(Citizen citizen){
         if (seekCitizens == null || !seekCitizens.contains(citizen)) {
             seekCitizens.add(citizen);
@@ -148,12 +152,10 @@ public class AMBGeneral {
                             return zones.get(i);
                         }
                     }
-                }else{
-                    throw new ABMCitizenException2(citizen.getId());
                 }
             }
             fstream.close();
-        }catch (IOException | ABMCitizenException2 e){
+        }catch (IOException e){
             e.getMessage();
         }
         return null;

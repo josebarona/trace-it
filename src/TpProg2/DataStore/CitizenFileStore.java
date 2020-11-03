@@ -1,8 +1,9 @@
 package TpProg2.DataStore;
 
+import TpProg2.Exceptions.CitizenFileStoreException;
 import TpProg2.ImplementOfUsers.Zone.Zone;
+import TpProg2.Main;
 import TpProg2.Users.Citizen;
-
 import java.util.ArrayList;
 
 public class CitizenFileStore extends FileStore<Citizen>{
@@ -14,8 +15,18 @@ public class CitizenFileStore extends FileStore<Citizen>{
     private boolean stringToBoolean(String string){
         return string.equals("true");
     }
-    private Zone stringToZone (String string){
-        return new Zone(string);
+    private Zone stringToZone (String zoneName){
+        try {
+        for (int i = 0; i < Main.generalAMB.getZones().size(); i++) {
+            if (Main.generalAMB.getZones().get(i).getName().equals(zoneName)){
+                return Main.generalAMB.getZones().get(i);
+            }
+        }
+            throw new CitizenFileStoreException(zoneName);
+        } catch (CitizenFileStoreException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
