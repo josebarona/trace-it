@@ -65,6 +65,7 @@ public class UserInterface {
         clear();
         int opcion;
         do {
+            //System.out.println(citizen.getZone().getName());
             title("  Menu Ciudadano: ");
             System.out.println("  Operaciones: \n\n 1. Notificaciones(" + citizen.getNotifications().size()+ ") \n 2. Bandeja de entrada de invitaciones(" + citizen.getReceivedInvitations().size()+ ") \n 3. Mandar solicitudes de encuentro \n 4. Registro de sintomas  \n 5. Ver/eliminar sintomas registrados\n 6. Log Out \n 7. Exit\n");
             opcion = Scanner.getInt(" Que operación desea realizar: ");
@@ -432,14 +433,19 @@ public class UserInterface {
             title("  - Estadisticas segun zonas:");
             System.out.println("\n" + viewZonesNames() + "\n  99. (volver)\n");
             opcion = Scanner.getInt(" De que zona desea ver estadisticas (nro): ");
-            Zone zona = Main.generalAMB.zones.get(opcion);
             clear();
             if (opcion < Main.generalAMB.zones.size()) {
+                Zone zona = Main.generalAMB.zones.get(opcion);
                 clear();
-                Scanner.enter(  " \n   Hay un total de " + zona.getCitizens().size() + " ciudadanos en la zona \"" + zona.getName() + "\", de los cuales " + EstadisticasSegunZona.seekCitizens(zona).size() + " estan enfermos." +
-                        "\n   Los tres sintomas registrados mas comunes registrados por ciudadanos de la zona son: " + EstadisticasSegunZona.convertWithIteration(EstadisticasSegunZona.top3CommonSymptoms(zona, Main.generalAMB.getSymptoms())) +
-                        "\n   El mayor brote detectado tiene un tamaño de " + EstadisticasSegunZona.brote(zona) + " contagiados dentro de la zona." +
-                        "\n\n   (Presione enter para regresar): ");
+                if (!zona.getCitizens().isEmpty()){
+                    Scanner.enter(  " \n   Hay un total de " + zona.getCitizens().size() + " ciudadanos en la zona \"" + zona.getName() + "\", de los cuales " + EstadisticasSegunZona.seekCitizens(zona).size() + " estan enfermos." +
+                                    "\n   " + EstadisticasSegunZona.top3CommonSymptomsString(zona, Main.generalAMB.getSymptoms()) +
+                                    "\n   El mayor brote detectado tiene un tamaño de " + EstadisticasSegunZona.brote(zona) + " contagiados dentro de la zona." +
+                                    "\n\n   (Presione enter para regresar): ");
+                    clear();
+                }else{
+                    message("(No hay ningun ciudadano que este registrado en esta zona)");
+                }
             } else if (opcion != 99) {
                 message(" Opcion invalida!");
             }
@@ -458,10 +464,10 @@ public class UserInterface {
         return lista;
     }
 
-    public static void estadisticasZona(Zone zone){
+    public static String estadisticasZona(Zone zone){
         //System.out.println(citizen.getRegisteredSymptoms().size());
         HashMap<Symptom, Integer> data = EstadisticasSegunZona.top3CommonSymptoms(zone,Main.generalAMB.symptoms);
-        System.out.println(EstadisticasSegunZona.convertWithIteration(data));
+        return (EstadisticasSegunZona.convertWithIteration(data));
     }
 
     //Extras graficas.

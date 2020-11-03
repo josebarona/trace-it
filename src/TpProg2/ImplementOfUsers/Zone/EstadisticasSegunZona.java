@@ -10,18 +10,15 @@ public class EstadisticasSegunZona {
 
     public static Symptom commonSymptom (HashMap<Symptom, Integer> count, ArrayList<Symptom> symptoms){ //Devuelve el sintoma mas comun dentro de un HashMap
         int max = 0;
-        Symptom commonSymptom = null;
+        Symptom commonSymptom = new Symptom("Vacio");
         for (int i = 0; i < symptoms.size(); i++){
             if (count.get(symptoms.get(i)) > max){
                 commonSymptom = symptoms.get(i);
                 max = count.get(symptoms.get(i));
             }
         }
-        if (max == 0){
-            return null;
-        }else{
-            return commonSymptom;
-        }
+        return commonSymptom;
+
     }// Devuelva el sintoma que haya sido registrado mas veces dentro de la zona.
 
     public static HashMap<Symptom, Integer> symptomCounter (Zone zone, ArrayList<Symptom> symptoms){
@@ -62,13 +59,35 @@ public class EstadisticasSegunZona {
     }// Devuelve un HashMap con los 3 sintomas mas comunes por zona y la cantidad de ciudadanos que la registraron.
 
     public static String convertWithIteration(HashMap<Symptom, ?> map) {
-        StringBuilder mapAsString = new StringBuilder("{");
+        StringBuilder mapAsString = new StringBuilder("(");
         for (Symptom key : map.keySet()) {
-            mapAsString.append(key.getName() + ": " + map.get(key) + ", ");
+            if (!(map.get(key) == null)){
+                mapAsString.append(key.getName() + ": " + map.get(key) + " - ");
+            }
         }
-        mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
+        mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append(")");
         return mapAsString.toString();
     }// Convierte un HashMap a string. (para testear)
+
+    public static String top3CommonSymptomsString(Zone zone, ArrayList<Symptom> symptoms){
+        HashMap<Symptom, Integer> top3 = top3CommonSymptoms(zone, symptoms);
+        if (!algunSintoma(zone)){
+            return "Ninguno de los ciudadanos registro ningun sintoma.";
+        }else{
+            return "Los tres sintomas registrados mas comunes registrados por ciudadanos de la zona son: " + convertWithIteration(top3);
+        }
+
+    }
+
+    private static boolean algunSintoma(Zone zona){
+        for (int i = 0; i < zona.getCitizens().size(); i++) {
+            if (!zona.getCitizens().get(i).getRegisteredSymptoms().isEmpty()){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public static ArrayList<Citizen> seekCitizens (Zone zone){
         zone.refresh();
