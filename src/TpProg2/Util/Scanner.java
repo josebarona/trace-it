@@ -117,10 +117,10 @@ public class Scanner {
 
     public static int getDay(String message, int year, int month) {
         System.out.print(message);
-        int monthDays = Date.monthDays(month, year);
+        int monthDays = Date.monthDays(year, month);
         try {
             int date = Integer.parseInt(scanner.nextLine());
-            if (date < 1 || date > Date.monthDays(month, year)){
+            if (date < 1 || date > monthDays){
                 System.out.println("  (Ingrese un valor entre 1 y "+ monthDays+" para el mes)");
                 return getDay(message, year, month);
             }else{return date;}
@@ -134,7 +134,7 @@ public class Scanner {
         System.out.print(message);
         try {
             int date = Integer.parseInt(scanner.nextLine());
-            if (date < 0 || date > 24){
+            if (date < 1 || date > 24){
                 System.out.println("  (Ingrese un valor entre 1 y 24 para la hora)");
                 return getHour(message);
             }else{return date;}
