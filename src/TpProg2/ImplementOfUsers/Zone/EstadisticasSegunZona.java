@@ -2,6 +2,7 @@ package TpProg2.ImplementOfUsers.Zone;
 
 import TpProg2.Events.Symptom;
 import TpProg2.ImplementOfUsers.Date;
+import TpProg2.Main;
 import TpProg2.Users.Citizen;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -88,7 +89,6 @@ public class EstadisticasSegunZona {
         return false;
     }
 
-
     public static ArrayList<Citizen> seekCitizens (Zone zone){
         zone.refresh();
         ArrayList<Citizen> seekCitizens = new ArrayList<>();
@@ -103,10 +103,10 @@ public class EstadisticasSegunZona {
     public static int brote(Zone zone){
         zone.refresh();
         ArrayList<Citizen> seekCitizens = seekCitizens(zone);
-        int minBroteSize = 5;
+        int minBroteSize = 2;
         int mayorBrote = 0;
         for (int i = 0; i < seekCitizens.size(); i++) {
-            int thisBroteSize = 0;
+            int thisBroteSize = 1;
             for (int j = 0; j < seekCitizens.size(); j++) {
                 Date thisCitizenDate = seekCitizens.get(i).getGotSeek();
                 Date otherCitizenDate = seekCitizens.get(j).getGotSeek();
@@ -121,4 +121,44 @@ public class EstadisticasSegunZona {
             return mayorBrote;
         }else{return 0;}
     }
+
+    public static String listadoDeBrotes(ArrayList<Zone> zonas){
+        if (mayorBrote(zonas) != null){
+            String lista = "\n (nombre de zona) -> [tamaño de su mayor brote]\n\n";
+            int count = 1;
+            ArrayList<Zone> zonasSinVer = (ArrayList<Zone>) zonas.clone();
+            while(mayorBrote(zonasSinVer) != null){
+                Zone mayorBrote = mayorBrote(zonasSinVer);
+                zonasSinVer.remove(mayorBrote);
+                lista += "             " + count + ". " + mayorBrote.getName() + " ->  [" + brote(mayorBrote) + "]\n";
+                count ++;
+            }
+            return lista;
+        } else {
+            return  "\n    (No hay ningun brote registrado hasta el momento)\n";
+        }
+    }
+
+    public static Zone mayorBrote(ArrayList<Zone> zonas){
+        Zone mayorBrote = null;
+        int tamañoDelMayorBrote = 0;
+        for (int i = 0; i < zonas.size(); i++) {
+            if (brote(zonas.get(i)) > tamañoDelMayorBrote){
+                mayorBrote = zonas.get(i);
+                tamañoDelMayorBrote = brote(zonas.get(i));
+            }
+        }
+        return mayorBrote;
+    }
 }
+/*
+ Lista de los mayores brotes detectados
+_________________________________________
+
+ (nombre de zona) -> [tamaño de su mayor brote]
+
+             1. A ->  [3]
+     2. B ->  [2]
+
+ (Presione enter para regresar)
+ */
