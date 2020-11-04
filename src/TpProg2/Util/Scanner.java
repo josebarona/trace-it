@@ -147,6 +147,7 @@ public class Scanner {
     public static void enter(){
         scanner.nextLine();
     }
+
     public static void enter(String message){
         System.out.println(message);
         scanner.nextLine();

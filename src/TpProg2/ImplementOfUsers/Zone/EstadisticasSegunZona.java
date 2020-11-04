@@ -151,14 +151,3 @@ public class EstadisticasSegunZona {
         return mayorBrote;
     }
 }
-/*
- Lista de los mayores brotes detectados
-_________________________________________
-
- (nombre de zona) -> [tamaño de su mayor brote]
-
-             1. A ->  [3]
-     2. B ->  [2]
-
- (Presione enter para regresar)
- */
