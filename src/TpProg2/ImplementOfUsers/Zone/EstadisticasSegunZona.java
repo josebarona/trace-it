@@ -103,7 +103,7 @@ public class EstadisticasSegunZona {
     public static int brote(Zone zone){
         zone.refresh();
         ArrayList<Citizen> seekCitizens = seekCitizens(zone);
-        int minBroteSize = 2;
+        int minBroteSize = 5;
         int mayorBrote = 0;
         for (int i = 0; i < seekCitizens.size(); i++) {
             int thisBroteSize = 1;

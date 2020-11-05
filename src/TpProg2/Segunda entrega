@@ -5,13 +5,15 @@ a los ciudadanos si se enferma (presenta más de 3 sintomas de una enfermedad) a
 Aplicamos muchas de las correcciones de la primera entrega y también pudimos limpiar y organizar bastante la estructura de nuestro código (como algunas "superclases" como el main en su momento),
 lo cual hace mucho mas fácil de entender el código y construir sobre el.
 
-Actualmente estamos profundizando con el monitoreo del programa. Ya asignamos zonas a cada usuario (encontrada en la data del ANSES) y empezamos a armar algunos métodos para las estadísticas de las mismas.
+Actualmente estamos terminando de profundizar el monitoreo del programa. Todos los usuarios tienen asignada una zona (encontrada en la data del ANSES) y los administradores tienen acceso a un panel de estadisticas,
+donde pueden visualisar informacion particular de cada zona (cantidad de personas que viven ahi, cantidad de enfermos, las 3 enfermedades mas comunes registradas por usuarios y el tamaño del mayor brote si hubo alguno en la zona),
+tambien pueden ver una lista de tamaño decendiente de las zonas con su mayor brote y el numero de contagiados en el mismo.
 Gran parte del trabajo lo estamos haciendo sobre generics mientras vamos resolviendo poco a poco la persistencia del mismo, podemos ejecutar t0do nuestro codigo guardando la información con cualquiera de las dos formas.
 
-Ahora podríamos decir que nos falta terminar algunos métodos para el monitoreo y estadísticas por zonas, averiguar como mostrar toda esta información y terminar el tema de la persistencia.
+Ahora podríamos decir que nos faltan algunos detalles para las estadísticas por zonas y terminar el tema de la persistencia sobre toda la informacion del programa.
 ______________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
-Pueden probar una demo del codigo para ver las funcionalidades de los ciudadanos registrando dos usuarios con Cuil "123" o "456". (ejecutar el Main)
+Pueden probar una demo del codigo para ver las funcionalidades de los ciudadanos registrando usuarios con Cuil "123", "456" o "789", una ves registrados pueden iniciar sesion para entrar al menu del mismo. (ejecutar el Main)
 
 Menu de Ciudadano (explicado)
 _________________________________________
