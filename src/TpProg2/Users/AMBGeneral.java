@@ -19,7 +19,6 @@ import java.util.HashMap;
 public class AMBGeneral {
 
     public DataStore<Symptom> symptomDataStore;
-    public ArrayList<Symptom> symptoms;
     public DataStore<Citizen> anses;
     public DataStore<Administrator> administratorDataStore;
     public ABMAdmin adminABM;
@@ -40,7 +39,7 @@ public class AMBGeneral {
         this.zones = zones;
     }*/// ----- para crearlo y hacerlo mas a tu gusto
 
-    public AMBGeneral(){ // --------> predeterminado covid.
+    public AMBGeneral() throws DataStoreException { // --------> predeterminado covid.
         anses = new FileStore<>("FileAnsesData");
 
         //administratorDataStore = new CollectionStore<>(new HashMap<>()); // GUARDADO EN COLLECTIONS
@@ -52,13 +51,8 @@ public class AMBGeneral {
         citizenABM = new ABMCitizen(citizenDataStore);
 
         symptomDataStore = new SymptomFileStore("FileSymptomData");
-        try {
-            symptoms = symptomDataStore.toArrayList();
-        } catch (DataStoreException e) {
-            e.printStackTrace();
-        }
 
-        disease = new Disease("COVID", symptoms);
+        disease = new Disease("COVID", symptomDataStore.toArrayList());
 
         zones = new ArrayList<>(Arrays.asList(
                 new Zone("A"),
@@ -91,8 +85,8 @@ public class AMBGeneral {
         }
     }
 
-    public ArrayList<Symptom> getSymptoms() {
-        return symptoms;
+    public ArrayList<Symptom> getSymptoms() throws DataStoreException {
+        return symptomDataStore.toArrayList();
     }
 
     public void adminRegister() throws ABMAdminException, ABMUserException {

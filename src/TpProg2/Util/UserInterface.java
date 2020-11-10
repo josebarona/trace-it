@@ -84,7 +84,11 @@ public class UserInterface {
                     createIvitation(citizen);
                     break;
                 case 4:
-                    selfRecordingOfSymptoms(citizen);
+                    try {
+                        selfRecordingOfSymptoms(citizen);
+                    } catch (DataStoreException e) {
+                        e.printStackTrace();
+                    }
                     clear();
                     break;
                 case 5:
@@ -349,17 +353,17 @@ public class UserInterface {
     } // Metodo que una vez que un ciudadano se autodiagnostica como enfermo, este alerta (envia notificacion, esta no sera visible para el otro ciudadano hasta que sean contactos) a todos los ciudadanos con los cuales estuvo en contacto en menos de 48 horas.
 
     //Sintomas
-    public static void selfRecordingOfSymptoms(Citizen citizen) {
+    public static void selfRecordingOfSymptoms(Citizen citizen) throws DataStoreException {
         int opcion;
         do {
             title(" - Registro de sintomas:");
-            System.out.println("\n ¿Usted presenta alguno de los siguientes sintomas?\n" + citizen.viewSymptoms(Main.generalAMB.symptoms) + "\n   99. (volver)");
+            System.out.println("\n ¿Usted presenta alguno de los siguientes sintomas?\n" + citizen.viewSymptoms(Main.generalAMB.getSymptoms()) + "\n   99. (volver)");
             opcion = Scanner.getInt(" Que sintoma desea registrar: ");
             clear();
-            if (opcion != 99 && opcion < Main.generalAMB.symptoms.size()) {
-                if (!citizen.getRegisteredSymptoms().contains(Main.generalAMB.symptoms.get(opcion))) {
-                    citizen.getRegisteredSymptoms().add(Main.generalAMB.symptoms.get(opcion));
-                    message("El sintoma (" + Main.generalAMB.symptoms.get(opcion).getName() + ") fue registrado!");
+            if (opcion != 99 && opcion < Main.generalAMB.getSymptoms().size()) {
+                if (!citizen.getRegisteredSymptoms().contains(Main.generalAMB.getSymptoms().get(opcion))) {
+                    citizen.getRegisteredSymptoms().add(Main.generalAMB.getSymptoms().get(opcion));
+                    message("El sintoma (" + Main.generalAMB.getSymptoms().get(opcion).getName() + ") fue registrado!");
 
                     //aca tendriamos que ver si se considera que esta enfermo.
                     if (citizen.isSeek()) {
@@ -396,17 +400,12 @@ public class UserInterface {
         int opcion;
         do {
             title(" Administracion y configuracion de sintomas");
-            ArrayList<Symptom> symptomsss = Main.generalAMB.symptomDataStore.toArrayList();
 
-            for (int i = 0; i < symptomsss.size(); i++) {
-                System.out.println(symptomsss.get(i).getName());
-            }
-            System.out.println("\n Lista de sintomas: \n" + administrator.viewSymptoms(Main.generalAMB.symptoms) + " Opciones:\n   97. Agregar sintoma\n   98. Eliminar sintoma\n   99. (volver)");
+            System.out.println("\n Lista de sintomas: \n" + administrator.viewSymptoms(Main.generalAMB.getSymptoms()) + " Opciones:\n   97. Agregar sintoma\n   98. Eliminar sintoma\n   99. (volver)");
             opcion = Scanner.getInt(" Que opcion desea realizar: ");
             switch (opcion){
                 case 97:
                     clear();
-                    Main.generalAMB.symptoms.add(new Symptom(Scanner.getString(" Ingrese el nombre del sintoma que desea agregar: ")));
                     Main.generalAMB.symptomDataStore.save(new Symptom(Scanner.getString(" Ingrese el nombre del sintoma que desea agregar: ")));
                     clear();
                     message(" El sintoma fue agregado!");
@@ -414,10 +413,11 @@ public class UserInterface {
                 case 98:
                     opcion = Scanner.getInt(" Que sintoma desea eliminar (nro): ");
                     clear();
-                    if (opcion != 99 && opcion < Main.generalAMB.symptoms.size()){
+                    if (opcion != 99 && opcion < Main.generalAMB.getSymptoms().size()){
 
-                        message(" El sintoma "+ Main.generalAMB.symptoms.get(opcion).getName() +" fue eliminado de su registro!");
-                        Main.generalAMB.symptoms.remove(opcion);
+                        message(" El sintoma "+ Main.generalAMB.getSymptoms().get(opcion).getName() +" fue eliminado de su registro!");
+
+                        Main.generalAMB.symptomDataStore.remove(Main.generalAMB.getSymptoms().get(opcion).getName());
 
                     }else if(opcion != 99){
                         clear();
