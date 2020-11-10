@@ -523,9 +523,9 @@ public class UserInterface {
         String lista = "";
         ArrayList<Citizen> bannedCitizens = Main.generalAMB.getBannedCitizens();
         if (bannedCitizens != null && bannedCitizens.size() > 0) {
-            lista += "\n (nombre del ciudadano) -> [su numero de cuil]\n\n";
+            lista += "\n  (nombre)   -> [numero de cuil]\n\n";
             for (int i = 0; i < bannedCitizens.size(); i++) {
-                lista += "                   " + i + ". " + bannedCitizens.get(i).getUserName() + " ->  [" + bannedCitizens.get(i).getCuil() + "]\n";
+                lista += "   " + i + ". " + bannedCitizens.get(i).getUserName() + "\t ->  [" + bannedCitizens.get(i).getCuil() + "]\n";
             }
         } else {
             lista += "\n    (No hay ningun ciudadano bloqueado actualmente)\n";
