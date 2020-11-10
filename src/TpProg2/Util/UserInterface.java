@@ -14,9 +14,8 @@ import TpProg2.Main;
 import TpProg2.Users.Administrator;
 import TpProg2.Users.Citizen;
 import java.util.ArrayList;
-import java.util.HashMap;
 
-    //La idea de este metodo es tener todos los metodos de interfaz que se imprimen en consola por  parte de los usuarios, principalmente para no cargar el main.
+//La idea de este metodo es tener todos los metodos de interfaz que se imprimen en consola por  parte de los usuarios, principalmente para no cargar el main.
 
 public class UserInterface {
 
@@ -46,7 +45,7 @@ public class UserInterface {
                     String userName = Scanner.getString("Nombre de Usuario: ");
                     try {
                         Main.generalAMB.iniciarSesion(userName);
-                    } catch (ABMUserException e) {
+                    } catch (ABMUserException | DataStoreException e) {
                         e.printStackTrace();
                     }
                     break;
@@ -114,7 +113,7 @@ public class UserInterface {
         int opcion;
         do {
             System.out.println("  Menu Administrador: ");
-            System.out.println(" _________________________________________\n Operaciones: \n 1. Estadisticas  \n 2. Sintomas  \n 3 (vacio)  \n 4. Bloquear Ciudadano \n 5. Desbloquear Cuidadano \n 6. Log Out \n 7. Exit ");
+            System.out.println(" _________________________________________\n Operaciones: \n 1. Estadisticas  \n 2. Sintomas  \n 3. Ciudadanos bloqueados \n 6. Log Out \n 7. Exit ");
             opcion = Scanner.getInt(" Que operación desea realizar: ");
             clear();
 
@@ -128,7 +127,8 @@ public class UserInterface {
                     clear();
                     break;
                 case 3:
-                    //ver citizens bloqueados.
+                    viewBannedCitizens(admin);
+                    clear();
                     break;
                 case 4:
                     // el administrador deberia bloquear a un ciudadano?? preguntar ---> si no bloquea, se saca la opcion.
@@ -392,16 +392,22 @@ public class UserInterface {
         } while (opcion != 99);
     } // Permite a un ciudadano eliminar un sintoma previamente autodiagnosticado.
 
-    public static void symptomRegister(Administrator administrator){
+    public static void symptomRegister(Administrator administrator) throws DataStoreException {
         int opcion;
         do {
             title(" Administracion y configuracion de sintomas");
+            ArrayList<Symptom> symptomsss = Main.generalAMB.symptomDataStore.toArrayList();
+
+            for (int i = 0; i < symptomsss.size(); i++) {
+                System.out.println(symptomsss.get(i).getName());
+            }
             System.out.println("\n Lista de sintomas: \n" + administrator.viewSymptoms(Main.generalAMB.symptoms) + " Opciones:\n   97. Agregar sintoma\n   98. Eliminar sintoma\n   99. (volver)");
             opcion = Scanner.getInt(" Que opcion desea realizar: ");
             switch (opcion){
                 case 97:
                     clear();
                     Main.generalAMB.symptoms.add(new Symptom(Scanner.getString(" Ingrese el nombre del sintoma que desea agregar: ")));
+                    Main.generalAMB.symptomDataStore.save(new Symptom(Scanner.getString(" Ingrese el nombre del sintoma que desea agregar: ")));
                     clear();
                     message(" El sintoma fue agregado!");
                     break;
@@ -412,6 +418,7 @@ public class UserInterface {
 
                         message(" El sintoma "+ Main.generalAMB.symptoms.get(opcion).getName() +" fue eliminado de su registro!");
                         Main.generalAMB.symptoms.remove(opcion);
+
                     }else if(opcion != 99){
                         clear();
                         message(" Opcion invalida!");
@@ -470,6 +477,58 @@ public class UserInterface {
             }
         } else {
             lista += "\n    (No ninguna zona registrada en el sistema)\n";
+        }
+        return lista;
+    }
+
+    private static void viewBannedCitizens(Administrator admin) throws ABMUserException {
+        int opcion;
+        do {
+            title("  - Ciudadanos bloqueados:");
+            System.out.println("\n" + viewBannedCitizensList() + "\n Opciones:\n   97. Bloquear un nuevo ciudadano\n   98. Desbloquear ciudadano\n   99. (volver)");
+            opcion = Scanner.getInt(" Que opcion desea realizar: ");
+            switch (opcion){
+                case 97:
+                    clear();
+                    String idCitizen = Scanner.getString("Ingrese cuil del ciudadano al que quiere Bloquear: ");
+                    clear();
+                    if (Main.generalAMB.citizenDataStore.exists(idCitizen)) {
+                        admin.banCitizen(Main.generalAMB.citizenDataStore.findById(idCitizen));
+
+                        message("El ciudadano a sido bloqueado");
+                    } else {
+                        message("el usuario al que quiere bloquear no existe");
+                    }
+                    break;
+                case 98:
+                    String idCitizen2 = Scanner.getString("Ingrese el cuil de ciudadano que quiere Desbloquear: ");
+                    clear();
+                    if (Main.generalAMB.citizenDataStore.exists(idCitizen2)) {
+                        admin.unbanCitizen(Main.generalAMB.citizenDataStore.findById(idCitizen2));
+                        message("El ciudadano a sido desbloqueado");
+                    } else {
+                        message("el usuario al que quiere desbloquear no existe");
+                    }
+                    break;
+                case 99:
+                    break;
+                default:
+                    clear();
+                    message(" Opcion invalida!");
+            }
+        }while (opcion != 99);
+    }
+
+    private static String viewBannedCitizensList(){
+        String lista = "";
+        ArrayList<Citizen> bannedCitizens = Main.generalAMB.getBannedCitizens();
+        if (bannedCitizens != null && bannedCitizens.size() > 0) {
+            lista += "\n (nombre del ciudadano) -> [su numero de cuil]\n\n";
+            for (int i = 0; i < bannedCitizens.size(); i++) {
+                lista += "                   " + i + ". " + bannedCitizens.get(i).getUserName() + " ->  [" + bannedCitizens.get(i).getCuil() + "]\n";
+            }
+        } else {
+            lista += "\n    (No hay ningun ciudadano bloqueado actualmente)\n";
         }
         return lista;
     }

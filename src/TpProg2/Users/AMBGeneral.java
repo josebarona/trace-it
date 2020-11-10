@@ -29,7 +29,7 @@ public class AMBGeneral {
     public Disease disease; // No usamos una lista de enfermedades por ahora, solo hay una.
     public ArrayList<Zone> zones;
     public ArrayList<Citizen> seekCitizens;
-    //public ArrayList<Citizen> bloqueados;
+    public ArrayList<Citizen> bannedCitizens;
 
     /*public AMBGeneral(DataStore<Citizen> anses, ABMAdmin adminABM, ABMCitizen citizenABM, ArrayList<Symptom> symptoms, Disease disease, ArrayList<Zone> zones) {
         this.anses = anses;
@@ -68,6 +68,11 @@ public class AMBGeneral {
         ));
 
         this.seekCitizens = new ArrayList<Citizen>();
+        this.bannedCitizens = new ArrayList<Citizen>();
+    }
+
+    public ArrayList<Citizen> getBannedCitizens() {
+        return bannedCitizens;
     }
 
     public ArrayList<Zone> getZones() {

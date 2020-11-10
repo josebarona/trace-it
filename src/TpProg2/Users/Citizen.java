@@ -142,6 +142,10 @@ public class Citizen extends User {
     public void rejectedRequest(Invitation invitation){
         receivedInvitations.remove(invitation);
         invitation.transmitter.rejections ++;
+        if (invitation.transmitter.rejections > 5){
+            invitation.transmitter.isBan  = true;
+            Main.generalAMB.bannedCitizens.add(invitation.transmitter);
+        }
     } // Metodo que rechaza una invitacion dentro de su bandeja de entrada y se suma a la cuenta de rechazos del emisor.
 
     //Notifications

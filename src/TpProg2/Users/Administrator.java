@@ -1,5 +1,7 @@
 package TpProg2.Users;
 
+import TpProg2.Main;
+
 public class Administrator extends User {
     String type;
 
@@ -9,10 +11,13 @@ public class Administrator extends User {
     }
 
     public void banCitizen(Citizen citizen) {
+        Main.generalAMB.bannedCitizens.add(citizen);
         citizen.isBan = true;
+        Main.generalAMB.citizenDataStore.edit(citizen);
     }
 
     public void unbanCitizen(Citizen citizen) {
+        Main.generalAMB.bannedCitizens.remove(citizen);
         citizen.isBan = false;
     }
 
