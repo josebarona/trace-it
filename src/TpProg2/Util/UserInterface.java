@@ -61,7 +61,7 @@ public class UserInterface {
         System.exit(0);
     }
 
-    public static void menuCitizen(Citizen citizen) throws ABMUserException {
+    public static void menuCitizen(Citizen citizen) throws ABMUserException, DataStoreException {
         clear();
         int opcion;
         do {
@@ -171,7 +171,7 @@ public class UserInterface {
     }
 
     //Ecuentros/Invitaciones
-    public static void inbox(Citizen citizen) {
+    public static void inbox(Citizen citizen) throws DataStoreException {
         int opcion;
         do {
             title("  - Bandeja de entrada de invitaciones:");
@@ -228,7 +228,7 @@ public class UserInterface {
         return info;
     } //Metodo que devuelve un String con toda la informacion que lleva una invitacion (location, date, citizens)
 
-    public static void createIvitation(Citizen citizen) throws ABMUserException {
+    public static void createIvitation(Citizen citizen) throws ABMUserException, DataStoreException {
         System.out.println(" - Porfavor ingrese los siguientes datos sobre el encuentro al cual asistio: \n\n");
         //1 Location
         title(" Ubicacion");
@@ -379,7 +379,7 @@ public class UserInterface {
         } while (opcion != 99);
     }// Con este metodo un ciudadano deberia poder seleccionar los sintomas que posee y asi guardar un registro.
 
-    public static void removeSymptom(Citizen citizen) {
+    public static void removeSymptom(Citizen citizen) throws DataStoreException {
         int opcion;
         do {
             title(" - Sintomas registrados:");

@@ -1,6 +1,7 @@
 package TpProg2.Users;
 
 import TpProg2.Events.Symptom;
+import TpProg2.Exceptions.DataStoreException;
 import TpProg2.ImplementOfUsers.*;
 import TpProg2.ImplementOfUsers.Zone.Zone;
 import TpProg2.Main;
@@ -129,7 +130,7 @@ public class Citizen extends User {
         sendTo.receiveMeetingRequest(invitation);
     }
 
-    public void acceptedRequest(Invitation invitation){
+    public void acceptedRequest(Invitation invitation) throws DataStoreException {
         receivedInvitations.remove(invitation);
         acceptedRequest.add(invitation.meeting);
         this.addContact(invitation.transmitter);
@@ -192,7 +193,7 @@ public class Citizen extends User {
     }
 
     //Sintomas
-    public boolean isSeek(){
+    public boolean isSeek() throws DataStoreException {
         int count = 0;
         ArrayList<Symptom> diseaseSymptoms = Main.generalAMB.getSymptoms();
         for (int i = 0; i < registeredSymptoms.size(); i++) {
