@@ -70,7 +70,6 @@ public class Citizen extends User {
         return acceptedRequest;
     }
 
-
     public ArrayList<Symptom> getRegisteredSymptoms() {
         return registeredSymptoms;
     }
@@ -94,7 +93,6 @@ public class Citizen extends User {
     public void setZone(Zone zone) {
         this.zone = zone;
     }
-
 
     @Override
     public String getFileRepresentation() {
