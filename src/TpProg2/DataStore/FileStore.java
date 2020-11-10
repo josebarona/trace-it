@@ -39,9 +39,12 @@ public class FileStore<T extends FileSaveable> implements DataStore<T>{
             }
 
         }
-        for (String line : allLines) {
-            writeFile(line);
-
+        for (int i = 0; i < allLines.size(); i++) {
+            if (allLines.size()-1 > i){
+                writeFile(allLines.get(i) + "\n");
+            }else {
+                writeFile(allLines.get(i));
+            }
         }
     }
 
@@ -65,7 +68,7 @@ public class FileStore<T extends FileSaveable> implements DataStore<T>{
     public void writeFile(String toWrite){
         //metodo para abstraer escribir en un archivo.
         try(BufferedWriter br = new BufferedWriter(new FileWriter(this.fileName, true));){
-            br.write(toWrite + "\n");
+            br.write(toWrite);
         } catch(IOException e){
             e.getMessage();
         }
