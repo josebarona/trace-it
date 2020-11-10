@@ -69,16 +69,10 @@ public class SymptomFileStore implements DataStore<Symptom>{
     public void writeFile(String toWrite){
         //metodo para abstraer escribir en un archivo.
         try(BufferedWriter br = new BufferedWriter(new FileWriter(this.fileName, true));){
-            FileInputStream fstream = new FileInputStream(fileName);
-            BufferedReader breader = new BufferedReader(new InputStreamReader(fstream));
-            for (int i = 0; i < breader.lines().toArray().length; i++) {
-                if (breader.lines().toArray()[i+1] != null){
-                    br.write(toWrite + "\n");
-                }else{
-                    br.write(toWrite);
-                }
-            }
-        } catch(IOException e){ e.getMessage(); }
+            br.write(toWrite + "\n");
+        } catch(IOException e){
+            e.getMessage();
+        }
     }
 
     private void cleanFile(){
