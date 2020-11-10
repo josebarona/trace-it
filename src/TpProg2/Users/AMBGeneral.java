@@ -86,7 +86,9 @@ public class AMBGeneral {
     }
 
     public ArrayList<Symptom> getSymptoms() throws DataStoreException {
-        return symptomDataStore.toArrayList();
+        ArrayList<Symptom> symptoms= symptomDataStore.toArrayList();
+        symptoms.remove(0);
+        return symptoms;
     }
 
     public void adminRegister() throws ABMAdminException, ABMUserException {
