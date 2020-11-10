@@ -3,6 +3,7 @@ package TpProg2.Util;
 import TpProg2.Events.Symptom;
 import TpProg2.Exceptions.ABMCitizenException;
 import TpProg2.Exceptions.ABMUserException;
+import TpProg2.Exceptions.DataStoreException;
 import TpProg2.ImplementOfUsers.Date;
 import TpProg2.ImplementOfUsers.FaceToFaceMeeting;
 import TpProg2.ImplementOfUsers.Invitation;
@@ -36,7 +37,7 @@ public class UserInterface {
                 case 1:
                     try {
                         Main.generalAMB.citizenRegister();
-                    } catch (ABMCitizenException | ABMUserException e) {
+                    } catch (ABMCitizenException | ABMUserException | DataStoreException e) {
                         e.printStackTrace();
                     }
                     clear();
@@ -108,7 +109,7 @@ public class UserInterface {
         } while (opcion != 6);// seguramente vaya a haber mas opciones
     }
 
-    public static void menuAdministrator(Administrator admin) throws ABMUserException {
+    public static void menuAdministrator(Administrator admin) throws ABMUserException, DataStoreException {
         clear();
         int opcion;
         do {
@@ -427,7 +428,7 @@ public class UserInterface {
 
     //Estadisticas (Para prueba)
 
-    private static void viewZoneStatistics() {
+    private static void viewZoneStatistics() throws DataStoreException {
         int opcion;
         do {
             title("  - Estadisticas segun zonas:");

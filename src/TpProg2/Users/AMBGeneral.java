@@ -3,10 +3,7 @@ package TpProg2.Users;
 import TpProg2.DataStore.*;
 import TpProg2.Events.Disease;
 import TpProg2.Events.Symptom;
-import TpProg2.Exceptions.ABMAdminException;
-import TpProg2.Exceptions.ABMCitizenException;
-import TpProg2.Exceptions.ABMCitizenException2;
-import TpProg2.Exceptions.ABMUserException;
+import TpProg2.Exceptions.*;
 import TpProg2.ImplementOfUsers.Zone.Zone;
 import TpProg2.Util.Scanner;
 import TpProg2.Util.UserInterface;
@@ -21,12 +18,14 @@ import java.util.HashMap;
 
 public class AMBGeneral {
 
+    public DataStore<Symptom> symptomDataStore;
+    public ArrayList<Symptom> symptoms;
     public DataStore<Citizen> anses;
     public DataStore<Administrator> administratorDataStore;
     public ABMAdmin adminABM;
     public DataStore<Citizen> citizenDataStore;
     public ABMCitizen citizenABM;
-    public ArrayList<Symptom> symptoms;
+
     public Disease disease; // No usamos una lista de enfermedades por ahora, solo hay una.
     public ArrayList<Zone> zones;
     public ArrayList<Citizen> seekCitizens;
@@ -52,18 +51,12 @@ public class AMBGeneral {
         //citizenDataStore = new CitizenFileStore("FileCitizenData"); // GUARDADO EN FILES
         citizenABM = new ABMCitizen(citizenDataStore);
 
-        symptoms = new ArrayList<>(Arrays.asList(
-                new Symptom("Toz seca"),
-                new Symptom( "Cansancio"),
-                new Symptom("Molestias y dolores"),
-                new Symptom("Dolor de garganta"),
-                new Symptom("Diarrea"),
-                new Symptom("Conjuntivitis"),
-                new Symptom("Dolor de cabeza"),
-                new Symptom("Pérdida del sentido del olfato o del gusto"),
-                new Symptom("Dificultad para respirar o sensación de falta de aire"),
-                new Symptom("Dolor o presión en el pecho")
-        ));
+        symptomDataStore = new SymptomFileStore("FileSymptomData");
+        try {
+            symptoms = symptomDataStore.toArrayList();
+        } catch (DataStoreException e) {
+            e.printStackTrace();
+        }
 
         disease = new Disease("COVID", symptoms);
 
@@ -104,7 +97,7 @@ public class AMBGeneral {
         //System.out.println("la base de datos esta vacia? " + administratorDataStore.isEmpty());
     }
 
-    public void citizenRegister() throws ABMCitizenException, ABMUserException {
+    public void citizenRegister() throws ABMCitizenException, ABMUserException, DataStoreException {
         //Zone zone = zones.get((int) (Math.random() * (zones.size() + 1) + 0));
 
         String id = Scanner.getString("Ingrese su cuil: ");
@@ -161,7 +154,7 @@ public class AMBGeneral {
         return null;
     }
 
-    public void iniciarSesion(String userName) throws ABMUserException {
+    public void iniciarSesion(String userName) throws ABMUserException, DataStoreException {
         // "TpGrupo14" ---> contraseña de administradores.
         if (administratorDataStore.exists(userName)){
             String password = Scanner.getString("Ingrese contraseña de administrador: ");

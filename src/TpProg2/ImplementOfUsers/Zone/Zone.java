@@ -1,5 +1,6 @@
 package TpProg2.ImplementOfUsers.Zone;
 
+import TpProg2.Exceptions.DataStoreException;
 import TpProg2.Main;
 import TpProg2.Users.Citizen;
 import java.util.ArrayList;
@@ -16,12 +17,12 @@ public class Zone{
         return name;
     }
 
-    public ArrayList<Citizen> getCitizens() {
+    public ArrayList<Citizen> getCitizens() throws DataStoreException {
         refresh();
         return citizens;
     }
 
-    public void refresh (){
+    public void refresh () throws DataStoreException {
         ArrayList<Citizen> allCitizens = Main.generalAMB.citizenDataStore.toArrayList();
         ArrayList<Citizen> localCitizens = new ArrayList<>();
         for (int i = 0; i < allCitizens.size(); i++) {

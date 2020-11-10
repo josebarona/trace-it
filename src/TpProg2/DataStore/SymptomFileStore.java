@@ -1,25 +1,30 @@
 package TpProg2.DataStore;
 
+import TpProg2.Events.Symptom;
+import TpProg2.Exceptions.ABMUserException;
+import TpProg2.Exceptions.DataStoreException;
+import TpProg2.Exceptions.SymptomsNotRegistred;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class FileStore<T extends FileSaveable> implements DataStore<T>{
+public class SymptomFileStore implements DataStore<Symptom>{
 
     String fileName;
 
-    public FileStore(String fileName) {
+    public SymptomFileStore(String fileName) {
         this.fileName = "src/TpProg2/DataStore/data/" + fileName;
     }
 
     @Override
-    public void save(T t) {
-        if (!exists(t.getId())) {
+    public void save(Symptom symptom) {
+        if (!exists(symptom.getName())) {
             try {
                 FileWriter fileWriter = new FileWriter(fileName, true);
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
                 bufferedWriter.newLine();
-                bufferedWriter.write(t.getFileRepresentation());
+                bufferedWriter.write(symptom.getName());
                 bufferedWriter.close();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -29,11 +34,11 @@ public class FileStore<T extends FileSaveable> implements DataStore<T>{
 
     // Metodo remove line de un file ---> chequealo mas a fondo.
     @Override
-    public void remove/*FileLine*/(String id) { /* leer archivo guardar en un arraylist users, borro el user con ese id y lo escribo devuelta.*/
+    public void remove/*FileLine*/(String symptom) { /* leer archivo guardar en un arraylist users, borro el user con ese id y lo escribo devuelta.*/
         ArrayList<String> allLines = collectFileLines();
         for(Iterator<String> itr = allLines.iterator(); itr.hasNext();){
             String line = itr.next();
-            if(line.startsWith(id)){
+            if(line.startsWith(symptom)){
                 itr.remove();
                 cleanFile();
             }
@@ -81,17 +86,15 @@ public class FileStore<T extends FileSaveable> implements DataStore<T>{
         }
     }
 
-
     @Override
-    public T findById(String id) {
+    public Symptom findById(String symptom) throws ABMUserException {
         try {
             FileInputStream fstream = new FileInputStream(fileName);
             BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
             String strLine;
             while ((strLine = br.readLine()) != null) {
-                String[] data = strLine.split(",");
-                if (data[0].equals(id)) {
-                    return this.lineToObject(strLine);
+                if (strLine.equals(symptom)) {
+                    return this.lineToSymtom(strLine);
                 }
             }
             fstream.close();
@@ -101,14 +104,15 @@ public class FileStore<T extends FileSaveable> implements DataStore<T>{
         return null;
     }
 
-    public T lineToObject(String line){
-        return null;
+    private Symptom lineToSymtom(String strLine) {
+        Symptom symptom = new Symptom(strLine);
+        return symptom;
     }
 
     @Override
-    public void edit(T t) {
-        this.remove(t.getId());
-        this.save(t);
+    public void edit(Symptom symptom) {
+        remove(symptom.getName());
+        save(symptom);
     }
 
     @Override
@@ -125,14 +129,13 @@ public class FileStore<T extends FileSaveable> implements DataStore<T>{
     }
 
     @Override
-    public boolean exists(String id) {
+    public boolean exists(String symptom) {
         try {
             FileInputStream fstream = new FileInputStream(fileName);
             BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
             String strLine;
             while ((strLine = br.readLine()) != null) {
-                String[] data = strLine.split(",");
-                if (data[0].equals(id)) {
+                if (strLine.equals(symptom)) {
                     return true;
                 }
             }
@@ -143,7 +146,26 @@ public class FileStore<T extends FileSaveable> implements DataStore<T>{
         return false;
     }
 
-    public ArrayList<T> toArrayList() {
-        return null;
+    @Override
+    public ArrayList<Symptom> toArrayList() throws DataStoreException {
+        ArrayList<Symptom> symptoms = new ArrayList();
+        try {
+            FileInputStream fstream = new FileInputStream(fileName);
+            BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+            String strLine;
+            if (!this.isEmpty()) {
+                while ((strLine = br.readLine()) != null) {
+                    Symptom symptom = lineToSymtom(strLine);
+                    if (!symptoms.contains(symptom)) {
+                        symptoms.add(symptom);
+                    }
+                }
+                return symptoms;
+            }
+            fstream.close();
+        }catch (IOException e){
+            System.out.println(e.getMessage());
+        }
+        throw new SymptomsNotRegistred();
     }
 }

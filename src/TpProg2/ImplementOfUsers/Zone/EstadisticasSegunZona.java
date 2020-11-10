@@ -1,6 +1,7 @@
 package TpProg2.ImplementOfUsers.Zone;
 
 import TpProg2.Events.Symptom;
+import TpProg2.Exceptions.DataStoreException;
 import TpProg2.ImplementOfUsers.Date;
 import TpProg2.Main;
 import TpProg2.Users.Citizen;
@@ -22,7 +23,7 @@ public class EstadisticasSegunZona {
 
     }// Devuelva el sintoma que haya sido registrado mas veces dentro de la zona.
 
-    public static HashMap<Symptom, Integer> symptomCounter (Zone zone, ArrayList<Symptom> symptoms){
+    public static HashMap<Symptom, Integer> symptomCounter (Zone zone, ArrayList<Symptom> symptoms) throws DataStoreException {
 
         HashMap<Symptom, Integer> count = new HashMap<>();
 
@@ -39,7 +40,7 @@ public class EstadisticasSegunZona {
         return count;
     }// Rellena un HashMap con un valor para cada sintoma segun cuantos ciudadanos en la zona lo hayan registrado.
 
-    public static HashMap<Symptom, Integer> top3CommonSymptoms(Zone zone,ArrayList<Symptom> symptoms){
+    public static HashMap<Symptom, Integer> top3CommonSymptoms(Zone zone,ArrayList<Symptom> symptoms) throws DataStoreException {
         zone.refresh();
         HashMap<Symptom, Integer> count = symptomCounter(zone, symptoms);
         HashMap<Symptom, Integer> topSymptoms = new HashMap<>();
@@ -70,7 +71,7 @@ public class EstadisticasSegunZona {
         return mapAsString.toString();
     }// Convierte un HashMap a string. (para testear)
 
-    public static String top3CommonSymptomsString(Zone zone, ArrayList<Symptom> symptoms){
+    public static String top3CommonSymptomsString(Zone zone, ArrayList<Symptom> symptoms) throws DataStoreException {
         HashMap<Symptom, Integer> top3 = top3CommonSymptoms(zone, symptoms);
         if (!algunSintoma(zone)){
             return "Ninguno de los ciudadanos registro ningun sintoma.";
@@ -80,7 +81,7 @@ public class EstadisticasSegunZona {
 
     }
 
-    private static boolean algunSintoma(Zone zona){
+    private static boolean algunSintoma(Zone zona) throws DataStoreException {
         for (int i = 0; i < zona.getCitizens().size(); i++) {
             if (!zona.getCitizens().get(i).getRegisteredSymptoms().isEmpty()){
                 return true;
@@ -89,7 +90,7 @@ public class EstadisticasSegunZona {
         return false;
     }
 
-    public static ArrayList<Citizen> seekCitizens (Zone zone){
+    public static ArrayList<Citizen> seekCitizens (Zone zone) throws DataStoreException {
         zone.refresh();
         ArrayList<Citizen> seekCitizens = new ArrayList<>();
         for (int i = 0; i < zone.getCitizens().size(); i++) {
@@ -100,7 +101,7 @@ public class EstadisticasSegunZona {
         return seekCitizens;
     }
 
-    public static int brote(Zone zone){
+    public static int brote(Zone zone) throws DataStoreException {
         zone.refresh();
         ArrayList<Citizen> seekCitizens = seekCitizens(zone);
         int minBroteSize = 5;
@@ -122,7 +123,7 @@ public class EstadisticasSegunZona {
         }else{return 0;}
     }
 
-    public static String listadoDeBrotes(ArrayList<Zone> zonas){
+    public static String listadoDeBrotes(ArrayList<Zone> zonas) throws DataStoreException {
         if (mayorBrote(zonas) != null){
             String lista = "\n (nombre de zona) -> [tamaño de su mayor brote]\n\n";
             int count = 1;
@@ -139,7 +140,7 @@ public class EstadisticasSegunZona {
         }
     }
 
-    public static Zone mayorBrote(ArrayList<Zone> zonas){
+    public static Zone mayorBrote(ArrayList<Zone> zonas) throws DataStoreException {
         Zone mayorBrote = null;
         int tamañoDelMayorBrote = 0;
         for (int i = 0; i < zonas.size(); i++) {
