@@ -170,6 +170,8 @@ public class UserInterface {
         } while (opcion != 6); // seguramente va a haber mas opciones
     }
 
+    //Interfaz de ciudadanos____________________________________________________________________________________________________________
+
     //Ecuentros/Invitaciones
     public static void inbox(Citizen citizen) throws DataStoreException {
         int opcion;
@@ -273,7 +275,7 @@ public class UserInterface {
                 citizen.sendNotification(presentCitizens[i], new Notification(citizen, citizen.getGotSeek()));
             }
         }
-        citizen.getAcceptedRequest().add(invitation.meeting);;//tambien se agrega este encuentro a la persona que lo creo
+        citizen.getAcceptedRequest().add(invitation.meeting);//tambien se agrega este encuentro a la persona que lo creo
         clear();
         message(" La solicitud del evento fue enviada a todos los participantes del mismo.");
     } // Con este metodo un ciudadano deberia poder crear una invitacion sobre una meeting/encuento, el cual debe tener una localizacion, fecha e integrantes de la misma.
@@ -396,6 +398,9 @@ public class UserInterface {
         } while (opcion != 99);
     } // Permite a un ciudadano eliminar un sintoma previamente autodiagnosticado.
 
+    //Interfaz de administradores______________________________________________________________________________________________________
+
+    //Sintomas
     public static void symptomRegister(Administrator administrator) throws DataStoreException {
         int opcion;
         do {
@@ -433,8 +438,7 @@ public class UserInterface {
         }while (opcion != 99);
     } // Con este metodo cualquier administrador deberia poder dar de alta/baja cualquier sintoma
 
-    //Estadisticas (Para prueba)
-
+    //Estadisticas
     private static void viewZoneStatistics() throws DataStoreException {
         int opcion;
         do {
@@ -533,7 +537,7 @@ public class UserInterface {
         return lista;
     }
 
-    //Extras graficas.
+    //Extras graficas__________________________________________________________________________________________________________________
 
     static void traceIt(){
         clear();
