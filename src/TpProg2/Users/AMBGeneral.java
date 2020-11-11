@@ -87,7 +87,6 @@ public class AMBGeneral {
 
     public ArrayList<Symptom> getSymptoms() throws DataStoreException {
         ArrayList<Symptom> symptoms= symptomDataStore.toArrayList();
-        symptoms.remove(0);
         return symptoms;
     }
 
