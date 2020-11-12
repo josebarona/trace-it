@@ -186,7 +186,4 @@ public class AMBGeneral {
         si existe pasa al menu del usuario al cual se asigna
          */
     }
-
-
-
 }

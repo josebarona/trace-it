@@ -106,21 +106,55 @@ public class EstadisticasSegunZona {
         ArrayList<Citizen> seekCitizens = seekCitizens(zone);
         int minBroteSize = 5;
         int mayorBrote = 0;
+
         for (int i = 0; i < seekCitizens.size(); i++) {
             int thisBroteSize = 1;
+            ArrayList<Citizen> posiblesConectados = new ArrayList<>();
+            posiblesConectados.add(seekCitizens.get(i));
             for (int j = 0; j < seekCitizens.size(); j++) {
                 Date thisCitizenDate = seekCitizens.get(i).getGotSeek();
                 Date otherCitizenDate = seekCitizens.get(j).getGotSeek();
                 int dateDiference = Date.dateDiference(otherCitizenDate, thisCitizenDate);
                 if (i != j && dateDiference >= 0 && dateDiference < 47){
                     thisBroteSize ++;
-                    if (thisBroteSize > mayorBrote){mayorBrote = thisBroteSize;}
+                    posiblesConectados.add(seekCitizens.get(j));
                 }
             }
+            if (thisBroteSize >= minBroteSize){
+                int tamanoDeBroteValido = conectadosEnBrote(posiblesConectados);
+                if (tamanoDeBroteValido > mayorBrote){mayorBrote = tamanoDeBroteValido;}
+            }
         }
+
         if (mayorBrote >= minBroteSize){
             return mayorBrote;
         }else{return 0;}
+    }
+
+    public static int conectadosEnBrote(ArrayList<Citizen> posiblesConectados){
+        int mayorConectados = 0;
+        for (int i = 0; i < posiblesConectados.size(); i++) {
+            ArrayList<Citizen> conectados = new ArrayList<>();
+            conectados.add(posiblesConectados.get(0));
+            for (int v = 0; v < posiblesConectados.size(); v++) {
+                for (int j = 0; j < posiblesConectados.size(); j++) {
+                    if (!conectados.contains(posiblesConectados.get(j)) && hayAlgunContacto(conectados, posiblesConectados.get(j))){
+                        conectados.add(posiblesConectados.get(j));
+                    }
+                }
+            }
+            if (conectados.size() > mayorConectados){mayorConectados = conectados.size();}
+        }
+        return mayorConectados;
+    }
+
+    public static boolean hayAlgunContacto(ArrayList<Citizen> conectados, Citizen posibleContacto){
+        for (int i = 0; i < conectados.size(); i++) {
+            if (conectados.get(i).getContacts().contains(posibleContacto)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public static String listadoDeBrotes(ArrayList<Zone> zonas) throws DataStoreException {

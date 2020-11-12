@@ -15,6 +15,7 @@ public class Citizen extends User {
     String type;
     boolean isBan;
     boolean seek;
+    int rejections;
     ArrayList<Notification> receivedNotifications;
     ArrayList<Notification> notifications;
     ArrayList<Invitation> receivedInvitations; // todas las invitaciones llegan aca. Una vez que se acepta o se rechaza una invitacion se remueve de esta bandeja.
@@ -22,7 +23,6 @@ public class Citizen extends User {
     ArrayList<Symptom> registeredSymptoms;
     ArrayList<Citizen> contacts;
     Date gotSeek;
-    int rejections;
     Zone zone;
 
     public Citizen(String userName, String cuil, String phoneNumber) {
@@ -210,5 +210,4 @@ public class Citizen extends User {
             return false;
         }
     } // Confirma si un ciudadano tiene suficientes sintomas como para considerarse enfermo
-
 }
