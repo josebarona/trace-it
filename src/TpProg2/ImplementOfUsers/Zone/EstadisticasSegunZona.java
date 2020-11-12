@@ -96,7 +96,7 @@ public class EstadisticasSegunZona {
     public static int brote(Zone zone) throws DataStoreException {
         zone.refresh();
         ArrayList<Citizen> seekCitizens = seekCitizens(zone);
-        int minBroteSize = 3;
+        int minBroteSize = 5;
         int mayorBrote = 0;
 
         for (int i = 0; i < seekCitizens.size(); i++) {
