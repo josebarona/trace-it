@@ -89,6 +89,14 @@ public class AMBGeneral {
         ArrayList<Symptom> symptoms = symptomDataStore.toArrayList();
         return symptoms;
     }
+    public ArrayList<String> getSymptomsStrings() throws DataStoreException {
+        ArrayList<Symptom> symptoms = symptomDataStore.toArrayList();
+        ArrayList<String> symptomsNames = new ArrayList<>();
+        for (int i = 0; i < symptoms.size(); i++) {
+            symptomsNames.add(symptoms.get(i).getName());
+        }
+        return symptomsNames;
+    }
 
     public void adminRegister() throws ABMAdminException, ABMUserException {
         Administrator administrator = new Administrator(Scanner.getString("Ingrese su nombre de usuario: "),Scanner.getString("Ingrese su cuil: "),Scanner.getString("Ingrese su numero de telefono: "));

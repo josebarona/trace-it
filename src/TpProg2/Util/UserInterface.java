@@ -363,7 +363,7 @@ public class UserInterface {
             opcion = Scanner.getInt(" Que sintoma desea registrar: ");
             clear();
             if (opcion != 99 && opcion < Main.generalAMB.getSymptoms().size()) {
-                if (!citizen.getRegisteredSymptoms().contains(Main.generalAMB.getSymptoms().get(opcion))) {
+                if (!citizen.getRegisteredSymptomsNames().contains(Main.generalAMB.getSymptomsStrings().get(opcion))) {
                     citizen.getRegisteredSymptoms().add(Main.generalAMB.getSymptoms().get(opcion));
                     message("El sintoma (" + Main.generalAMB.getSymptoms().get(opcion).getName() + ") fue registrado!");
 
@@ -451,7 +451,7 @@ public class UserInterface {
                 clear();
                 if (!zona.getCitizens().isEmpty()) {
                     System.out.println(" \n   Hay un total de " + zona.getCitizens().size() + " ciudadanos en la zona \"" + zona.getName() + "\", de los cuales " + EstadisticasSegunZona.seekCitizens(zona).size() + " estan enfermos." +
-                                       "\n   " + EstadisticasSegunZona.top3CommonSymptomsString(zona, Main.generalAMB.getSymptoms()));
+                                       "\n   " + EstadisticasSegunZona.viewTop3CommonSymptomsString(zona, Main.generalAMB.getSymptoms()));
                     if (EstadisticasSegunZona.brote(zona) == 0) {
                         System.out.println("   Hasta el momento no se detecto ningun brote en esta zona.");
                     } else {

@@ -10,54 +10,47 @@ import java.util.HashMap;
 
 public class EstadisticasSegunZona {
 
-    public static Symptom commonSymptom (HashMap<Symptom, Integer> count, ArrayList<Symptom> symptoms){ //Devuelve el sintoma mas comun dentro de un HashMap
+    public static String commonSymptom (HashMap<String, Integer> count, ArrayList<Symptom> symptoms){ //Devuelve el sintoma mas comun dentro de un HashMap
         int max = 0;
-        Symptom commonSymptom = new Symptom("Vacio");
+        String commonSymptom = "Vacio";
         for (int i = 0; i < symptoms.size(); i++){
-            if (count.get(symptoms.get(i)) > max){
-                commonSymptom = symptoms.get(i);
-                max = count.get(symptoms.get(i));
+            if (count.get(symptoms.get(i).getName()) > max){
+                commonSymptom = symptoms.get(i).getName();
+                max = count.get(symptoms.get(i).getName());
             }
         }
         return commonSymptom;
 
     }// Devuelva el sintoma que haya sido registrado mas veces dentro de la zona.
 
-    public static HashMap<Symptom, Integer> symptomCounter (Zone zone, ArrayList<Symptom> symptoms) throws DataStoreException {
+    public static HashMap<String, Integer> symptomCounter (Zone zone, ArrayList<Symptom> symptoms) throws DataStoreException {
 
-        HashMap<Symptom, Integer> count = new HashMap<>();
+        HashMap<String, Integer> count = new HashMap<>();
 
         for (int i = 0; i < symptoms.size(); i++){ //Crea un HashMap con los sintomas (key) y ceros predeterminados
-            count.put(symptoms.get(i), 0);
+            count.put(symptoms.get(i).getName(), 0);
         }
 
         for (int i = 0; i < zone.getCitizens().size(); i++){ //Se hace un conteo de todos los sintomas registrados.
             for (int j = 0; j < zone.getCitizens().get(i).getRegisteredSymptoms().size(); j++) {
-                Symptom key = zone.getCitizens().get(i).getRegisteredSymptoms().get(j);
+                String key = zone.getCitizens().get(i).getRegisteredSymptoms().get(j).getName();
                 count.put(key, count.get(key) + 1);
             }
         }
         return count;
     }// Rellena un HashMap con un valor para cada sintoma segun cuantos ciudadanos en la zona lo hayan registrado.
 
-    public static HashMap<Symptom, Integer> top3CommonSymptoms(Zone zone,ArrayList<Symptom> symptoms) throws DataStoreException {
+    public static String top3CommonSymptoms(Zone zone,ArrayList<Symptom> symptoms) throws DataStoreException {
         zone.refresh();
-        HashMap<Symptom, Integer> count = symptomCounter(zone, symptoms);
-        HashMap<Symptom, Integer> topSymptoms = new HashMap<>();
-
-        Symptom symptom1 = commonSymptom(count, symptoms);
-        topSymptoms.put(symptom1, count.get(symptom1));
-        count.put(symptom1, 0);
-
-        Symptom symptom2 = commonSymptom(count, symptoms);
-        topSymptoms.put(symptom2, count.get(symptom2));
-        count.put(symptom2, 0);
-
-        Symptom symptom3 = commonSymptom(count, symptoms);
-        topSymptoms.put(symptom3, count.get(symptom3));
-        count.put(symptom3, 0);
-
-        return topSymptoms;
+        HashMap<String, Integer> count = symptomCounter(zone, symptoms);
+        String top3CommonSymptoms = "";
+        for (int i = 0; i < 3; i++) {
+            String commonSymptom = commonSymptom(count, symptoms);
+            top3CommonSymptoms += commonSymptom + " ->[" + count.get(commonSymptom) + "]";
+            if (i < 2){top3CommonSymptoms += ", ";}
+            count.put(commonSymptom, 0);
+        }//" 1. Cansancio ->(4) / 2. Toz seca ->(3) / 3. Dolores ->(1)
+        return top3CommonSymptoms;
     }// Devuelve un HashMap con los 3 sintomas mas comunes por zona y la cantidad de ciudadanos que la registraron.
 
     public static String convertWithIteration(HashMap<Symptom, ?> map) {
@@ -71,12 +64,11 @@ public class EstadisticasSegunZona {
         return mapAsString.toString();
     }// Convierte un HashMap a string. (para testear)
 
-    public static String top3CommonSymptomsString(Zone zone, ArrayList<Symptom> symptoms) throws DataStoreException {
-        HashMap<Symptom, Integer> top3 = top3CommonSymptoms(zone, symptoms);
+    public static String viewTop3CommonSymptomsString(Zone zone, ArrayList<Symptom> symptoms) throws DataStoreException {
         if (!algunSintoma(zone)){
             return "Ninguno de los ciudadanos registro ningun sintoma.";
         }else{
-            return "Los tres sintomas registrados mas comunes registrados por ciudadanos de la zona son: " + convertWithIteration(top3);
+            return "Los tres sintomas registrados mas comunes registrados por ciudadanos de la zona son: " + top3CommonSymptoms(zone, symptoms);
         }
 
     }
@@ -104,7 +96,7 @@ public class EstadisticasSegunZona {
     public static int brote(Zone zone) throws DataStoreException {
         zone.refresh();
         ArrayList<Citizen> seekCitizens = seekCitizens(zone);
-        int minBroteSize = 2;
+        int minBroteSize = 3;
         int mayorBrote = 0;
 
         for (int i = 0; i < seekCitizens.size(); i++) {

@@ -133,7 +133,7 @@ public class Citizen extends User {
         acceptedRequest.add(invitation.meeting);
         this.addContact(invitation.transmitter);
         invitation.transmitter.addContact(this);
-        if (isSeek()){
+        if (seek && Date.howLongAgo(gotSeek) < 47 && Date.howLongAgo(gotSeek) > 0){
             sendNotification(invitation.transmitter, new Notification(this, this.getGotSeek()));
         }
     } // Metodo que acepta una invitacion dentro de su bandeja de entrada y guarda registro de este encuentro/meeting.
@@ -193,9 +193,11 @@ public class Citizen extends User {
     //Sintomas
     public boolean isSeek() throws DataStoreException {
         int count = 0;
-        ArrayList<Symptom> diseaseSymptoms = Main.generalAMB.getSymptoms();
+        ArrayList<String> symptoms = Main.generalAMB.getSymptomsStrings();
+        ArrayList<String> registeredSymptoms = getRegisteredSymptomsNames();
+
         for (int i = 0; i < registeredSymptoms.size(); i++) {
-            if (diseaseSymptoms.contains(registeredSymptoms.get(i))){
+            if (symptoms.contains(registeredSymptoms.get(i))){
                 count ++;
             }
         }
@@ -210,4 +212,12 @@ public class Citizen extends User {
             return false;
         }
     } // Confirma si un ciudadano tiene suficientes sintomas como para considerarse enfermo
+
+    public ArrayList<String> getRegisteredSymptomsNames(){
+        ArrayList<String> symptomsNames = new ArrayList<>();
+        for (int i = 0; i < getRegisteredSymptoms().size(); i++) {
+            symptomsNames.add(getRegisteredSymptoms().get(i).getName());
+        }
+        return symptomsNames;
+    }
 }
