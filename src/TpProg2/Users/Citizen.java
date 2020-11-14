@@ -170,7 +170,7 @@ public class Citizen extends User {
     public void rejectedRequest(Invitation invitation){
         receivedInvitations.remove(invitation);
         invitation.transmitter.rejections ++;
-        if (invitation.transmitter.rejections > 5){
+        if (invitation.transmitter.rejections >= 5){
             invitation.transmitter.isBan  = true;
             Main.generalAMB.bannedCitizens.add(invitation.transmitter);
         }

@@ -50,27 +50,16 @@ public class EstadisticasSegunZona {
             count.put(commonSymptom, 0);
         }//" 1. Cansancio ->(4) / 2. Toz seca ->(3) / 3. Dolores ->(1)
         return top3CommonSymptoms;
-    }// Devuelve un HashMap con los 3 sintomas mas comunes por zona y la cantidad de ciudadanos que la registraron.
-
-    public static String convertWithIteration(HashMap<Symptom, ?> map) {
-        StringBuilder mapAsString = new StringBuilder("(");
-        for (Symptom key : map.keySet()) {
-            if (!(map.get(key) == null)){
-                mapAsString.append(key.getName() + ": " + map.get(key) + " - ");
-            }
-        }
-        mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append(")");
-        return mapAsString.toString();
-    }// Convierte un HashMap a string. (para testear)
+    }// Devuelve un HashMap con los 3 sintomas mas comunes por zona y la cantidad de ciudadanos que lo registraron.
 
     public static String viewTop3CommonSymptomsString(Zone zone, ArrayList<Symptom> symptoms) throws DataStoreException {
         if (!algunSintoma(zone)){
             return "Ninguno de los ciudadanos registro ningun sintoma.";
         }else{
-            return "Los tres sintomas registrados mas comunes registrados por ciudadanos de la zona son: " + top3CommonSymptoms(zone, symptoms);
+            return "Los tres sintomas mas comunes registrados por ciudadanos de la zona son: " + top3CommonSymptoms(zone, symptoms);
         }
 
-    }
+    } // Devuelve un texto que enseña los 3 sintomas mas comunes por zona.
 
     private static boolean algunSintoma(Zone zona) throws DataStoreException {
         for (int i = 0; i < zona.getCitizens().size(); i++) {
@@ -79,7 +68,7 @@ public class EstadisticasSegunZona {
             }
         }
         return false;
-    }
+    } // Confirma si un ciudadano registro al menos 1 sintoma
 
     public static ArrayList<Citizen> seekCitizens (Zone zone) throws DataStoreException {
         zone.refresh();
@@ -90,12 +79,12 @@ public class EstadisticasSegunZona {
             }
         }
         return seekCitizens;
-    }
+    } // Devuelve una lista con todos los ciudadanos enfermos de una zona
 
     public static int brote(Zone zone) throws DataStoreException {
         zone.refresh();
         ArrayList<Citizen> seekCitizens = seekCitizens(zone);
-        int minBroteSize = 5;
+        int minBroteSize = 3;
         int mayorBrote = 0;
 
         for (int i = 0; i < seekCitizens.size(); i++) {
@@ -120,7 +109,7 @@ public class EstadisticasSegunZona {
         if (mayorBrote >= minBroteSize){
             return mayorBrote;
         }else{return 0;}
-    }
+    } // Devuelve el tamaño del mayor brote en una zona. (Cuando hay mas de 5 enfermos registrados en menos de 47 horas y estos comparten una conexion entre si)
 
     public static int conectadosEnBrote(ArrayList<Citizen> posiblesConectados){
         int mayorConectados = 0;
@@ -137,7 +126,7 @@ public class EstadisticasSegunZona {
             if (conectados.size() > mayorConectados){mayorConectados = conectados.size();}
         }
         return mayorConectados;
-    }
+    } // Devuelve la cantidad de cuidadanos conectados en un grupo de ciudadanos (que compartan un hilo de contactos)
 
     public static boolean hayAlgunContacto(ArrayList<Citizen> conectados, Citizen posibleContacto){
         for (int i = 0; i < conectados.size(); i++) {
@@ -146,7 +135,7 @@ public class EstadisticasSegunZona {
             }
         }
         return false;
-    }
+    } // Confirma si un ciudadano es contacto de algun otro en un grupo de personas.
 
     public static String listadoDeBrotes(ArrayList<Zone> zonas) throws DataStoreException {
         if (mayorBrote(zonas) != null){
@@ -163,7 +152,7 @@ public class EstadisticasSegunZona {
         } else {
             return  "\n    (No hay ningun brote registrado hasta el momento)\n";
         }
-    }
+    } // Devuelve una lista de brotes de zonas (de mayor a menor tamaño).
 
     public static Zone mayorBrote(ArrayList<Zone> zonas) throws DataStoreException {
         Zone mayorBrote = null;
@@ -175,5 +164,5 @@ public class EstadisticasSegunZona {
             }
         }
         return mayorBrote;
-    }
+    } // Devuelve la zona que contiene el mayor brote registrado.
 }

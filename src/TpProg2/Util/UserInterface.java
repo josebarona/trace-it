@@ -474,7 +474,7 @@ public class UserInterface {
                 message(" Opcion invalida!");
             }
         } while (opcion != 99);
-    }
+    } // Este metodo deja la opcion de ver estadisticas especificas de una zona o ver una lista general de brotes.
 
     private static String viewZonesNames() {
         String lista = "";
@@ -486,7 +486,7 @@ public class UserInterface {
             lista += "\n    (No ninguna zona registrada en el sistema)\n";
         }
         return lista;
-    }
+    } // Devuelve una lista con todos los nombres de zonas registradas
 
     private static void viewBannedCitizens(Administrator admin) throws ABMUserException {
         int opcion;
@@ -524,7 +524,7 @@ public class UserInterface {
                     message(" Opcion invalida!");
             }
         }while (opcion != 99);
-    }
+    } // Este metodo permite ver todos los ciudadanos bloqueados y permite a los administradores desbloquear o bloquear ciudadanos segun su cuil.
 
     private static String viewBannedCitizensList(){
         String lista = "";
@@ -538,7 +538,7 @@ public class UserInterface {
             lista += "\n    (No hay ningun ciudadano bloqueado actualmente)\n";
         }
         return lista;
-    }
+    }// Devuelve una lista con todos los nombres de usuario de ciudadanos bloqueados
 
     //Extras graficas__________________________________________________________________________________________________________________
 

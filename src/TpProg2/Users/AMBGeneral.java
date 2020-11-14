@@ -5,7 +5,12 @@ import TpProg2.DataStore.AdminFileStore;
 import TpProg2.Events.Disease;
 import TpProg2.Events.Symptom;
 import TpProg2.Exceptions.*;
+import TpProg2.ImplementOfUsers.Date;
+import TpProg2.ImplementOfUsers.FaceToFaceMeeting;
+import TpProg2.ImplementOfUsers.Invitation;
+import TpProg2.ImplementOfUsers.Notification;
 import TpProg2.ImplementOfUsers.Zone.Zone;
+import TpProg2.Main;
 import TpProg2.Util.Scanner;
 import TpProg2.Util.UserInterface;
 
@@ -138,7 +143,7 @@ public class AMBGeneral {
         //System.out.println("la base de datos esta vacia? " + citizenDataStore.isEmpty());
     }
 
-    private Zone obtenerZonaCiudadano(Citizen citizen) { // Metodo que sirve para obtener la zona de un Citizen al buscar en El DataStore de Anses.
+    public Zone obtenerZonaCiudadano(Citizen citizen) { // Metodo que sirve para obtener la zona de un Citizen al buscar en El DataStore de Anses.
         /*
         idea para anses:
         cuil(id), zona -----> registre la zona al citizen segun el id que metas
@@ -183,7 +188,8 @@ public class AMBGeneral {
                 if (!citizen.isBan()) {
                     UserInterface.menuCitizen(citizen);
                 } else {
-                    System.out.println("El cuidadano se encuentra bloqueado momentaneamente");
+                    UserInterface.clear();
+                    UserInterface.message("El cuidadano se encuentra bloqueado momentaneamente");
                 }
             } else {
                 UserInterface.clear();
