@@ -13,18 +13,6 @@ public class ABMAdmin implements ABM<Administrator>/*metodos que va a utilizar A
         this.dataStore = dataStore;
     }
 
-    /*@Override
-    public Administrator add(String userName, String phoneNumber, String cuil) throws ABMAdminException, ABMUserException {
-
-        if (this.dataStore.findById(cuil) == null){
-            Administrator administrator = new Administrator(userName, cuil, phoneNumber);
-            this.dataStore.save(administrator);
-            return administrator;
-        }
-        throw new ABMAdminException(phoneNumber);
-
-    }*/
-
     @Override
     public Administrator add(Administrator administrator) throws ABMAdminException, ABMUserException {
         if (this.dataStore.findById(administrator.getId()) == null){

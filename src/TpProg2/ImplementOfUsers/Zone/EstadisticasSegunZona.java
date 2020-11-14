@@ -3,7 +3,6 @@ package TpProg2.ImplementOfUsers.Zone;
 import TpProg2.Events.Symptom;
 import TpProg2.Exceptions.DataStoreException;
 import TpProg2.ImplementOfUsers.Date;
-import TpProg2.Main;
 import TpProg2.Users.Citizen;
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,6 +1,7 @@
 package TpProg2.Users;
 
 import TpProg2.DataStore.*;
+import TpProg2.DataStore.AdminFileStore;
 import TpProg2.Events.Disease;
 import TpProg2.Events.Symptom;
 import TpProg2.Exceptions.*;
@@ -89,6 +90,7 @@ public class AMBGeneral {
         ArrayList<Symptom> symptoms = symptomDataStore.toArrayList();
         return symptoms;
     }
+
     public ArrayList<String> getSymptomsStrings() throws DataStoreException {
         ArrayList<Symptom> symptoms = symptomDataStore.toArrayList();
         ArrayList<String> symptomsNames = new ArrayList<>();

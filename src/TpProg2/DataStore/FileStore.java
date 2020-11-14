@@ -1,5 +1,7 @@
 package TpProg2.DataStore;
 
+import TpProg2.Exceptions.UserNotExistDataStore;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -24,6 +26,8 @@ public class FileStore<T extends FileSaveable> implements DataStore<T>{
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
+        }else {
+            this.edit(t);
         }
     }
 
@@ -146,7 +150,7 @@ public class FileStore<T extends FileSaveable> implements DataStore<T>{
         return false;
     }
 
-    public ArrayList<T> toArrayList() {
+    public ArrayList<T> toArrayList() throws UserNotExistDataStore {
         return null;
     }
 }

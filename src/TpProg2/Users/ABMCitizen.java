@@ -13,16 +13,6 @@ public class ABMCitizen implements ABM<Citizen>/*metodos que va a utilizar ABM*/
         this.dataStore = dataStore;
     }
 
-    /*@Override
-    public Citizen add(String userName,String cuil, String phoneNumber) throws ABMCitizenException, ABMUserException {  // chquear excepciones
-        if (this.dataStore.findById(cuil) == null){
-            Citizen citizen = new Citizen(userName,cuil,phoneNumber);
-            this.dataStore.save(citizen);
-            return citizen;
-        }
-        throw new ABMCitizenException(phoneNumber);
-    }*/
-
     @Override
     public Citizen add(Citizen citizen) throws ABMCitizenException, ABMUserException {  // chquear excepciones
         if (this.dataStore.findById(citizen.getId()) == null){

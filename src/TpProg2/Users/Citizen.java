@@ -5,10 +5,7 @@ import TpProg2.Exceptions.DataStoreException;
 import TpProg2.ImplementOfUsers.*;
 import TpProg2.ImplementOfUsers.Zone.Zone;
 import TpProg2.Main;
-import TpProg2.Util.UserInterface;
-
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class Citizen extends User {
 
@@ -20,8 +17,8 @@ public class Citizen extends User {
     ArrayList<Notification> notifications;
     ArrayList<Invitation> receivedInvitations; // todas las invitaciones llegan aca. Una vez que se acepta o se rechaza una invitacion se remueve de esta bandeja.
     ArrayList<FaceToFaceMeeting> acceptedRequest; // bandeja de invitaciones aceptadas.
-    ArrayList<Symptom> registeredSymptoms;
     ArrayList<Citizen> contacts;
+    ArrayList<Symptom> registeredSymptoms;
     Date gotSeek;
     Zone zone;
 
@@ -94,9 +91,41 @@ public class Citizen extends User {
         this.zone = zone;
     }
 
+    public void setSeek(boolean seek) {
+        this.seek = seek;
+    }
+
+    public void setReceivedNotifications(ArrayList<Notification> receivedNotifications) {
+        this.receivedNotifications = receivedNotifications;
+    }
+
+    public void setNotifications(ArrayList<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
+    public void setReceivedInvitations(ArrayList<Invitation> receivedInvitations) {
+        this.receivedInvitations = receivedInvitations;
+    }
+
+    public void setAcceptedRequest(ArrayList<FaceToFaceMeeting> acceptedRequest) {
+        this.acceptedRequest = acceptedRequest;
+    }
+
+    public void setRegisteredSymptoms(ArrayList<Symptom> registeredSymptoms) {
+        this.registeredSymptoms = registeredSymptoms;
+    }
+
+    public void setContacts(ArrayList<Citizen> contacts) {
+        this.contacts = contacts;
+    }
+
     @Override
     public String getFileRepresentation() {
-        return super.getFileRepresentation() + "," + isBan + "," + rejections + "," + zone;
+        String gotSeekRepresentation = "no date";
+        if (this.gotSeek != null){
+            gotSeekRepresentation = this.gotSeek.getFileRepresentation();
+        }
+        return super.getFileRepresentation() + "," + isBan + "," + rejections + "," + zone.getName() + "," + seek + "," + gotSeekRepresentation;
     }
 
     @Override

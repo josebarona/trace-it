@@ -1,8 +1,11 @@
 package TpProg2.ImplementOfUsers;
 
+import TpProg2.DataStore.FileSaveable;
+import TpProg2.DataStore.Saveable;
+
 import java.util.Calendar;
 
-public class Date {
+public class Date implements FileSaveable {
 
     public int mes, dia, hora;
 
@@ -89,5 +92,23 @@ public class Date {
             default:
                 return -1;
         }
+    }
+
+    @Override
+    public String getFileRepresentation() {
+        return mes + "/" + dia + "/" + hora  ;
+    }
+
+    @Override
+    public String getId() {
+        return null;
+    }
+
+    public static Date stringToDate(String date){
+        String[] data = date.split("/");
+        String mes = data[0];
+        String dia = data[1];
+        String hora = data[2];
+        return new Date(Integer.parseInt(mes),Integer.parseInt(dia),Integer.parseInt(hora));
     }
 }
