@@ -274,6 +274,9 @@ public class UserInterface {
             if (citizen.isSeek() && Date.howLongAgo(end) < 48){
                 citizen.sendNotification(presentCitizens[i], new Notification(citizen, citizen.getGotSeek()));
             }
+            if (presentCitizens[i].isSeek() && Date.howLongAgo(end) < 48){
+                presentCitizens[i].sendNotification(citizen, new Notification(presentCitizens[i], presentCitizens[i].getGotSeek()));
+            }
         }
         citizen.getAcceptedRequest().add(invitation.meeting);//tambien se agrega este encuentro a la persona que lo creo
         clear();
