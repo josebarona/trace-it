@@ -32,5 +32,4 @@ public class Zone{
         }
         citizens = localCitizens;
     } //Actualiza y guarda la informacion de todos los ciudadanos de esta zona
-
 }

@@ -225,8 +225,8 @@ public class UserInterface {
     public static String viewInvitationInfo(Invitation invitation) {
         title(" - Informacion del encuentro");
         String info = "\n Invitacion de " + invitation.transmitter.getUserName() + ": \n";
-        info += " Ecuentro realizado en " + invitation.meeting.location + ".\n Iniciado el dia " + invitation.meeting.start.dia + " del mes " + invitation.meeting.start.dia + " a las " + invitation.meeting.start.hora + "hs.";
-        info += "\n Hasta el dia " + invitation.meeting.finish.dia + " del mes " + invitation.meeting.finish.mes + " a las " + invitation.meeting.finish.hora + "hs.";
+        info += " Ecuentro realizado en " + invitation.meeting.location + ".\n Iniciado el mes " + invitation.meeting.start.mes + " del dia " + invitation.meeting.start.dia + " a las " + invitation.meeting.start.hora + "hs.";
+        info += "\n Hasta el mes " + invitation.meeting.finish.mes + " del dia " + invitation.meeting.finish.dia + " a las " + invitation.meeting.finish.hora + "hs.";
         return info;
     } //Metodo que devuelve un String con toda la informacion que lleva una invitacion (location, date, citizens)
 
