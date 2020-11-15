@@ -1,1 +1,65 @@
+TP Programación 2
+El diseño empieza mostrando el Menú principal del sistema que consta de tres opciones, Registrarse,
+Iniciar sesión y Salir, que están numeradas del 1 al 3.  Se le pregunta a la persona al  que está
+ingresando qué operación desea realizar (debe ingresar un número entero).
+
+Menú principal, registro e inicio de sesión.
+Si el usuario que ingresa es un ciudadano y aun no se encuentra registrado, elige la opción 1. Registrarse,
+si ya lo hizo anteriormente elige la opción 2. Iniciar sesión. Suponiendo que es la primera vez que el ciudadano
+utiliza el programa y opta por registrarse, se le solicita el número de cuil, un nombre de usuario y un número de
+teléfono. Es importante remarcar que para que el cuil sea válido tiene que estar registrado en Anses, es decir,
+en el documento dentro de DataStore que contiene todos los números de cuil válidos en Anses.De lo contrario ese
+ciudadano se tomará como inexistente y el programa vuelve al menú principal y no se toma el registro. Si todos
+los datos ingresados son válidos, es decir, el nombre de usuario es único, el cuil se encuentra aprobado en Anses
+y el teléfono se ingresa correctamente, entonces se aprueba el registro de dicho ciudadano y el programa regresa
+al menú principal. Allí se seleccionaría la opción de iniciar sesión y para ello el ciudadano debe ingresar su nombre
+de usuario y cuil. Si todos los datos ingresados son válidos se concede el acceso al Menu Ciudadano.
+Si el usuario que ingresa lo hace como administrador, directamente elige la opción de Iniciar sesión, ya que se
+supone que ya se encuentra registrado en los Datos del programa. Para acceder debe ingresar su nombre de usuario
+(que debe coincidir con el guardado en FileAdminData) y una vez que el programa reconoce que el usuario es
+administrador le pide una contraseña. Si todos los datos ingresados son válidos se concede el acceso al Menú
+Administrador.
+
+Menú Ciudadano
+El menú ciudadano tiene 7 opciones:
+Notificaciones: Es una bandeja de notificaciones en la cual el ciudadano recibirá una notificación si alguno de
+sus contactos (ciudadanos con los que tuvo una solicitud de encuentro aceptada) presenta más de 3 síntomas de la
+enfermedad. Dentro de esta opción el ciudadano puede ver todas sus notificaciones, elegir alguna para ver su
+información, o bien eliminarla si lo desea, y por último puede también volver a su menú.. Una notificación tiene
+dentro el nombre de la persona que está enferma y la fecha del encuentro o del día que se enfermó?
+Bandeja de entrada de invitaciones: Es una bandeja donde entran las invitaciones de encuentro recibe el ciudadano,
+listadas por el nombre del emisor. El ciudadano puede seleccionar cada invitación para acceder a la información del
+encuentro; locación, fecha de inicio, fecha de finalización y ciudadanos involucrados. Además puede aceptarla si es
+que está de acuerdo con haber estado en dicho encuentro, o rechazarla si no fue así. La fecha de finalización del
+encuentro es muy importante ya que si uno de los ciudadanos que asistió se enferma dentro de las 48hs de haber
+transcurrido el mismo, se envía una solicitud de encuentro y se le notifica sobre lo ocurrido a todos los ciudadanos
+que hayan estado en contacto con el usuario enfermo.
+Mandar solicitudes de encuentro: El ciudadano puede crear una solicitud de encuentro con su información solicitada;
+locación, fecha de inicio y finalización, y los ciudadanos que asistieron, y luego enviarla a dichos ciudadanos.
+Registro de síntomas: El ciudadano cuenta con una lista de todos los síntomas dispuestos por los administradores,
+donde puede seleccionar aquellos que considere que tiene, es decir, se autodiagnostica. Al registrarse más de
+3 síntomas de una misma enfermedad dicho ciudadano se considera enfermo.
+Ver/eliminar síntomas registrados: El ciudadano puede eliminar algún síntoma que haya registrado si ya no lo padece.
+Luego también está la opción de cerrar sesión o salir.
+
+Menú Administrador
+El menú de administrador tiene 5 opciones:
+Estadísticas: Dentro de esta opción el administrador puede obtener las estadísticas según la zona en cuestión o
+bien de todos los brotes en general. Todos los ciudadanos tienen asignada una zona (que se encuentra señalizada
+en la Data del Anses). Si el administrador selecciona una zona en específico podrá acceder a los siguientes datos
+de la misma: cantidad de ciudadanos, cantidad de ciudadanos enfermos, los tres síntomas más comunes, y por último
+los brotes y su tamaño. El sistema de brotes funciona de la siguiente manera: el programa busca si en esa zona
+se enfermaron más de 5 personas en menos de 47hs. Si es así, entonces busca si esas personas están conectadas de
+alguna manera, es decir, si estuvieron en un encuentro o con alguien que tuvo un encuentro con una de esas personas.
+Si esto fuera así, estaríamos en presencia de un brote. A su vez, el administrador puede acceder a las estadísticas
+de todos los brotes detectados. Con esta opción se puede visualizar una lista de mayor a menor tamaño de los brotes
+totales.
+Síntomas: Dentro de este comando se visualiza una lista de síntomas que es establecida por los administradores.
+Las opciones son justamente agregar síntomas o eliminar síntomas. Y de esta manera se puede modificar la lista de
+la cual disponen los ciudadanos para autodiagnosticarse.
+Ciudadanos bloqueados: Los administradores tienen acceso a los ciudadanos bloqueados y a su cuil por medio de esta
+opción. Además pueden bloquear y desbloquear ciudadanos de ser necesario. Un ciudadano no solo puede ser bloqueado
+por los administradores sino que también, si recibe más de 5 rechazos a diferentes encuentros es bloqueado
+automáticamente.
+Por último tienen la opción de cerrar sesión o salir.
 
