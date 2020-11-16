@@ -1,7 +1,10 @@
 package TpProg2.Util;
 
 import TpProg2.Events.Symptom;
-import TpProg2.Exceptions.*;
+import TpProg2.Exceptions.ABMAdminException;
+import TpProg2.Exceptions.ABMCitizenException;
+import TpProg2.Exceptions.ABMUserException;
+import TpProg2.Exceptions.DataStoreException;
 import TpProg2.ImplementOfUsers.Date;
 import TpProg2.ImplementOfUsers.FaceToFaceMeeting;
 import TpProg2.ImplementOfUsers.Invitation;
@@ -59,7 +62,7 @@ public class UserInterface {
         System.exit(0);
     }
 
-    public static void menuCitizen(Citizen citizen) throws ABMUserException, DataStoreException, ABMCitizenException2 {
+    public static void menuCitizen(Citizen citizen) throws ABMUserException, DataStoreException {
         clear();
         int opcion;
         do {
@@ -114,7 +117,8 @@ public class UserInterface {
                         exists = zone.equals(Main.generalAMB.getZones().get(i).getName());
                         //System.out.println(Main.generalAMB.getZones().get(i).getName());
                         if (exists){
-                            citizen.setZone(Main.generalAMB.getZones().get(i)); }
+                            citizen.setZone(Main.generalAMB.getZones().get(i));
+                        }
                     }
                     clear();
                     //System.out.println(citizen.getZone().getName());
