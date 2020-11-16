@@ -11,13 +11,13 @@ public class Administrator extends User {
     }
 
     public void banCitizen(Citizen citizen) { // bloquea a un citizen de la aplicacion
-        Main.generalAMB.bannedCitizens.add(citizen);
+        Main.generalAMB.getBannedCitizens().add(citizen);
         citizen.isBan = true;
-        Main.generalAMB.citizenDataStore.edit(citizen);
+        Main.generalAMB.getCitizenDataStore().edit(citizen);
     }
 
     public void unbanCitizen(Citizen citizen) { //desbloquea a un citizen de la aplicacion
-        Main.generalAMB.bannedCitizens.remove(citizen);
+        Main.generalAMB.getBannedCitizens().remove(citizen);
         citizen.isBan = false;
     }
 

@@ -24,17 +24,17 @@ import java.util.HashMap;
 
 public class AMBGeneral {
 
-    DataStore<Symptom> symptomDataStore;
-    DataStore<Citizen> anses;
-    DataStore<Administrator> administratorDataStore;
-    ABMAdmin adminABM;
-    DataStore<Citizen> citizenDataStore;
-    ABMCitizen citizenABM;
+    private DataStore<Symptom> symptomDataStore;
+    private DataStore<Citizen> anses;
+    private DataStore<Administrator> administratorDataStore;
+    private ABMAdmin adminABM;
+    private DataStore<Citizen> citizenDataStore;
+    private ABMCitizen citizenABM;
 
-    Disease disease; // No usamos una lista de enfermedades por ahora, solo hay una.
-    ArrayList<Zone> zones;
-    ArrayList<Citizen> seekCitizens;
-    ArrayList<Citizen> bannedCitizens;
+    private Disease disease; // No usamos una lista de enfermedades por ahora, solo hay una.
+    private ArrayList<Zone> zones;
+    private ArrayList<Citizen> seekCitizens;
+    private ArrayList<Citizen> bannedCitizens;
 
     /*public AMBGeneral(DataStore<Citizen> anses, ABMAdmin adminABM, ABMCitizen citizenABM, ArrayList<Symptom> symptoms, Disease disease, ArrayList<Zone> zones) {
         this.anses = anses;
