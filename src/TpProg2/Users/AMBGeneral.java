@@ -32,7 +32,7 @@ public class AMBGeneral {
     private ABMCitizen citizenABM;
 
     private Disease disease; // No usamos una lista de enfermedades por ahora, solo hay una.
-    private ArrayList<Zone> zones;
+    private static ArrayList<Zone> zones;
     private ArrayList<Citizen> seekCitizens;
     private ArrayList<Citizen> bannedCitizens;
 
@@ -107,7 +107,7 @@ public class AMBGeneral {
         return bannedCitizens;
     }
 
-    public ArrayList<Zone> getZones() {
+    public static ArrayList<Zone> getZones() {
         return zones;
     }
 

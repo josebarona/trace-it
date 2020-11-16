@@ -72,7 +72,7 @@ public class Citizen extends User {
     }
 
     public Zone getZone() {
-        return zone;
+        return this.zone;
     }
 
     public void setRejections(int rejections) {

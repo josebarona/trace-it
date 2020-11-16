@@ -12,6 +12,7 @@ import TpProg2.ImplementOfUsers.Notification;
 import TpProg2.ImplementOfUsers.Zone.EstadisticasSegunZona;
 import TpProg2.ImplementOfUsers.Zone.Zone;
 import TpProg2.Main;
+import TpProg2.Users.AMBGeneral;
 import TpProg2.Users.Administrator;
 import TpProg2.Users.Citizen;
 import java.util.ArrayList;
@@ -67,7 +68,7 @@ public class UserInterface {
         do {
             //System.out.println(citizen.getZone().getName());
             title("  Menu Ciudadano: ");
-            System.out.println("  Operaciones: \n\n 1. Notificaciones(" + citizen.getNotifications().size()+ ") \n 2. Bandeja de entrada de invitaciones(" + citizen.getReceivedInvitations().size()+ ") \n 3. Mandar solicitudes de encuentro \n 4. Registro de sintomas  \n 5. Ver/eliminar sintomas registrados\n 6. Log Out \n 7. Exit\n");
+            System.out.println("  Operaciones: \n\n 1. Notificaciones(" + citizen.getNotifications().size()+ ") \n 2. Bandeja de entrada de invitaciones(" + citizen.getReceivedInvitations().size()+ ") \n 3. Mandar solicitudes de encuentro \n 4. Registro de sintomas  \n 5. Ver/eliminar sintomas registrados\n 6. Log Out \n 7. Exit\n 8. Cambio De Zona \n");
             opcion = Scanner.getInt(" Que operación desea realizar: ");
             clear();
 
@@ -105,6 +106,27 @@ public class UserInterface {
                     System.out.println();
                     System.out.println("Adios ;D");
                     System.exit(0);
+                    break;
+                case 8:
+                    System.out.println("A que zona se mudo: A, B, C, D");
+                    System.out.println(citizen.getZone().getName() + " ----> " + " ...");
+                    String zone = Scanner.getString(": ");
+                    boolean exists;
+                    for (int i = 0; i < Main.generalAMB.getZones().size(); i++) {
+                        //System.out.println(zone.equals(Main.generalAMB.getZones().get(i).getName()));
+                        exists = zone.equals(Main.generalAMB.getZones().get(i).getName());
+                        //System.out.println(Main.generalAMB.getZones().get(i).getName());
+                        if (exists){
+                            citizen.setZone(Main.generalAMB.getZones().get(i));
+                        }
+                    }
+                    clear();
+                    //System.out.println(citizen.getZone().getName());
+                    if (zone.equals("A") || zone.equals("B") || zone.equals("C") || zone.equals("D")) {
+                        message("El ciudadano cambio su zona donde vive de forma exitosa!");
+                    }else{
+                        message("La zona que selecciono no existe!");
+                    }
                     break;
                 default:
                     message("opcion invalida!");
@@ -156,7 +178,6 @@ public class UserInterface {
                     }
                     break;
                 case 6:
-
                     break;
                 case 7: // finalizar programa
                     System.out.println();
