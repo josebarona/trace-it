@@ -61,4 +61,6 @@ Ciudadanos bloqueados: Los administradores tienen acceso a los ciudadanos bloque
 opción. Además pueden bloquear y desbloquear ciudadanos de ser necesario. Un ciudadano no solo puede ser bloqueado
 por los administradores sino que también, si recibe más de 5 rechazos a diferentes encuentros es bloqueado
 automáticamente.
-Por último tienen la opción de cerrar sesión o salir de la sesion del usuario.
+Las opciones 6 y 7 de log out y cerrar sesion ya explicadas anteriormente.
+Por ultimo, la opcion 8 permite a un Administrador poder registrar a otros administradores
+haciendo que este privilegio sea dado de una manera controlada y supervisada.

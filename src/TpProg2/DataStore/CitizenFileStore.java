@@ -53,7 +53,7 @@ public class CitizenFileStore extends FileStore<Citizen>{
     }
 
     @Override
-    public Citizen lineToObject(String line) {
+    public Citizen lineToObject(String line) { // lee una linea de un archivo y o transforma en un citizen.
         String[] data = line.split(",");
         String id = data[0];
         String userName = data[1];
@@ -77,7 +77,7 @@ public class CitizenFileStore extends FileStore<Citizen>{
     }
 
 
-    public void setNotifications(Citizen citizen){
+    public void setNotifications(Citizen citizen){ // setea las notificaciones levantadas de un archivo a un ciudadano.
         ArrayList<NotificationRelation> notificationRelations = notificationFileStore.getNotificationsForCitizen(citizen);
         ArrayList<Notification> notifications = new ArrayList<>();
         ArrayList<Notification> receivedNotifications = new ArrayList<>();
@@ -94,7 +94,7 @@ public class CitizenFileStore extends FileStore<Citizen>{
         citizen.setReceivedNotifications(receivedNotifications);
     }
 
-    public void setRegisteredSymptom(Citizen citizen){
+    public void setRegisteredSymptom(Citizen citizen){ // setea el array list de los sintomasRegistrados por un ciudadano a un ciudadano. (levantado de un archivo)
         ArrayList<SymptomRelation> symptomRelations = registeredSymptomsFileStore.getSymptomsForCitizen(citizen);
         ArrayList<Symptom> registeredSymptoms = new ArrayList<>();
         for (SymptomRelation symptomRelation : symptomRelations) {
@@ -110,9 +110,9 @@ public class CitizenFileStore extends FileStore<Citizen>{
 
     private boolean stringToBoolean(String string){
         return string.equals("true");
-    }
+    } // convierte un string a un boollean
 
-    private Zone stringToZone (String zoneName){
+    private Zone stringToZone (String zoneName){ // convierte un string a una zona existente de el ABMGeneral
         try {
             for (int i = 0; i < Main.generalAMB.getZones().size(); i++) {
                 if (Main.generalAMB.getZones().get(i).getName().equals(zoneName)){

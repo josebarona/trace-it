@@ -18,7 +18,7 @@ public class SymptomFileStore implements DataStore<Symptom>{
     }
 
     @Override
-    public void save(Symptom symptom) {
+    public void save(Symptom symptom) { // guarda, persiste y agrega un sintoma en la lista de sintomas de los ciudadanos
         if (!exists(symptom.getName())) {
             try {
                 FileWriter fileWriter = new FileWriter(fileName, true);
@@ -90,7 +90,7 @@ public class SymptomFileStore implements DataStore<Symptom>{
     }
 
     @Override
-    public Symptom findById(String symptom) throws ABMUserException {
+    public Symptom findById(String symptom) throws ABMUserException { // busca un sintoma en el archivo y te lo devuelve
         try {
             FileInputStream fstream = new FileInputStream(fileName);
             BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
@@ -107,7 +107,7 @@ public class SymptomFileStore implements DataStore<Symptom>{
         return null;
     }
 
-    private Symptom lineToSymtom(String strLine) {
+    private Symptom lineToSymtom(String strLine) { // de un string a un sintoma
         Symptom symptom = new Symptom(strLine);
         return symptom;
     }
@@ -119,7 +119,7 @@ public class SymptomFileStore implements DataStore<Symptom>{
     }
 
     @Override
-    public boolean isEmpty() {
+    public boolean isEmpty() { // pregunta si esta vacio el archivo de sintomas guardados como dato
         try {
             BufferedReader br = new BufferedReader(new FileReader(fileName));
             if (br.readLine() == null) {
@@ -132,7 +132,7 @@ public class SymptomFileStore implements DataStore<Symptom>{
     }
 
     @Override
-    public boolean exists(String symptom) {
+    public boolean exists(String symptom) { //pregunta si existe un sintoma
         try {
             FileInputStream fstream = new FileInputStream(fileName);
             BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
@@ -150,7 +150,7 @@ public class SymptomFileStore implements DataStore<Symptom>{
     }
 
     @Override
-    public ArrayList<Symptom> toArrayList() throws DataStoreException {
+    public ArrayList<Symptom> toArrayList() throws DataStoreException { // lee el archivo, crea los sintomas y hace un array list de todos esos sintomas
         ArrayList<Symptom> symptoms = new ArrayList();
         try {
             FileInputStream fstream = new FileInputStream(fileName);

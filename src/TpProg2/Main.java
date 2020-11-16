@@ -31,7 +31,7 @@ public class Main {
         UserInterface.menuPrincipal();
     }
 
-    public static void demo() throws ABMUserException, ABMCitizenException, DataStoreException {
+    public static void demo() throws ABMUserException, ABMCitizenException, DataStoreException { //situacion predeterminada para exponer el trabajo.
         Citizen citizen = new Citizen("Marcos_PM", "43447273", "+5491164430555");
         citizen.setZone(generalAMB.obtenerZonaCiudadano(citizen));
         generalAMB.citizenABM.add(citizen);

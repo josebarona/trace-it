@@ -5,6 +5,8 @@ import TpProg2.Exceptions.*;
 
 public interface ABM<T extends FileSaveable>{  //T(generico) puede ser cualquier tipo de cla
 
+    // Base de datos generica ---> depende que objeto sea.
+
     // Agrega un T a la base de datos.
     public T add(T t) throws ABMException;
 

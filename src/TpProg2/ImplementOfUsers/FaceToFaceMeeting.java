@@ -19,7 +19,7 @@ public class FaceToFaceMeeting implements FileSaveable {
         this.attendeesCitizens = meeting;
     }
 
-    public Citizen[] getAttendeesCitizens() {
+    public Citizen[] getAttendeesCitizens() { // obtiene los ciudadanos que van a atender a una reunion de cara a cara
         return attendeesCitizens;
     }
 

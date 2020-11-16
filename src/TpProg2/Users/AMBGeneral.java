@@ -53,10 +53,10 @@ public class AMBGeneral {
         adminABM = new ABMAdmin(administratorDataStore);
 
         citizenDataStore = new CollectionStore<>(new HashMap<>());    // GUARDADO EN COLLECTIONS
-        //citizenDataStore = new CitizenFileStore("FileCitizenData"); // GUARDADO EN FILES
+        //citizenDataStore = new CitizenFileStore("FileCitizenData"); // GUARDADO EN FILES ---> no pudimos terminarlo cosas inconclusas y errores
         citizenABM = new ABMCitizen(citizenDataStore);
 
-        symptomDataStore = new SymptomFileStore("FileSymptomData");
+        symptomDataStore = new SymptomFileStore("FileSymptomData"); // lugar donde se guarda la data de los sintomas.
 
         disease = new Disease("COVID", symptomDataStore.toArrayList());
 
@@ -71,32 +71,32 @@ public class AMBGeneral {
         this.bannedCitizens = new ArrayList<Citizen>();
     }
 
-    public ArrayList<Citizen> getBannedCitizens() {
+    public ArrayList<Citizen> getBannedCitizens() { // obtiene los citizens bloqueados
         return bannedCitizens;
     }
 
-    public ArrayList<Zone> getZones() {
+    public ArrayList<Zone> getZones() { // obtiene las zonas
         return zones;
     }
 
-    public void addSeekCitizen(Citizen citizen){
+    public void addSeekCitizen(Citizen citizen){ // agrega a un ciudano enfermo(que contenga mas de 3 sintomas) a la lista de enfermos
         if (seekCitizens == null || !seekCitizens.contains(citizen)) {
             seekCitizens.add(citizen);
         }
     }
 
-    public void removeSeekCitizen(Citizen citizen){
+    public void removeSeekCitizen(Citizen citizen){ // remueve a un enfermo que dejo de presentar sintomas de la lista
         if (seekCitizens != null && seekCitizens.contains(citizen)) {
             seekCitizens.remove(citizen);
         }
     }
 
-    public ArrayList<Symptom> getSymptoms() throws DataStoreException {
+    public ArrayList<Symptom> getSymptoms() throws DataStoreException { // obtenes la lista de sintomas tomadas de la dataStore de sintomas
         ArrayList<Symptom> symptoms = symptomDataStore.toArrayList();
         return symptoms;
     }
 
-    public ArrayList<String> getSymptomsStrings() throws DataStoreException {
+    public ArrayList<String> getSymptomsStrings() throws DataStoreException { // obtenes la lista de sintomas tomadas de la dataStore de sintomas como strings en vez de objeto
         ArrayList<Symptom> symptoms = symptomDataStore.toArrayList();
         ArrayList<String> symptomsNames = new ArrayList<>();
         for (int i = 0; i < symptoms.size(); i++) {
@@ -105,14 +105,14 @@ public class AMBGeneral {
         return symptomsNames;
     }
 
-    public void adminRegister() throws ABMAdminException, ABMUserException {
+    public void adminRegister() throws ABMAdminException, ABMUserException { // Registro de un administrador.
         Administrator administrator = new Administrator(Scanner.getString("Ingrese su nombre de usuario: "),"TpGrupo14",Scanner.getString("Ingrese su numero de telefono: "));
         //adminABM.add(administrator.getUserName(),administrator.getId(),administrator.getCuil());
         adminABM.add(administrator);
         //System.out.println("la base de datos esta vacia? " + administratorDataStore.isEmpty());
     }
 
-    public boolean citizenRegister() throws ABMCitizenException, ABMUserException, DataStoreException {
+    public boolean citizenRegister() throws ABMCitizenException, ABMUserException, DataStoreException { //Registro de un Ciudadano que tiene que existir en el anses.
         //Zone zone = zones.get((int) (Math.random() * (zones.size() + 1) + 0));
 
         String id = Scanner.getString("Ingrese su cuil: ");
@@ -169,7 +169,7 @@ public class AMBGeneral {
         return null;
     }
 
-    public void iniciarSesion(String userName) throws ABMUserException, DataStoreException {
+    public void iniciarSesion(String userName) throws ABMUserException, DataStoreException { // inicia session como admin o Como citizen dependiendo que datos les pases. DataStore se ocupa de buscar estos datos.
         // "TpGrupo14" ---> contraseña de administradores.
         if (administratorDataStore.exists(userName)){
             String password = Scanner.getString("Ingrese contraseña de administrador: ");

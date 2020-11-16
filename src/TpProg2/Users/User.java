@@ -16,8 +16,8 @@ public abstract class User implements FileSaveable {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getFileRepresentation() {
-        String fileData = getId() + "," + getUserName() + "," + getPhoneNumber(); //por ahora... despues hay que agregar + cosas.
+    public String getFileRepresentation() { // forma representativa de mostrar los datos de un usuario en un archivo
+        String fileData = getId() + "," + getUserName() + "," + getPhoneNumber();
         return fileData;
     }
 
@@ -42,7 +42,7 @@ public abstract class User implements FileSaveable {
         return type;
     }
 
-    public String viewSymptoms(ArrayList<Symptom> symptoms){
+    public String viewSymptoms(ArrayList<Symptom> symptoms){ // muestra los sintomas registrados en la base de datos por pantalla
         String lista = "";
         if (symptoms != null) {
             for (int i = 0; i < symptoms.size(); i++) {

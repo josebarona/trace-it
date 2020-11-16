@@ -15,7 +15,7 @@ public class FileStore<T extends FileSaveable> implements DataStore<T>{
     }
 
     @Override
-    public void save(T t) {
+    public void save(T t) { // escribe un objeto de tipo t en un archvio(persistecia)
         if (!exists(t.getId())) {
             try {
                 FileWriter fileWriter = new FileWriter(fileName, true);
@@ -90,7 +90,7 @@ public class FileStore<T extends FileSaveable> implements DataStore<T>{
 
 
     @Override
-    public T findById(String id) {
+    public T findById(String id) { // lee el archivo busca por el String id del objeto si lo encuentra te lo devuelve a ese objeto a traves del lineToObject
         try {
             FileInputStream fstream = new FileInputStream(fileName);
             BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
@@ -108,18 +108,18 @@ public class FileStore<T extends FileSaveable> implements DataStore<T>{
         return null;
     }
 
-    public T lineToObject(String line){
+    public T lineToObject(String line){ // hechos en los otros filestores de las clases cuales extienden de esta
         return null;
     }
 
     @Override
-    public void edit(T t) {
+    public void edit(T t) { // edita un dato de un tipo t
         this.remove(t.getId());
         this.save(t);
     }
 
     @Override
-    public boolean isEmpty() {
+    public boolean isEmpty() { // preguntaq si la base de datos esta vacia.
         try {
             BufferedReader br = new BufferedReader(new FileReader(fileName));
             if (br.readLine() == null) {
@@ -132,7 +132,7 @@ public class FileStore<T extends FileSaveable> implements DataStore<T>{
     }
 
     @Override
-    public boolean exists(String id) {
+    public boolean exists(String id) {  // pregunta si un objeto t existe en la base de datos.
         try {
             FileInputStream fstream = new FileInputStream(fileName);
             BufferedReader br = new BufferedReader(new InputStreamReader(fstream));

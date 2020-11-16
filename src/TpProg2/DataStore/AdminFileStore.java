@@ -23,7 +23,7 @@ public class AdminFileStore extends FileStore<Administrator> {
     }
 
     @Override
-    public Administrator lineToObject(String line) {
+    public Administrator lineToObject(String line) { // lee una linea de archivo y lo convierte en un administrador.
         String[] data = line.split(",");
         String id = data[0];
         String phoneNumber = data[2];

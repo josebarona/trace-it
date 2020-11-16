@@ -10,13 +10,13 @@ public class Administrator extends User {
         this.type = "Administrador";
     }
 
-    public void banCitizen(Citizen citizen) {
+    public void banCitizen(Citizen citizen) { // bloquea a un citizen de la aplicacion
         Main.generalAMB.bannedCitizens.add(citizen);
         citizen.isBan = true;
         Main.generalAMB.citizenDataStore.edit(citizen);
     }
 
-    public void unbanCitizen(Citizen citizen) {
+    public void unbanCitizen(Citizen citizen) { //desbloquea a un citizen de la aplicacion
         Main.generalAMB.bannedCitizens.remove(citizen);
         citizen.isBan = false;
     }
@@ -41,6 +41,5 @@ public class Administrator extends User {
     public String getUserName() {
         return super.getUserName();
     }
-
 
 }

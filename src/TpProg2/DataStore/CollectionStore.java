@@ -16,17 +16,17 @@ public class CollectionStore<T extends Saveable> implements DataStore<T>{
     }
 
     @Override
-    public void save(T t) {
+    public void save(T t) { // guarda un objeto de tipo t como dato en el Hashmap
         collectionStore.put(t.getId(),t);
     }
 
     @Override
-    public void remove(String id) {
+    public void remove(String id) { // borra un objeto de tipo t al encontrarr su id
         collectionStore.remove(id);
     }
 
     @Override
-    public T findById(String id) {
+    public T findById(String id) { // busca en el HashMapa, donde estan guardados los datos de el objeto t, a traves del cuil y te lo devuelve
         if (collectionStore.containsKey(id)){
             return collectionStore.get(id);
         }
@@ -42,12 +42,12 @@ public class CollectionStore<T extends Saveable> implements DataStore<T>{
     }
 
     @Override
-    public boolean isEmpty() {
+    public boolean isEmpty() { //pregunta si labase de datos en collections se encuntra vacia.
         return collectionStore.isEmpty();
     }
 
     @Override
-    public boolean exists(String phoneNumber) {
+    public boolean exists(String phoneNumber) { // pregunta si un objeto de tipo t se encuentra guardado en la base de datos de collections.
         if (collectionStore.containsKey(phoneNumber)){
             return true;
         }
@@ -55,7 +55,7 @@ public class CollectionStore<T extends Saveable> implements DataStore<T>{
     }
 
     @Override
-    public ArrayList<T> toArrayList() {
+    public ArrayList<T> toArrayList() { // pasa el HashMap que contiene a todos los ciudadanos a un ArrayList
         Collection<T> values = collectionStore.values();
         return new ArrayList<T>(values);
     }

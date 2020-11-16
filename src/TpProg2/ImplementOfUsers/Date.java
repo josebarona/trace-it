@@ -15,18 +15,18 @@ public class Date implements FileSaveable {
         this.hora = hora;
     }
 
-    public static int howLongAgo (Date date){
+    public static int howLongAgo (Date date){ // direncia de horaria entre una hora y la hora actual
         Date today = actualDate();
         return dateDiference(today,date);
     } //Devuelve las horas transcurridas desde una fecha hasta el dia de hoy.
 
-    public static int dateDiference (Date date1, Date date2){
+    public static int dateDiference (Date date1, Date date2){ // obtiene diferencia de hora entre 2 horas.
         int date1Hours = pastMonthDays(date1.mes)*24 + date1.dia*24 + date1.hora;
         int date2Hours = pastMonthDays(date2.mes)*24 + date2.dia*24 + date2.hora;
         return date1Hours - date2Hours;
     }
 
-    public static Date actualDate(){
+    public static Date actualDate(){ // obtiene la hora del dia actual de tu calendario
         Calendar fecha = Calendar.getInstance();
         int dia = fecha.get(Calendar.DAY_OF_MONTH);
         int mes = fecha.get(Calendar.MONTH)+1;
