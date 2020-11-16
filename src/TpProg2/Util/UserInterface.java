@@ -1,10 +1,7 @@
 package TpProg2.Util;
 
 import TpProg2.Events.Symptom;
-import TpProg2.Exceptions.ABMAdminException;
-import TpProg2.Exceptions.ABMCitizenException;
-import TpProg2.Exceptions.ABMUserException;
-import TpProg2.Exceptions.DataStoreException;
+import TpProg2.Exceptions.*;
 import TpProg2.ImplementOfUsers.Date;
 import TpProg2.ImplementOfUsers.FaceToFaceMeeting;
 import TpProg2.ImplementOfUsers.Invitation;
@@ -62,7 +59,7 @@ public class UserInterface {
         System.exit(0);
     }
 
-    public static void menuCitizen(Citizen citizen) throws ABMUserException, DataStoreException {
+    public static void menuCitizen(Citizen citizen) throws ABMUserException, DataStoreException, ABMCitizenException2 {
         clear();
         int opcion;
         do {
@@ -117,8 +114,7 @@ public class UserInterface {
                         exists = zone.equals(Main.generalAMB.getZones().get(i).getName());
                         //System.out.println(Main.generalAMB.getZones().get(i).getName());
                         if (exists){
-                            citizen.setZone(Main.generalAMB.getZones().get(i));
-                        }
+                            citizen.setZone(Main.generalAMB.getZones().get(i)); }
                     }
                     clear();
                     //System.out.println(citizen.getZone().getName());
@@ -139,7 +135,7 @@ public class UserInterface {
         int opcion;
         do {
             System.out.println("  Menu Administrador: ");
-            System.out.println(" _________________________________________\n Operaciones: \n 1. Estadisticas  \n 2. Sintomas  \n 3. Ciudadanos bloqueados \n 6. Log Out \n 7. Exit \n 8. Regristrar Administrador \n");
+            System.out.println(" _________________________________________\n Operaciones: \n 1. Estadisticas  \n 2. Sintomas  \n 3. Ciudadanos bloqueados \n 4. Regristrar Administrador\n 6. Log Out \n 7. Exit \n");
             opcion = Scanner.getInt(" Que operación desea realizar: ");
             clear();
 
@@ -156,27 +152,6 @@ public class UserInterface {
                     viewBannedCitizens(admin);
                     clear();
                     break;
-                case 4:
-                    // el administrador deberia bloquear a un ciudadano?? preguntar ---> si no bloquea, se saca la opcion.
-                    String idCitizen = Scanner.getString("Ingrese cuil del ciudadano al que quiere Bloquear: ");
-                    clear();
-                    if (Main.generalAMB.getCitizenDataStore().exists(idCitizen)) {
-                        admin.banCitizen(Main.generalAMB.getCitizenDataStore().findById(idCitizen));
-                        message("El ciudadano a sido bloqueado");
-                    } else {
-                        message("el usuario al que quiere bloquear no existe");
-                    }
-                    break;
-                case 5:
-                    String idCitizen2 = Scanner.getString("Pase id de ciudadano que quiere Desbloquear: ");
-                    clear();
-                    if (Main.generalAMB.getCitizenDataStore().exists(idCitizen2)) {
-                        admin.unbanCitizen(Main.generalAMB.getCitizenDataStore().findById(idCitizen2));
-                        message("El ciudadano a sido desbloqueado");
-                    } else {
-                        message("el usuario al que quiere desbloquear no existe");
-                    }
-                    break;
                 case 6:
                     break;
                 case 7: // finalizar programa
@@ -184,7 +159,7 @@ public class UserInterface {
                     System.out.println("Adios ;D");
                     System.exit(0);
                     break;
-                case 8:
+                case 4:
                     try {
                         Main.generalAMB.adminRegister();
                     } catch (ABMAdminException e) {
