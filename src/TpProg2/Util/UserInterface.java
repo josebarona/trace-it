@@ -23,7 +23,7 @@ public class UserInterface {
     private UserInterface() {}
 
     //Menus
-    public static void menuPrincipal() {
+    public static void menuPrincipal() throws DataStoreException, ABMCitizenException, ABMUserException {
         traceIt();
         int opcion;
 
@@ -35,12 +35,11 @@ public class UserInterface {
 
             switch (opcion) {
                 case 1:
-                    try {
-                        Main.generalAMB.citizenRegister();
-                    } catch (ABMCitizenException | ABMUserException | DataStoreException e) {
-                        e.printStackTrace();
-                    }
+                    boolean existeEnAnses = Main.generalAMB.citizenRegister();
                     clear();
+                    if (!existeEnAnses){
+                        message("Cuil inexistente, consultar al Anses para mas informacion");
+                    }
                     break;
                 case 2:
                     String userName = Scanner.getString("Nombre de Usuario: ");
