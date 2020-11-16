@@ -12,6 +12,8 @@ import TpProg2.Users.*;
 import TpProg2.Util.Scanner;
 import TpProg2.Util.UserInterface;
 
+import java.util.Random;
+
 public class Main {
 
     public static AMBGeneral generalAMB;
@@ -87,13 +89,13 @@ public class Main {
         //------------------------------------------------------------------------------------------------------
         //BROTE EN ZONA "A"
         //43447273 esta en contacto con 111, 222, 333, (333 fue reciente por lo cual va a recibir una notificacion)
-        citizen1.sendRequest(citizen, new Invitation(new FaceToFaceMeeting("Jujuy", new Date(11,14,15), new Date(8,8,16), new Citizen[]{citizen}), citizen1));
+        citizen1.sendRequest(citizen, new Invitation(new FaceToFaceMeeting("Jujuy", new Date(11,14,15), new Date(11,14,16), new Citizen[]{citizen}), citizen1));
         enfermarCiudadano(citizen1);
         citizen2.sendRequest(citizen, new Invitation(new FaceToFaceMeeting("CABA", new Date(1,2,10), new Date(1,2,18), new Citizen[]{citizen}), citizen2));
         enfermarCiudadano(citizen2);
-        citizen3.sendRequest(citizen, new Invitation(new FaceToFaceMeeting("Salta", new Date(11,14,14), new Date(11,14,23), new Citizen[]{citizen}), citizen3));
+        citizen3.sendRequest(citizen, new Invitation(new FaceToFaceMeeting("Salta", new Date(11,15,14), new Date(11,15,23), new Citizen[]{citizen}), citizen3));
         enfermarCiudadano(citizen3);
-        citizen3.sendNotification(citizen, new Notification(citizen3, new Date(11,14,23)));
+        citizen3.sendNotification(citizen, new Notification(citizen3, new Date(11,15,23)));
         //333 esta en contacto con 444
         citizen3.sendRequest(citizen4, new Invitation(new FaceToFaceMeeting("vacio", new Date(10,10,14), new Date(10,10,16), new Citizen[]{citizen4}), citizen3));
         enfermarCiudadano(citizen4);
@@ -138,10 +140,12 @@ public class Main {
         Main.generalAMB.citizenDataStore.edit(citizen3_B);
     }
     static void enfermarCiudadano(Citizen citizen) throws DataStoreException {
-        for (int i = 0; i < 4; i++) {
-            citizen.getRegisteredSymptoms().add(generalAMB.getSymptoms().get(i));
+        Random rn = new Random();
+        while (citizen.getRegisteredSymptoms().size() < 4) {
+            for (int i = 0; i < 4; i++) {
+                citizen.getRegisteredSymptoms().add(generalAMB.getSymptoms().get(rn.nextInt(generalAMB.getSymptoms().size()-2) + 1));
+            }
         }
         citizen.isSeek();
     }
-
 }

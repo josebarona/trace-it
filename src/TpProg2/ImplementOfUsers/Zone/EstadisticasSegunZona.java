@@ -45,9 +45,13 @@ public class EstadisticasSegunZona {
         String top3CommonSymptoms = "";
         for (int i = 0; i < 3; i++) {
             String commonSymptom = commonSymptom(count, symptoms);
-            top3CommonSymptoms += commonSymptom + " ->[" + count.get(commonSymptom) + "]";
+            if (!commonSymptom.equals("Vacio")){
+                top3CommonSymptoms += commonSymptom + " ->[" + count.get(commonSymptom) + "]";
+                count.put(commonSymptom, 0);
+            }else{
+                top3CommonSymptoms += commonSymptom + " ->[null]";
+            }
             if (i < 2){top3CommonSymptoms += ", ";}
-            count.put(commonSymptom, 0);
         }//" 1. Cansancio ->(4) / 2. Toz seca ->(3) / 3. Dolores ->(1)
         return top3CommonSymptoms;
     }// Devuelve un HashMap con los 3 sintomas mas comunes por zona y la cantidad de ciudadanos que lo registraron.
