@@ -34,57 +34,57 @@ public class Main {
     public static void demo() throws ABMUserException, ABMCitizenException, DataStoreException { //situacion predeterminada para exponer el trabajo.
         Citizen citizen = new Citizen("Marcos_PM", "43447273", "+5491164430555");
         citizen.setZone(generalAMB.obtenerZonaCiudadano(citizen));
-        generalAMB.citizenABM.add(citizen);
+        generalAMB.getCitizenABM().add(citizen);
         generalAMB.obtenerZonaCiudadano(citizen).refresh();
         //Ciudadanos de la zona "A"-----------------------------------------------------------------------------
         Citizen citizen1 = new Citizen("Usuario1", "111", "+5491164430556");
         citizen1.setZone(generalAMB.obtenerZonaCiudadano(citizen1));
-        generalAMB.citizenABM.add(citizen1);
+        generalAMB.getCitizenABM().add(citizen1);
         generalAMB.obtenerZonaCiudadano(citizen1).refresh();
         Citizen citizen2 = new Citizen("Usuario2", "222", "+5491164430556");
         citizen2.setZone(generalAMB.obtenerZonaCiudadano(citizen2));
-        generalAMB.citizenABM.add(citizen2);
+        generalAMB.getCitizenABM().add(citizen2);
         generalAMB.obtenerZonaCiudadano(citizen2).refresh();
         Citizen citizen3 = new Citizen("Usuario3", "333", "+5491164430556");
         citizen3.setZone(generalAMB.obtenerZonaCiudadano(citizen3));
-        generalAMB.citizenABM.add(citizen3);
+        generalAMB.getCitizenABM().add(citizen3);
         generalAMB.obtenerZonaCiudadano(citizen3).refresh();
         Citizen citizen4 = new Citizen("Usuario4", "444", "+5491164430556");
         citizen4.setZone(generalAMB.obtenerZonaCiudadano(citizen4));
-        generalAMB.citizenABM.add(citizen4);
+        generalAMB.getCitizenABM().add(citizen4);
         generalAMB.obtenerZonaCiudadano(citizen4).refresh();
         Citizen citizen5 = new Citizen("Usuario5", "555", "+5491164430556");
         citizen5.setZone(generalAMB.obtenerZonaCiudadano(citizen5));
-        generalAMB.citizenABM.add(citizen5);
+        generalAMB.getCitizenABM().add(citizen5);
         generalAMB.obtenerZonaCiudadano(citizen5).refresh();
         Citizen citizen6 = new Citizen("Usuario6", "666", "+5491164430556");
         citizen6.setZone(generalAMB.obtenerZonaCiudadano(citizen6));
-        generalAMB.citizenABM.add(citizen6);
+        generalAMB.getCitizenABM().add(citizen6);
         generalAMB.obtenerZonaCiudadano(citizen6).refresh();
         Citizen citizen7 = new Citizen("Usuario7", "777", "+5491164430556");
         citizen7.setZone(generalAMB.obtenerZonaCiudadano(citizen7));
-        generalAMB.citizenABM.add(citizen7);
+        generalAMB.getCitizenABM().add(citizen7);
         generalAMB.obtenerZonaCiudadano(citizen7).refresh();
         //Ciudadanos de la zona "B"-----------------------------------------------------------------------------
         Citizen citizen1_B = new Citizen("Lucas_T", "42357465", "+5491164430556");
         citizen1_B.setZone(generalAMB.obtenerZonaCiudadano(citizen1_B));
-        generalAMB.citizenABM.add(citizen1_B);
+        generalAMB.getCitizenABM().add(citizen1_B);
         generalAMB.obtenerZonaCiudadano(citizen1_B).refresh();
         Citizen citizen2_B = new Citizen("Pedro_R", "42562843", "+5491164430556");
         citizen2_B.setZone(generalAMB.obtenerZonaCiudadano(citizen2_B));
-        generalAMB.citizenABM.add(citizen2_B);
+        generalAMB.getCitizenABM().add(citizen2_B);
         generalAMB.obtenerZonaCiudadano(citizen2_B).refresh();
         Citizen citizen3_B = new Citizen("Dylan_J", "42967721", "+5491164430556");
         citizen3_B.setZone(generalAMB.obtenerZonaCiudadano(citizen3_B));
-        generalAMB.citizenABM.add(citizen3_B);
+        generalAMB.getCitizenABM().add(citizen3_B);
         generalAMB.obtenerZonaCiudadano(citizen3_B).refresh();
         Citizen citizen4_B = new Citizen("4_B", "44", "+5491164430556");
         citizen4_B.setZone(generalAMB.obtenerZonaCiudadano(citizen4_B));
-        generalAMB.citizenABM.add(citizen4_B);
+        generalAMB.getCitizenABM().add(citizen4_B);
         generalAMB.obtenerZonaCiudadano(citizen4_B).refresh();
         Citizen citizen5_B = new Citizen("5_B", "55", "+5491164430556");
         citizen5_B.setZone(generalAMB.obtenerZonaCiudadano(citizen5_B));
-        generalAMB.citizenABM.add(citizen5_B);
+        generalAMB.getCitizenABM().add(citizen5_B);
         generalAMB.obtenerZonaCiudadano(citizen5_B).refresh();
         //------------------------------------------------------------------------------------------------------
         //BROTE EN ZONA "A"
@@ -129,15 +129,15 @@ public class Main {
         enfermarCiudadano(citizen5_B);
         //------------------------------------------------------------------------------------------------------
         //Algunos ciudadanos bloqueados
-        Main.generalAMB.bannedCitizens.add(citizen1_B);
+        Main.generalAMB.getBannedCitizens().add(citizen1_B);
         citizen1_B.setBan(true);
-        Main.generalAMB.citizenDataStore.edit(citizen1_B);
-        Main.generalAMB.bannedCitizens.add(citizen2_B);
+        Main.generalAMB.getCitizenDataStore().edit(citizen1_B);
+        Main.generalAMB.getBannedCitizens().add(citizen2_B);
         citizen2_B.setBan(true);
-        Main.generalAMB.citizenDataStore.edit(citizen3_B);
-        Main.generalAMB.bannedCitizens.add(citizen3_B);
+        Main.generalAMB.getCitizenDataStore().edit(citizen3_B);
+        Main.generalAMB.getBannedCitizens().add(citizen3_B);
         citizen3_B.setBan(true);
-        Main.generalAMB.citizenDataStore.edit(citizen3_B);
+        Main.generalAMB.getCitizenDataStore().edit(citizen3_B);
     }
     static void enfermarCiudadano(Citizen citizen) throws DataStoreException {
         Random rn = new Random();

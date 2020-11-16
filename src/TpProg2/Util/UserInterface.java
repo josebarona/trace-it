@@ -138,8 +138,8 @@ public class UserInterface {
                     // el administrador deberia bloquear a un ciudadano?? preguntar ---> si no bloquea, se saca la opcion.
                     String idCitizen = Scanner.getString("Ingrese cuil del ciudadano al que quiere Bloquear: ");
                     clear();
-                    if (Main.generalAMB.citizenDataStore.exists(idCitizen)) {
-                        admin.banCitizen(Main.generalAMB.citizenDataStore.findById(idCitizen));
+                    if (Main.generalAMB.getCitizenDataStore().exists(idCitizen)) {
+                        admin.banCitizen(Main.generalAMB.getCitizenDataStore().findById(idCitizen));
                         message("El ciudadano a sido bloqueado");
                     } else {
                         message("el usuario al que quiere bloquear no existe");
@@ -148,8 +148,8 @@ public class UserInterface {
                 case 5:
                     String idCitizen2 = Scanner.getString("Pase id de ciudadano que quiere Desbloquear: ");
                     clear();
-                    if (Main.generalAMB.citizenDataStore.exists(idCitizen2)) {
-                        admin.unbanCitizen(Main.generalAMB.citizenDataStore.findById(idCitizen2));
+                    if (Main.generalAMB.getCitizenDataStore().exists(idCitizen2)) {
+                        admin.unbanCitizen(Main.generalAMB.getCitizenDataStore().findById(idCitizen2));
                         message("El ciudadano a sido desbloqueado");
                     } else {
                         message("el usuario al que quiere desbloquear no existe");
@@ -263,7 +263,7 @@ public class UserInterface {
         for (int i = 1; i < cantidad+1; i++) {
             boolean v = true;
             do {
-                Citizen citizen1 = Main.generalAMB.citizenDataStore.findById(Scanner.getString(" Ingrese el cuil del ciudadano (" + (i) + "): "));
+                Citizen citizen1 = Main.generalAMB.getCitizenDataStore().findById(Scanner.getString(" Ingrese el cuil del ciudadano (" + (i) + "): "));
                 if (citizen1 != null) {
                     presentCitizens[i] = citizen1;
                     v = false;
@@ -422,7 +422,7 @@ public class UserInterface {
             switch (opcion){
                 case 97:
                     clear();
-                    Main.generalAMB.symptomDataStore.save(new Symptom(Scanner.getString(" Ingrese el nombre del sintoma que desea agregar: ")));
+                    Main.generalAMB.getSymptomDataStore().save(new Symptom(Scanner.getString(" Ingrese el nombre del sintoma que desea agregar: ")));
                     clear();
                     message(" El sintoma fue agregado!");
                     break;
@@ -433,7 +433,7 @@ public class UserInterface {
 
                         message(" El sintoma "+ Main.generalAMB.getSymptoms().get(opcion).getName() +" fue eliminado de su registro!");
 
-                        Main.generalAMB.symptomDataStore.remove(Main.generalAMB.getSymptoms().get(opcion).getName());
+                        Main.generalAMB.getSymptomDataStore().remove(Main.generalAMB.getSymptoms().get(opcion).getName());
 
                     }else if(opcion != 99){
                         clear();
@@ -457,8 +457,8 @@ public class UserInterface {
             System.out.println("\n" + viewZonesNames() + "\n  98. Estadisticas de brotes\n  99. (volver)\n");
             opcion = Scanner.getInt(" De que zona desea ver estadisticas (nro): ");
             clear();
-            if (opcion < Main.generalAMB.zones.size()) {
-                Zone zona = Main.generalAMB.zones.get(opcion);
+            if (opcion < Main.generalAMB.getZones().size()) {
+                Zone zona = Main.generalAMB.getZones().get(opcion);
                 clear();
                 if (!zona.getCitizens().isEmpty()) {
                     System.out.println(" \n   Hay un total de " + zona.getCitizens().size() + " ciudadanos en la zona \"" + zona.getName() + "\", de los cuales " + EstadisticasSegunZona.seekCitizens(zona).size() + " estan enfermos." +
@@ -486,9 +486,9 @@ public class UserInterface {
 
     private static String viewZonesNames() {
         String lista = "";
-        if (Main.generalAMB.zones.size() > 0) {
-            for (int i = 0; i < Main.generalAMB.zones.size(); i++) {
-                lista += "  " + i + ". " + Main.generalAMB.zones.get(i).getName() + "\n";
+        if (Main.generalAMB.getZones().size() > 0) {
+            for (int i = 0; i < Main.generalAMB.getZones().size(); i++) {
+                lista += "  " + i + ". " + Main.generalAMB.getZones().get(i).getName() + "\n";
             }
         } else {
             lista += "\n    (No ninguna zona registrada en el sistema)\n";
@@ -507,8 +507,8 @@ public class UserInterface {
                     clear();
                     String idCitizen = Scanner.getString("Ingrese cuil del ciudadano al que quiere Bloquear: ");
                     clear();
-                    if (Main.generalAMB.citizenDataStore.exists(idCitizen)) {
-                        admin.banCitizen(Main.generalAMB.citizenDataStore.findById(idCitizen));
+                    if (Main.generalAMB.getCitizenDataStore().exists(idCitizen)) {
+                        admin.banCitizen(Main.generalAMB.getCitizenDataStore().findById(idCitizen));
 
                         message("El ciudadano a sido bloqueado");
                     } else {
@@ -518,8 +518,8 @@ public class UserInterface {
                 case 98:
                     String idCitizen2 = Scanner.getString("Ingrese el cuil de ciudadano que quiere Desbloquear: ");
                     clear();
-                    if (Main.generalAMB.citizenDataStore.exists(idCitizen2)) {
-                        admin.unbanCitizen(Main.generalAMB.citizenDataStore.findById(idCitizen2));
+                    if (Main.generalAMB.getCitizenDataStore().exists(idCitizen2)) {
+                        admin.unbanCitizen(Main.generalAMB.getCitizenDataStore().findById(idCitizen2));
                         message("El ciudadano a sido desbloqueado");
                     } else {
                         message("el usuario al que quiere desbloquear no existe");

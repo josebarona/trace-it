@@ -183,7 +183,7 @@ public class Citizen extends User {
         }else{
             receivedNotifications.add(notification);
         }
-    }
+    } // Recibe una notificacion, si el emisor de la misma es parte de nuestros contactos, se agregara a las notificaciones visibles.
 
     public void sendNotification(Citizen sendTo, Notification notification){
         boolean avisar = true;
@@ -201,14 +201,14 @@ public class Citizen extends User {
             sendTo.receiveNotification(notification);
             sendTo.refreshNotifications();
         }
-    }
+    } // Envia una notificacion a un ciudadano, esta no debe estar repetida.
 
     public void addContact(Citizen contact){
         if (contacts == null || !contacts.contains(contact)){
             contacts.add(contact);
         }
         refreshNotifications();// Es posible tener una notificacion de esta persona antes de tenerla como contacto, por eso se actualiza la lista despues de "agregar a alguien"
-    }
+    } // Agrega un ciudadano a la lista de contactos.
 
     public void refreshNotifications(){
         for (int i = 0; i < receivedNotifications.size(); i++) {
@@ -217,7 +217,7 @@ public class Citizen extends User {
                 receivedNotifications.remove(receivedNotifications.get(i));
             }
         }
-    }
+    } // Actualiza las notificaciones (hace visibles las notificaciones de nuevos contactos)
 
     //Sintomas
     public boolean isSeek() throws DataStoreException {
@@ -248,5 +248,5 @@ public class Citizen extends User {
             symptomsNames.add(getRegisteredSymptoms().get(i).getName());
         }
         return symptomsNames;
-    }
+    } // Devuelve un arrayList de los nombres de los sintomas registrados.
 }

@@ -23,7 +23,7 @@ public class Zone{
     }
 
     public void refresh () throws DataStoreException {
-        ArrayList<Citizen> allCitizens = Main.generalAMB.citizenDataStore.toArrayList();
+        ArrayList<Citizen> allCitizens = Main.generalAMB.getCitizenDataStore().toArrayList();
         ArrayList<Citizen> localCitizens = new ArrayList<>();
         for (int i = 0; i < allCitizens.size(); i++) {
             if (allCitizens.get(i).getZone().equals(this)){

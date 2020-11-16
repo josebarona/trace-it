@@ -24,17 +24,17 @@ import java.util.HashMap;
 
 public class AMBGeneral {
 
-    public DataStore<Symptom> symptomDataStore;
-    public DataStore<Citizen> anses;
-    public DataStore<Administrator> administratorDataStore;
-    public ABMAdmin adminABM;
-    public DataStore<Citizen> citizenDataStore;
-    public ABMCitizen citizenABM;
+    DataStore<Symptom> symptomDataStore;
+    DataStore<Citizen> anses;
+    DataStore<Administrator> administratorDataStore;
+    ABMAdmin adminABM;
+    DataStore<Citizen> citizenDataStore;
+    ABMCitizen citizenABM;
 
-    public Disease disease; // No usamos una lista de enfermedades por ahora, solo hay una.
-    public ArrayList<Zone> zones;
-    public ArrayList<Citizen> seekCitizens;
-    public ArrayList<Citizen> bannedCitizens;
+    Disease disease; // No usamos una lista de enfermedades por ahora, solo hay una.
+    ArrayList<Zone> zones;
+    ArrayList<Citizen> seekCitizens;
+    ArrayList<Citizen> bannedCitizens;
 
     /*public AMBGeneral(DataStore<Citizen> anses, ABMAdmin adminABM, ABMCitizen citizenABM, ArrayList<Symptom> symptoms, Disease disease, ArrayList<Zone> zones) {
         this.anses = anses;
@@ -53,10 +53,10 @@ public class AMBGeneral {
         adminABM = new ABMAdmin(administratorDataStore);
 
         citizenDataStore = new CollectionStore<>(new HashMap<>());    // GUARDADO EN COLLECTIONS
-        //citizenDataStore = new CitizenFileStore("FileCitizenData"); // GUARDADO EN FILES ---> no pudimos terminarlo cosas inconclusas y errores
+        //citizenDataStore = new CitizenFileStore("FileCitizenData"); // GUARDADO EN FILES
         citizenABM = new ABMCitizen(citizenDataStore);
 
-        symptomDataStore = new SymptomFileStore("FileSymptomData"); // lugar donde se guarda la data de los sintomas.
+        symptomDataStore = new SymptomFileStore("FileSymptomData");
 
         disease = new Disease("COVID", symptomDataStore.toArrayList());
 
@@ -71,32 +71,64 @@ public class AMBGeneral {
         this.bannedCitizens = new ArrayList<Citizen>();
     }
 
-    public ArrayList<Citizen> getBannedCitizens() { // obtiene los citizens bloqueados
+    public DataStore<Symptom> getSymptomDataStore() {
+        return symptomDataStore;
+    }
+
+    public DataStore<Citizen> getAnses() {
+        return anses;
+    }
+
+    public DataStore<Administrator> getAdministratorDataStore() {
+        return administratorDataStore;
+    }
+
+    public ABMAdmin getAdminABM() {
+        return adminABM;
+    }
+
+    public DataStore<Citizen> getCitizenDataStore() {
+        return citizenDataStore;
+    }
+
+    public ABMCitizen getCitizenABM() {
+        return citizenABM;
+    }
+
+    public Disease getDisease() {
+        return disease;
+    }
+
+    public ArrayList<Citizen> getSeekCitizens() {
+        return seekCitizens;
+    }
+
+    public ArrayList<Citizen> getBannedCitizens() {
         return bannedCitizens;
     }
 
-    public ArrayList<Zone> getZones() { // obtiene las zonas
+    public ArrayList<Zone> getZones() {
         return zones;
     }
 
-    public void addSeekCitizen(Citizen citizen){ // agrega a un ciudano enfermo(que contenga mas de 3 sintomas) a la lista de enfermos
+    public void addSeekCitizen(Citizen citizen){
         if (seekCitizens == null || !seekCitizens.contains(citizen)) {
             seekCitizens.add(citizen);
         }
     }
 
-    public void removeSeekCitizen(Citizen citizen){ // remueve a un enfermo que dejo de presentar sintomas de la lista
+    public void removeSeekCitizen(Citizen citizen){
         if (seekCitizens != null && seekCitizens.contains(citizen)) {
             seekCitizens.remove(citizen);
         }
     }
 
-    public ArrayList<Symptom> getSymptoms() throws DataStoreException { // obtenes la lista de sintomas tomadas de la dataStore de sintomas
+    public ArrayList<Symptom> getSymptoms() throws DataStoreException {
         ArrayList<Symptom> symptoms = symptomDataStore.toArrayList();
         return symptoms;
     }
 
-    public ArrayList<String> getSymptomsStrings() throws DataStoreException { // obtenes la lista de sintomas tomadas de la dataStore de sintomas como strings en vez de objeto
+    public ArrayList<String> getSymptomsStrings() throws DataStoreException {
         ArrayList<Symptom> symptoms = symptomDataStore.toArrayList();
         ArrayList<String> symptomsNames = new ArrayList<>();
         for (int i = 0; i < symptoms.size(); i++) {
@@ -105,14 +137,14 @@ public class AMBGeneral {
         return symptomsNames;
     }
 
-    public void adminRegister() throws ABMAdminException, ABMUserException { // Registro de un administrador.
+    public void adminRegister() throws ABMAdminException, ABMUserException {
         Administrator administrator = new Administrator(Scanner.getString("Ingrese su nombre de usuario: "),"TpGrupo14",Scanner.getString("Ingrese su numero de telefono: "));
         //adminABM.add(administrator.getUserName(),administrator.getId(),administrator.getCuil());
         adminABM.add(administrator);
         //System.out.println("la base de datos esta vacia? " + administratorDataStore.isEmpty());
     }
 
-    public boolean citizenRegister() throws ABMCitizenException, ABMUserException, DataStoreException { //Registro de un Ciudadano que tiene que existir en el anses.
+    public boolean citizenRegister() throws ABMCitizenException, ABMUserException, DataStoreException {
         //Zone zone = zones.get((int) (Math.random() * (zones.size() + 1) + 0));
 
         String id = Scanner.getString("Ingrese su cuil: ");
@@ -169,7 +201,7 @@ public class AMBGeneral {
         return null;
     }
 
-    public void iniciarSesion(String userName) throws ABMUserException, DataStoreException { // inicia session como admin o Como citizen dependiendo que datos les pases. DataStore se ocupa de buscar estos datos.
+    public void iniciarSesion(String userName) throws ABMUserException, DataStoreException {
         // "TpGrupo14" ---> contraseña de administradores.
         if (administratorDataStore.exists(userName)){
             String password = Scanner.getString("Ingrese contraseña de administrador: ");
