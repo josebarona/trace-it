@@ -1,5 +1,3 @@
-notas:
+Notas para Demo:
 
-- Armar el tema de estadisticas.
-- Rearmar los metodos para sacar las horas entre dos fechas (no funciona para diferentes años).
-- Terminar la persistencia.
+1- MENU PRINCIPAL

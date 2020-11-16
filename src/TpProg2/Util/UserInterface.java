@@ -1,6 +1,7 @@
 package TpProg2.Util;
 
 import TpProg2.Events.Symptom;
+import TpProg2.Exceptions.ABMAdminException;
 import TpProg2.Exceptions.ABMCitizenException;
 import TpProg2.Exceptions.ABMUserException;
 import TpProg2.Exceptions.DataStoreException;
@@ -28,7 +29,7 @@ public class UserInterface {
 
         do {
             title("  Menu: ");
-            System.out.println("  Operaciones: \n\n 1. Registrarse \n 2. Iniciar sesion \n 3.Exit\n");
+            System.out.println("  Operaciones: \n\n 1. Registrarse \n 2. Iniciar sesion \n 3. Exit\n");
             opcion = Scanner.getInt("Que operación desea realizar: ");
             clear();
 
@@ -117,7 +118,7 @@ public class UserInterface {
         int opcion;
         do {
             System.out.println("  Menu Administrador: ");
-            System.out.println(" _________________________________________\n Operaciones: \n 1. Estadisticas  \n 2. Sintomas  \n 3. Ciudadanos bloqueados \n 6. Log Out \n 7. Exit ");
+            System.out.println(" _________________________________________\n Operaciones: \n 1. Estadisticas  \n 2. Sintomas  \n 3. Ciudadanos bloqueados \n 6. Log Out \n 7. Exit \n 8. Regristrar Administrador \n");
             opcion = Scanner.getInt(" Que operación desea realizar: ");
             clear();
 
@@ -156,13 +157,21 @@ public class UserInterface {
                     }
                     break;
                 case 6:
-                    //volver atras
-                    //menuPrincipal(); //no es necesario
+
                     break;
                 case 7: // finalizar programa
                     System.out.println();
                     System.out.println("Adios ;D");
                     System.exit(0);
+                    break;
+                case 8:
+                    try {
+                        Main.generalAMB.adminRegister();
+                    } catch (ABMAdminException e) {
+                        e.printStackTrace();
+                    }
+                    clear();
+                    message("El Administrador fue registrado");
                     break;
                 default:
                    message("opcion invalida!");
